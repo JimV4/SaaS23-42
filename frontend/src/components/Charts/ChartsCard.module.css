@@ -1,0 +1,15 @@
+.charts-container {
+  margin-top: 50px;
+  background-color: #dad7d7be;
+  height: 350px;
+  border: 4px solid #1098ad;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  overflow-x: auto;
+  gap: 25px;
+}

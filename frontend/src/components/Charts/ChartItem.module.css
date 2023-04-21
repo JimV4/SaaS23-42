@@ -1,0 +1,28 @@
+.charts {
+  border: 2px solid #1098ad;
+  height: 280px;
+  width: 350px;
+}
+
+.basic-line {
+  margin-left: 20px;
+}
+
+.charts img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.charts img:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.network-graph {
+  margin-right: 20px;
+}
+
+div {
+  margin-top: 20px;
+}
