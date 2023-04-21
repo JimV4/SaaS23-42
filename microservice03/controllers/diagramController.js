@@ -33,7 +33,7 @@ exports.createDiagram = async (req, res, next) => {
     // Render the chart to a buffer
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    fs.writeFile(`${__dirname}/../../charts/chart.png`, image, async (err) => {
+    fs.writeFile(`${__dirname}/../charts/chart.png`, image, async (err) => {
       if (err) {
         // Handle error if needed
         console.error(err);
