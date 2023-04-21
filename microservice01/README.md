@@ -1,6 +1,5 @@
-# MICROSERVICE
+# ORCHESTRATOR
 
 ## (name)
 
 (description)
-
