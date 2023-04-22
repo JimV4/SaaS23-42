@@ -23,7 +23,6 @@ exports.GoogleCallback = async (req, res, next) => {
       });
     }
 
-    user.verified = true;
     user.lastLogin = Date.now();
     user.save();
 
