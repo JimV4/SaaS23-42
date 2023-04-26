@@ -25,7 +25,7 @@ mongoose
     });
   });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 const server = app.listen(port, process.env.BASE_URL, () => {
   console.log(`App running on 'http://${process.env.BASE_URL}:${port}'...`);

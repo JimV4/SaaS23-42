@@ -1,6 +1,5 @@
-# MICROSERVICE
+# Scatter
 
 ## (name)
 
 (description)
-

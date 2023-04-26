@@ -3,6 +3,6 @@ const diagramController = require("../controllers/diagramController");
 
 const router = express.Router();
 
-router.post("/create", diagramController.createDiagram);
+router.get("/create", diagramController.createDiagram);
 
 module.exports = router;
