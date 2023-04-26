@@ -10,6 +10,7 @@ function getRandomRGBColor() {
 
 exports.createDiagram = async (req, res, next) => {
   try {
+    console.log(req.body);
     if (
       !req.body.xaxis ||
       !req.body.yaxis ||

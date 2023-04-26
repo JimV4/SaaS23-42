@@ -3,9 +3,10 @@ const axios = require("axios");
 exports.createLineChart = async (req, res, next) => {
   try {
     const response = await axios({
-      method: "get",
+      method: "post",
       url: `${process.env.LINE_CHART_SERVICE}/create`,
       responseType: "arraybuffer",
+      data: req.config,
     });
 
     const image = Buffer.from(response.data, "binary");

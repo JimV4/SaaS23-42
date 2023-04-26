@@ -1,14 +1,14 @@
-const lineChartConfiguration = {
-  xaxis: {
-    labels: [],
-  },
-  yaxis: {
-    datasets: [],
-  },
-};
-
 exports.getLineChartConfig = (data) => {
   try {
+    const lineChartConfiguration = {
+      xaxis: {
+        labels: [],
+      },
+      yaxis: {
+        datasets: [],
+      },
+    };
+
     if (data["width"])
       lineChartConfiguration["width"] = parseInt(data["width"]);
     if (data["height"])
@@ -40,33 +40,27 @@ exports.getLineChartConfig = (data) => {
           ? false
           : null;
 
-    if (data["data"]) {
-      let labels = data["data"].split("labels")[1];
-      if (labels) {
-        const startIndex = labels.indexOf("[");
-        const endIndex = labels.lastIndexOf("]");
+    let labels = data["data"].split("labels")[1];
 
-        const arrayString = labels.slice(startIndex, endIndex + 1);
-        const jsonStr = arrayString.replace(/\s+/g, ",");
-        const array = JSON.parse(jsonStr);
-        lineChartConfiguration["xaxis"]["labels"] = array;
-      }
-    }
+    const startIndex = labels.indexOf("[");
+    const endIndex = labels.lastIndexOf("]");
 
-    for (i = 1; data[`DATASET${i}`] != null; i++) {
+    const arrayString = labels.slice(startIndex, endIndex + 1);
+    const jsonStr = arrayString.replace(/\s+/g, ",");
+    const array = JSON.parse(jsonStr);
+    lineChartConfiguration["xaxis"]["labels"] = array;
+
+    let i = 1;
+    while (data[`DATASET${i}`] != null) {
       let dataset = data[`DATASET${i}`].split(",");
       let jsonStr = dataset[1].replace(/\s+/g, ",");
       lineChartConfiguration.yaxis.datasets.push({
         label: dataset[0],
         data: JSON.parse(jsonStr),
-        fill:
-          dataset[2].toLowerCase() == "true"
-            ? true
-            : dataset[2].toLowerCase() == "false"
-            ? false
-            : null,
+        fill: dataset[2].toLowerCase() == "fill" ? true : false,
         color: dataset[3],
       });
+      i++;
     }
 
     return lineChartConfiguration;

@@ -7,6 +7,6 @@ const router = express.Router();
 const storage = multer.memoryStorage(); // Use memory storage
 const upload = multer({ storage }); // Configure multer with storage
 
-router.get("/readfile", upload.single("csvFile"), csvController.readCSVFile);
+router.post("/readfile", upload.single("csvFile"), csvController.readCSVFile);
 
 module.exports = router;
