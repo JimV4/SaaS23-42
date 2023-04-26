@@ -27,7 +27,7 @@ exports.readCSVFile = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err,
+      message: err.message,
     });
   }
 };

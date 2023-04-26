@@ -29,7 +29,7 @@ exports.readCSVFile = async (req, res, next) => {
     } else if (data["type"] == "line-chart") {
       config = lineChartController.getLineChartConfig(data);
       if (!config) {
-        return res.status(500).json({
+        return res.status(400).json({
           status: "failed",
           message: "The file you uploaded contains errors!",
         });
