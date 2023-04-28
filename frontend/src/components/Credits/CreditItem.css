@@ -17,3 +17,11 @@
   cursor: pointer;
   color: white;
 }
+
+.credit-box-hovered {
+  background-color: #1098ad;
+  color: white;
+  transition: 0.5s;
+  cursor: pointer;
+  color: white;
+}

@@ -1,8 +1,13 @@
-import classes from "./CreditItem.module.css";
+import "./CreditItem.css";
 
 function CreditItem(props) {
   return (
-    <div className={classes["credit-box"]}>{`${props.amount} Credits`}</div>
+    <div
+      className={`credit-box ${
+        props.selected === props.id ? "credit-box-hovered" : ""
+      }`}
+      onClick={() => props.handleSelected(props.id)}
+    >{`${props.amount} Credits`}</div>
   );
 }
 
