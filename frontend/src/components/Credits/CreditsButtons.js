@@ -1,6 +1,6 @@
 import Button from "../Login/Buttons/Button";
 
-function CreditsButtons() {
+function CreditsButtons(props) {
   return (
     <div
       style={{
@@ -9,8 +9,10 @@ function CreditsButtons() {
         gap: "15px",
       }}
     >
-      <Button text={"Purchase"} />
-      {/* <Button text={"Cancel Purchase"} /> */}
+      {props.selected && (
+        <Button text={"Purchase"} onClick={props.onShowModal} />
+      )}
+      {/* {props.selected && <Button text={"Cancel"} />} */}
     </div>
   );
 }

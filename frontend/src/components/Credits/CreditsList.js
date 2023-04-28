@@ -2,7 +2,7 @@ import { useState } from "react";
 import CreditItem from "./CreditItem";
 import CreditsContainer from "./CreditsContainer";
 
-function CreditsList() {
+function CreditsList(props) {
   const credits = [
     {
       id: "0",
@@ -21,18 +21,13 @@ function CreditsList() {
       amount: "50",
     },
   ];
-  const [selected, setSelected] = useState(null);
-
-  function handleSelected(index) {
-    setSelected(index);
-  }
 
   const creditsList = credits.map((item) => (
     <CreditItem
       id={item.id}
       amount={item.amount}
-      handleSelected={handleSelected}
-      selected={selected}
+      handleSelected={props.handleSelected}
+      selected={props.selected}
     />
   ));
 
