@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./MyChartsLogo.module.css";
 import myChartsImage from "../../assets/myCharts-logo2.jpg";
+import { Outlet } from "react-router-dom";
 
 function MyChartsLogo() {
   return (
@@ -13,6 +14,10 @@ function MyChartsLogo() {
           className={classes["myCharts-logo"]}
         />
       </header>
+
+      <main>
+        <Outlet />
+      </main>
     </React.Fragment>
   );
 }

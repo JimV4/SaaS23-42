@@ -1,0 +1,14 @@
+.title {
+  margin-right: 20px;
+}
+
+.box {
+  width: 250px;
+  height: 40px;
+  border: solid;
+  border-color: black;
+}
+
+.container {
+  display: flex;
+}

@@ -9,7 +9,7 @@ import NetworkGraphImg from "../../assets/network_graph.png";
 function ChartItem(props) {
   return (
     <div className={`${classes.charts} ${classes[props.title]}`}>
-      <img src={BasicColumnImg} alt={props.alt} className={props.imgClass} />
+      <img src={props.img} alt={props.alt} className={props.imgClass} />
     </div>
   );
 }

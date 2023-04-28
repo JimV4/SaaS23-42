@@ -1,30 +1,37 @@
-import React, { useState } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MyChartsLogo from "./components/UI/MyChartsLogo";
-import ChartItemsList from "./components/Charts/ChartItemsList";
-import Container from "./components/UI/Container";
-import ConfrimLoginContext from "./components/Context/confirm-login-context";
+import HomePage from "./pages/HomePage";
 import ConfirmLogin from "./components/Login/ConfirmLogin";
+import MyAccountPage from "./pages/MyAccountPage";
+import BuyCreditsPage from "./pages/BuyCreditsPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MyChartsLogo />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "login",
+        element: <ConfirmLogin />,
+      },
+      {
+        path: "my-account",
+        element: <MyAccountPage />,
+      },
+      {
+        path: "buy-credits",
+        element: <BuyCreditsPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  const [confirmLogin, setConfirmLogin] = useState(false);
-
-  function handleConfirmLogin() {
-    setConfirmLogin(!confirmLogin);
-  }
-
-  return (
-    <ConfrimLoginContext.Provider
-      value={{
-        confirmLogin: confirmLogin,
-        setConfirmLogin: handleConfirmLogin,
-      }}
-    >
-      <MyChartsLogo />
-      {!confirmLogin && <ChartItemsList />}
-      {!confirmLogin && <Container />}
-      {confirmLogin && <ConfirmLogin />}
-    </ConfrimLoginContext.Provider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
