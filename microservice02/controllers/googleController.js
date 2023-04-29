@@ -4,7 +4,7 @@ const { promisify } = require("util");
 
 exports.GoogleCallback = async (req, res, next) => {
   try {
-    if (!req.body.clientId || !req.body.email || !req.body.name) {
+    if (!req.body.email || !req.body.name) {
       return res.status(400).json({
         status: "failed",
         message: "Please provide clientID, email and name!",
@@ -18,7 +18,6 @@ exports.GoogleCallback = async (req, res, next) => {
     if (!user || user.verified == false) {
       if (!user) {
         user = await User.create({
-          googleId: req.body.clientId,
           email: req.body.email,
           displayName: req.body.name,
         });
@@ -52,7 +51,6 @@ exports.GoogleCallback = async (req, res, next) => {
       token: token,
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       status: "failed",
       message: err.message,

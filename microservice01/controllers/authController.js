@@ -98,7 +98,6 @@ exports.GoogleCallback = async (req, res, next) => {
       method: "post",
       url: `${process.env.LOGIN_SERVICE}/google/callback`,
       data: {
-        clientId: req.body.clientId ? req.body.clientId : null,
         email: req.body.email ? req.body.email : null,
         name: req.body.name ? req.body.name : null,
       },
