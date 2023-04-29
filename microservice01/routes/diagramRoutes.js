@@ -10,11 +10,11 @@ const storage = multer.memoryStorage(); // Use memory storage
 const upload = multer({ storage }); // Configure multer with storage
 
 router.post(
-  "/create/line-chart",
+  "/create",
   // authController.protect,
   upload.single("csvFile"),
   csvController.readCSVFile,
-  diagramController.createLineChart
+  diagramController.createChart
 );
 
 module.exports = router;

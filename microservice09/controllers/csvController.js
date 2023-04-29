@@ -3,6 +3,7 @@ const lineChartController = require("./lineChartController");
 exports.readCSVFile = async (req, res, next) => {
   try {
     let data = {};
+    let type;
 
     if (!req.file) {
       return res.status(400).json({
@@ -27,6 +28,7 @@ exports.readCSVFile = async (req, res, next) => {
           "The type of the chart does not match any of the provided charts!",
       });
     } else if (data["type"] == "line-chart") {
+      type = "line-chart";
       config = lineChartController.getLineChartConfig(data);
       if (!config) {
         return res.status(400).json({
@@ -45,6 +47,7 @@ exports.readCSVFile = async (req, res, next) => {
     res.status(200).json({
       status: "success",
       config,
+      type,
     });
   } catch (err) {
     return res.status(500).json({

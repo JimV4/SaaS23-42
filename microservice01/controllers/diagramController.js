@@ -1,6 +1,10 @@
 const axios = require("axios");
 
-exports.createLineChart = async (req, res, next) => {
+exports.createChart = async (req, res, next) => {
+  if (req.type == "line-chart") createLineChart(req, res, next);
+};
+
+const createLineChart = async (req, res, next) => {
   try {
     const response = await axios({
       method: "post",

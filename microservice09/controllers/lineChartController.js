@@ -1,3 +1,15 @@
+function isValidScaleType(type) {
+  return ["linear", "logarithmic", "category"].includes(type);
+}
+
+function isValidScalePosition(position) {
+  return ["left", "right"].includes(position);
+}
+
+function isNumber(input) {
+  return !isNaN(input);
+}
+
 exports.getLineChartConfig = (data) => {
   try {
     const lineChartConfiguration = {
@@ -9,36 +21,49 @@ exports.getLineChartConfig = (data) => {
       },
     };
 
-    if (data["width"])
+    if (data["width"]) {
+      if (!isNumber(data["width"])) return null;
       lineChartConfiguration["width"] = parseInt(data["width"]);
-    if (data["height"])
+    }
+    if (data["height"]) {
+      if (!isNumber(data["height"])) return null;
       lineChartConfiguration["height"] = parseInt(data["height"]);
+    }
     if (data["title"]) lineChartConfiguration["title"] = data["title"];
     if (data["X-axis title"])
       lineChartConfiguration["xaxis"]["title"] = data["X-axis title"];
     if (data["Y-axis title"])
       lineChartConfiguration["yaxis"]["title"] = data["Y-axis title"];
-    if (data["X-axis grid"])
-      lineChartConfiguration["xaxis"]["grid"] =
-        data["X-axis grid"].toLowerCase() == "true"
-          ? true
-          : data["X-axis grid"].toLowerCase() == "false"
-          ? false
-          : null;
-    if (data["Y-axis grid"])
-      lineChartConfiguration["yaxis"]["grid"] =
-        data["Y-axis grid"].toLowerCase() == "true"
-          ? true
-          : data["Y-axis grid"].toLowerCase() == "false"
-          ? false
-          : null;
-    if (data["Y-axis beginAtZero"])
-      lineChartConfiguration["yaxis"]["beginAtZero"] =
-        data["Y-axis beginAtZero"].toLowerCase() == "true"
-          ? true
-          : data["Y-axis beginAtZero"].toLowerCase() == "false"
-          ? false
-          : null;
+    if (data["X-axis grid"]) {
+      if (data["X-axis grid"].toLowerCase() == "true")
+        lineChartConfiguration["xaxis"]["grid"] = true;
+      else if (data["X-axis grid"].toLowerCase() == "false")
+        lineChartConfiguration["xaxis"]["grid"] = false;
+      else return null;
+    }
+    if (data["Y-axis grid"]) {
+      if (data["Y-axis grid"].toLowerCase() == "true")
+        lineChartConfiguration["yaxis"]["grid"] = true;
+      else if (data["Y-axis grid"].toLowerCase() == "false")
+        lineChartConfiguration["yaxis"]["grid"] = false;
+      else return null;
+    }
+    if (data["Y-axis beginAtZero"]) {
+      if (data["Y-axis beginAtZero"].toLowerCase() == "true")
+        lineChartConfiguration["yaxis"]["beginAtZero"] = true;
+      else if (data["Y-axis beginAtZero"].toLowerCase() == "false")
+        lineChartConfiguration["yaxis"]["beginAtZero"] = false;
+      else return null;
+    }
+    if (data["Y-axis type"]) {
+      if (!isValidScaleType(data["Y-axis type"].toLowerCase())) return null;
+      lineChartConfiguration["yaxis"]["type"] = data["Y-axis type"];
+    }
+    if (data["Y-axis position"]) {
+      if (!isValidScalePosition(data["Y-axis position"].toLowerCase()))
+        return null;
+      lineChartConfiguration["yaxis"]["position"] = data["Y-axis position"];
+    }
 
     let labels = data["data"].split("labels")[1];
 
@@ -50,8 +75,10 @@ exports.getLineChartConfig = (data) => {
     const array = JSON.parse(jsonStr);
     lineChartConfiguration["xaxis"]["labels"] = array;
 
+    hasDataset = false;
     let i = 1;
     while (data[`DATASET${i}`] != null) {
+      hasDataset = true;
       let dataset = data[`DATASET${i}`].split(",");
       let jsonStr = dataset[1].replace(/\s+/g, ",");
       lineChartConfiguration.yaxis.datasets.push({
@@ -62,6 +89,7 @@ exports.getLineChartConfig = (data) => {
       });
       i++;
     }
+    if (!hasDataset) return null;
 
     return lineChartConfiguration;
   } catch (err) {
