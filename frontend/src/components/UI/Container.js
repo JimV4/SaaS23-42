@@ -13,7 +13,7 @@ function Container() {
       {
         method: "POST",
         body: JSON.stringify({
-          clientId: UserInfo.clientId,
+          // clientId: UserInfo.clientId,
           email: UserInfo.email,
           name: UserInfo.name,
         }), // takes a javascript object and converts it to json
