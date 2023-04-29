@@ -6,6 +6,8 @@ import BuyCreditsPage from "./pages/BuyCreditsPage";
 import NewChartPage from "./pages/NewChartPage";
 import ConfirmLoginPage from "./pages/ConfirmLoginPage";
 
+// const passport = require("passport");
+
 const router = createBrowserRouter([
   {
     path: "/",
