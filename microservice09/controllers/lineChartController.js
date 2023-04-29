@@ -10,6 +10,12 @@ function isNumber(input) {
   return !isNaN(input);
 }
 
+function isValidColorString(colorString) {
+  const regex =
+    /^((red|blue|black|purple|yellow)|(pink)|(rgb(a)?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*(\d*\.?\d+))?\s*\)))$/i;
+  return regex.test(colorString);
+}
+
 exports.getLineChartConfig = (data) => {
   try {
     const lineChartConfiguration = {
@@ -81,6 +87,8 @@ exports.getLineChartConfig = (data) => {
       hasDataset = true;
       let dataset = data[`DATASET${i}`].split(",");
       let jsonStr = dataset[1].replace(/\s+/g, ",");
+      if (!isValidColorString(dataset[3]) && dataset[3] != "") return null;
+
       lineChartConfiguration.yaxis.datasets.push({
         label: dataset[0],
         data: JSON.parse(jsonStr),

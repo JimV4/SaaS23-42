@@ -49,7 +49,6 @@ exports.createDiagram = async (req, res, next) => {
         backgroundColor: lineColor, // Background color
         pointBackgroundColor: lineColor, // Data point background color
         pointBorderColor: lineColor, // Data point border color
-        yAxisID: req.body.yaxis.datasets[i].yAxisID,
       });
     }
 
@@ -90,43 +89,10 @@ exports.createDiagram = async (req, res, next) => {
             },
           },
           y: {
-            position: "right",
-            beginAtZero: req.body.yaxis.beginAtZero ? true : false, // Start y-axis at zero
-            display: true, // Show y-axis
-            title: {
-              display: req.body.yaxis.title ? true : false,
-              text: req.body.yaxis.title,
-            },
-            ticks: {
-              font: {
-                size: 12,
-                weight: "bold",
-              },
-            },
-            grid: {
-              display: req.body.yaxis.grid ? true : false, // Show y-axis grid lines
-            },
-          },
-          y1: {
-            position: "left",
-            beginAtZero: req.body.yaxis.beginAtZero ? true : false, // Start y-axis at zero
-            display: true, // Show y-axis
-            title: {
-              display: req.body.yaxis.title ? true : false,
-              text: req.body.yaxis.title,
-            },
-            ticks: {
-              font: {
-                size: 12,
-                weight: "bold",
-              },
-            },
-            grid: {
-              display: req.body.yaxis.grid ? true : false, // Show y-axis grid lines
-            },
-          },
-          y2: {
-            position: "left",
+            type: req.body.yaxis.type ? req.body.yaxis.type : "linear",
+            position: req.body.yaxis.position
+              ? req.body.yaxis.position
+              : "left",
             beginAtZero: req.body.yaxis.beginAtZero ? true : false, // Start y-axis at zero
             display: true, // Show y-axis
             title: {
