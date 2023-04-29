@@ -134,8 +134,9 @@ exports.createDiagram = async (req, res, next) => {
       res.end(image, "binary");
     });
   } catch (error) {
-    // Handle any errors that occur during chart creation
-    console.error("Error creating chart image:", error);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
   }
 };
