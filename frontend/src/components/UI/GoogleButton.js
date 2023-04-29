@@ -8,7 +8,8 @@ function GoogleButton() {
   /* const confirmLoginCtx = useContext(ConfirmLoginContext); */
 
   return (
-    <Link to="/login" style={{ textDecoration: "none" }}>
+    // <Link to="/login" style={{ textDecoration: "none" }}>
+    <a href="">
       <button
         className={classes["google-login-button"]}
         /* onClick={confirmLoginCtx.setConfirmLogin} */
@@ -20,7 +21,8 @@ function GoogleButton() {
         />
         Sign in with Google
       </button>
-    </Link>
+    </a>
+    // </Link>
   );
 }
 
