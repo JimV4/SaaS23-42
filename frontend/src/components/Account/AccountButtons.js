@@ -11,7 +11,9 @@ function AccountButtons() {
       }}
     >
       <Button text={"My Charts"} />
-      <Button text={"New Chart"} />
+      <Link to="/new-chart">
+        <Button text={"New Chart"} />
+      </Link>
       <Link to="/buy-credits">
         <Button text={"Buy Credits"} />
       </Link>

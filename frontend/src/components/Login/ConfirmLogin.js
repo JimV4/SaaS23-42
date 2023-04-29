@@ -12,9 +12,9 @@ function ConfirmLogin() {
     <div className={classes.container}>
       <ConfirmLoginInstructions />
       <div className={classes.buttonsContainer}>
-        <Link to="/my-account">
+        <a href="https://accounts.google.com/InteractiveLogin/signinchooser?ifkv=Af_xneEs8OwI2ND93gWwm-R8gXxBuV2XmOlL0Pqg3X-Uw_an7HHP1cZwEQxfkAFOeB5aixu10vv6MA&flowName=GlifWebSignIn&flowEntry=ServiceLogin">
           <Button text={"Continue"} />
-        </Link>
+        </a>
         <Link to="../">
           <Button
             text={"No thanks"}
@@ -25,5 +25,7 @@ function ConfirmLogin() {
     </div>
   );
 }
+
+export async function loader() {}
 
 export default ConfirmLogin;

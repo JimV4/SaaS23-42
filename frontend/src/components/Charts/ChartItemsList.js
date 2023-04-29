@@ -7,8 +7,10 @@ import PieChartImg from "../../assets/pie_chart.png";
 import DependencyWheelImg from "../../assets/basic_line.png";
 import NetworkGraphImg from "../../assets/network_graph.png";
 
+export let chartItems = [];
+
 function ChartItemsList() {
-  const chartItems = [
+  chartItems = [
     {
       title: "basic-line",
       img: BasicLineImg,
