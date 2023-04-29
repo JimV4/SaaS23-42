@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
     required: true,
-    unique: true,
   },
   displayName: {
     type: String,
@@ -13,6 +12,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
+    required: true,
   },
   lastLogin: {
     type: Date,

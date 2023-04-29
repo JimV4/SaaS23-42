@@ -12,7 +12,7 @@ exports.GoogleCallback = async (req, res, next) => {
     }
 
     let user = await User.findOne({
-      googleId: req.body.clientId,
+      email: req.body.email,
     });
 
     if (!user || user.verified == false) {
@@ -52,6 +52,7 @@ exports.GoogleCallback = async (req, res, next) => {
       token: token,
     });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       status: "failed",
       message: err.message,
