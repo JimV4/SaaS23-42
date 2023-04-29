@@ -7,12 +7,17 @@ import jwt_decode from "jwt-decode";
 
 function Container() {
   async function loginHandler(UserInfo) {
+    console.log(UserInfo);
     const response = await fetch(
-      "127.0.0.1:8000/api/myCharts/auth/google/callback",
+      "http://127.0.0.1:8000/api/myCharts/auth/google/callback",
       {
         method: "POST",
-        body: JSON.stringify(UserInfo), // takes a javascript object and converts it to json
-        header: {
+        body: JSON.stringify({
+          clientId: UserInfo.clientId,
+          email: UserInfo.email,
+          name: UserInfo.name,
+        }), // takes a javascript object and converts it to json
+        headers: {
           "Content-Type": "application/json",
         },
       }
@@ -32,7 +37,7 @@ function Container() {
           let decoded = jwt_decode(credentialResponse.credential);
           console.log(decoded);
           const UserInfo = {
-            cliendId: credentialResponse.clientId,
+            clientId: credentialResponse.clientId,
             email: decoded.email,
             name: decoded.name,
           };
