@@ -1,46 +1,46 @@
 /microservice01/node_modules/
-/microservice01/config.env
+# /microservice01/config.env
 
 /microservice02/node_modules/
-/microservice02/config.env
+# /microservice02/config.env
 
 /microservice03/node_modules/
-/microservice03/config.env
+# /microservice03/config.env
 
 /microservice04/node_modules/
-/microservice04/config.env
+# /microservice04/config.env
 
 /microservice05/node_modules/
-/microservice05/config.env
+# /microservice05/config.env
 
 /microservice06/node_modules/
-/microservice06/config.env
+# /microservice06/config.env
 
 /microservice07/node_modules/
-/microservice07/config.env
+# /microservice07/config.env
 
 /microservice08/node_modules/
-/microservice08/config.env
+# /microservice08/config.env
 
 /microservice09/node_modules/
-/microservice09/config.env
+# /microservice09/config.env
 
 /microservice10/node_modules/
-/microservice10/config.env
+# /microservice10/config.env
 
 /microservice11/node_modules/
-/microservice11/config.env
+# /microservice11/config.env
 
 /microservice12/node_modules/
-/microservice12/config.env
+# /microservice12/config.env
 
 /microservice13/node_modules/
-/microservice13/config.env
+# /microservice13/config.env
 
 /microservice14/node_modules/
-/microservice14/config.env
+# /microservice14/config.env
 
 /microservice15/node_modules/
-/microservice15/config.env
+# /microservice15/config.env
 
 /frontend/node_modules/

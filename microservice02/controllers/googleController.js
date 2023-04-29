@@ -4,16 +4,23 @@ const { promisify } = require("util");
 
 exports.GoogleCallback = async (req, res, next) => {
   try {
+    if (!req.body.clientId || !req.body.email || !req.body.name) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide clientID, email and name!",
+      });
+    }
+
     let user = await User.findOne({
-      googleId: global.userProfile.id,
+      googleId: req.body.clientId,
     });
 
     if (!user || user.verified == false) {
       if (!user) {
         user = await User.create({
-          googleId: global.userProfile.id,
-          email: global.userProfile.email,
-          displayName: global.userProfile.displayName,
+          googleId: req.body.clientId,
+          email: req.body.email,
+          displayName: req.body.name,
         });
       }
       return res.status(200).json({
@@ -66,13 +73,6 @@ exports.logout = (req, res, next) => {
       message: err.message,
     });
   }
-};
-
-exports.GoogleError = async (req, res, next) => {
-  return res.status(500).json({
-    status: "failed",
-    message: "Something went wrong!",
-  });
 };
 
 exports.isLoggedIn = async (req, res, next) => {
