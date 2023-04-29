@@ -102,8 +102,6 @@ exports.createDiagram = async (req, res, next) => {
       };
     }
 
-    console.log(scales);
-
     const configuration = {
       type: "line",
       data: {
