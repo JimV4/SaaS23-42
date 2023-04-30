@@ -1,0 +1,24 @@
+type:radar-chart			
+(width:<width>)					
+(height:<height>)							
+(title:<title>)													
+(displayAxis:<true/false>)
+(displayAngleLines:<true/false>)												"""
+data:labels[<data>]
+DATASET1:(<name>),[<data>],((<fill>)(/<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)
+(DATASET2: ...
+DATASET3: ...
+...)
+
+
+
+
+
+
+
+
+
+
+
+
+
