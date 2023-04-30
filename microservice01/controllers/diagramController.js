@@ -1,14 +1,21 @@
 const axios = require("axios");
 
 exports.createChart = async (req, res, next) => {
-  if (req.type == "line-chart") createLineChart(req, res, next);
-};
-
-const createLineChart = async (req, res, next) => {
   try {
+    let service;
+    if (req.type == "line-chart") service = process.env.LINE_CHART_SERVICE;
+    else if ((req.type = "multi-axis-line-chart"))
+      service = process.env.MULTI_AXIS_LINE_CHART_SERVICE;
+    else {
+      return res.status(400).json({
+        status: "failed",
+        message: "There is no chart with this type!",
+      });
+    }
+
     const response = await axios({
       method: "post",
-      url: `${process.env.LINE_CHART_SERVICE}/create`,
+      url: `${service}/create`,
       responseType: "arraybuffer",
       data: req.config,
     });

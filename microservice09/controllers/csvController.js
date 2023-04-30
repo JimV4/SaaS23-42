@@ -1,4 +1,5 @@
 const lineChartController = require("./lineChartController");
+const multiAxisLineChartController = require("./multiAxisLineChartController");
 
 exports.readCSVFile = async (req, res, next) => {
   try {
@@ -30,6 +31,15 @@ exports.readCSVFile = async (req, res, next) => {
     } else if (data["type"] == "line-chart") {
       type = "line-chart";
       config = lineChartController.getLineChartConfig(data);
+      if (!config) {
+        return res.status(400).json({
+          status: "failed",
+          message: "The file you uploaded contains errors!",
+        });
+      }
+    } else if (data["type"] == "multi-axis-line-chart") {
+      type = "multi-axis-line-chart";
+      config = multiAxisLineChartController.getMultiAxisLineChartConfig(data);
       if (!config) {
         return res.status(400).json({
           status: "failed",

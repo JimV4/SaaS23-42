@@ -109,7 +109,6 @@ exports.createDiagram = async (req, res, next) => {
         datasets: datasets,
       },
       options: {
-        stacked: req.body.stacked ? true : false,
         responsive: true,
         plugins: {
           legend: {
