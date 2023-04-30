@@ -57,8 +57,12 @@ exports.createDiagram = async (req, res, next) => {
         });
       }
 
-      lineColor = req.body.yaxis.datasets[i].color
-        ? req.body.yaxis.datasets[i].color
+      lineColor = req.body.yaxis.datasets[i].borderColor
+        ? req.body.yaxis.datasets[i].borderColor
+        : getRandomRGBColor();
+
+      fillColor = req.body.yaxis.datasets[i].fillColor
+        ? req.body.yaxis.datasets[i].fillColor
         : getRandomRGBColor();
 
       datasets.push({
@@ -69,7 +73,9 @@ exports.createDiagram = async (req, res, next) => {
         fill: req.body.yaxis.datasets[i].fill ? true : false,
         borderColor: lineColor, // Line color
         borderWidth: 1,
-        backgroundColor: lineColor, // Background color
+        backgroundColor: req.body.yaxis.datasets[i].fill
+          ? fillColor
+          : lineColor, // Background color
         pointBackgroundColor: lineColor, // Data point background color
         pointBorderColor: lineColor, // Data point border color
         yAxisID: req.body.yaxis.datasets[i].yAxisID,
@@ -146,7 +152,7 @@ exports.createDiagram = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
+      message: error,
     });
   }
 };

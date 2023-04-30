@@ -8,9 +8,9 @@ type:line-chart
 (Y-axis grid:<true/false>)						
 (Y-axis beginAtZero:<true/false>)
 (Y-axis type:<linear/logarithmic/category>)
-(Y-axis position:<left/right>)									"""
+(Y-axis position:<left/right>)									
 data:labels[<data>]
-DATASET1:(<name>),[<data>],(<fill>),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)
+DATASET1:(<name>),[<data>],((<fill>)(/<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)
 (DATASET2: ...
 DATASET3: ...
 ...)

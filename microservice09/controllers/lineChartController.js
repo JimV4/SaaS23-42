@@ -87,13 +87,20 @@ exports.getLineChartConfig = (data) => {
       hasDataset = true;
       let dataset = data[`DATASET${i}`].split(",");
       let jsonStr = dataset[1].replace(/\s+/g, ",");
+      let fill = dataset[2].split("/")[0];
+      let fillColor = dataset[2].split("/")[1];
       if (!isValidColorString(dataset[3]) && dataset[3] != "") return null;
+      if (fillColor && !isValidColorString(fillColor)) return null;
+      if (fill.toLowerCase() == "fill") fill = true;
+      else if (fill == "") fill = false;
+      else return null;
 
       lineChartConfiguration.yaxis.datasets.push({
         label: dataset[0],
         data: JSON.parse(jsonStr),
-        fill: dataset[2].toLowerCase() == "fill" ? true : false,
-        color: dataset[3],
+        fill: fill,
+        borderColor: dataset[3],
+        fillColor: fillColor,
       });
       i++;
     }

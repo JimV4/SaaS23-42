@@ -25,21 +25,40 @@ exports.createDiagram = async (req, res, next) => {
     const width = req.body.width ? req.body.width : 1000;
     const height = req.body.height ? req.body.height : 500;
 
+    let scales = {
+      x: {
+        display: true, // Show x-axis
+        title: {
+          display: req.body.xaxis.title ? true : false,
+          text: req.body.xaxis.title,
+        },
+        ticks: {
+          font: {
+            size: 12,
+            weight: "bold",
+          },
+          maxRotation: 90, // Rotate x-axis labels by 90 degrees
+        },
+        grid: {
+          display: req.body.xaxis.grid ? true : false, // Show x-axis grid lines
+        },
+      },
+    };
+
     const datasets = [];
     for (i = 0; i < req.body.yaxis.datasets.length; i++) {
-      if (!req.body.yaxis.datasets[i].data) {
+      if (
+        !req.body.yaxis.datasets[i].data ||
+        !req.body.yaxis.datasets[i].yAxisID
+      ) {
         return res.status(400).json({
           status: "failed",
           message: "The file you uploaded contains errors!",
         });
       }
 
-      lineColor = req.body.yaxis.datasets[i].borderColor
-        ? req.body.yaxis.datasets[i].borderColor
-        : getRandomRGBColor();
-
-      fillColor = req.body.yaxis.datasets[i].fillColor
-        ? req.body.yaxis.datasets[i].fillColor
+      lineColor = req.body.yaxis.datasets[i].color
+        ? req.body.yaxis.datasets[i].color
         : getRandomRGBColor();
 
       datasets.push({
@@ -50,15 +69,39 @@ exports.createDiagram = async (req, res, next) => {
         fill: req.body.yaxis.datasets[i].fill ? true : false,
         borderColor: lineColor, // Line color
         borderWidth: 1,
-        backgroundColor: req.body.yaxis.datasets[i].fill
-          ? fillColor
-          : lineColor, // Background color
+        backgroundColor: lineColor, // Background color
         pointBackgroundColor: lineColor, // Data point background color
         pointBorderColor: lineColor, // Data point border color
+        yAxisID: req.body.yaxis.datasets[i].yAxisID,
       });
     }
 
-    // Define the chart configuration
+    for (i = 0; i < req.body.yaxis.axis.length; i++) {
+      scales[i == 0 ? "y" : `y${i}`] = {
+        type: req.body.yaxis.axis[i].type
+          ? req.body.yaxis.axis[i].type
+          : "linear",
+        position: req.body.yaxis.axis[i].position
+          ? req.body.yaxis.axis[i].position
+          : "left",
+        beginAtZero: req.body.yaxis.axis[i].beginAtZero ? true : false, // Start y-axis at zero
+        display: true, // Show y-axis
+        title: {
+          display: req.body.yaxis.axis[i].title ? true : false,
+          text: req.body.yaxis.axis[i].title,
+        },
+        ticks: {
+          font: {
+            size: 12,
+            weight: "bold",
+          },
+        },
+        grid: {
+          display: req.body.yaxis.axis[i].grid ? true : false, // Show y-axis grid lines
+        },
+      };
+    }
+
     const configuration = {
       type: "line",
       data: {
@@ -76,46 +119,7 @@ exports.createDiagram = async (req, res, next) => {
             text: req.body.title,
           },
         },
-        scales: {
-          x: {
-            display: true, // Show x-axis
-            title: {
-              display: req.body.xaxis.title ? true : false,
-              text: req.body.xaxis.title,
-            },
-            ticks: {
-              font: {
-                size: 12,
-                weight: "bold",
-              },
-              maxRotation: 90, // Rotate x-axis labels by 90 degrees
-            },
-            grid: {
-              display: req.body.xaxis.grid ? true : false, // Show x-axis grid lines
-            },
-          },
-          y: {
-            type: req.body.yaxis.type ? req.body.yaxis.type : "linear",
-            position: req.body.yaxis.position
-              ? req.body.yaxis.position
-              : "left",
-            beginAtZero: req.body.yaxis.beginAtZero ? true : false, // Start y-axis at zero
-            display: true, // Show y-axis
-            title: {
-              display: req.body.yaxis.title ? true : false,
-              text: req.body.yaxis.title,
-            },
-            ticks: {
-              font: {
-                size: 12,
-                weight: "bold",
-              },
-            },
-            grid: {
-              display: req.body.yaxis.grid ? true : false, // Show y-axis grid lines
-            },
-          },
-        },
+        scales: scales,
       },
     };
 
