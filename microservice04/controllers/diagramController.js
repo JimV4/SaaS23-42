@@ -18,7 +18,7 @@ exports.createDiagram = async (req, res, next) => {
     ) {
       return res.status(400).json({
         status: "failed",
-        message: "The file you uploaded contains errors!",
+        message: "The configuration you uploaded contains errors!",
       });
     }
 
@@ -27,7 +27,7 @@ exports.createDiagram = async (req, res, next) => {
 
     let scales = {
       x: {
-        display: true, // Show x-axis
+        display: true,
         title: {
           display: req.body.xaxis.title ? true : false,
           text: req.body.xaxis.title,
@@ -37,10 +37,10 @@ exports.createDiagram = async (req, res, next) => {
             size: 12,
             weight: "bold",
           },
-          maxRotation: 90, // Rotate x-axis labels by 90 degrees
+          maxRotation: 90,
         },
         grid: {
-          display: req.body.xaxis.grid ? true : false, // Show x-axis grid lines
+          display: req.body.xaxis.grid ? true : false,
         },
       },
     };
@@ -53,7 +53,7 @@ exports.createDiagram = async (req, res, next) => {
       ) {
         return res.status(400).json({
           status: "failed",
-          message: "The file you uploaded contains errors!",
+          message: "The configuration you uploaded contains errors!",
         });
       }
 
@@ -71,13 +71,13 @@ exports.createDiagram = async (req, res, next) => {
           : `Dataset ${i + 1}`,
         data: req.body.yaxis.datasets[i].data,
         fill: req.body.yaxis.datasets[i].fill ? true : false,
-        borderColor: lineColor, // Line color
+        borderColor: lineColor,
         borderWidth: 1,
         backgroundColor: req.body.yaxis.datasets[i].fill
           ? fillColor
-          : lineColor, // Background color
-        pointBackgroundColor: lineColor, // Data point background color
-        pointBorderColor: lineColor, // Data point border color
+          : lineColor,
+        pointBackgroundColor: lineColor,
+        pointBorderColor: lineColor,
         yAxisID: req.body.yaxis.datasets[i].yAxisID,
       });
     }
@@ -90,8 +90,8 @@ exports.createDiagram = async (req, res, next) => {
         position: req.body.yaxis.axis[i].position
           ? req.body.yaxis.axis[i].position
           : "left",
-        beginAtZero: req.body.yaxis.axis[i].beginAtZero ? true : false, // Start y-axis at zero
-        display: true, // Show y-axis
+        beginAtZero: req.body.yaxis.axis[i].beginAtZero ? true : false,
+        display: true,
         title: {
           display: req.body.yaxis.axis[i].title ? true : false,
           text: req.body.yaxis.axis[i].title,
@@ -103,7 +103,7 @@ exports.createDiagram = async (req, res, next) => {
           },
         },
         grid: {
-          display: req.body.yaxis.axis[i].grid ? true : false, // Show y-axis grid lines
+          display: req.body.yaxis.axis[i].grid ? true : false,
         },
       };
     }
@@ -129,17 +129,16 @@ exports.createDiagram = async (req, res, next) => {
       },
     };
 
-    // Create a chart node canvas instance
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 
-    // Render the chart to a buffer
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
     fs.writeFile(`${__dirname}/../charts/chart.png`, image, async (err) => {
       if (err) {
-        // Handle error if needed
-        console.error(err);
-        return res.status(500).send("Failed to save image");
+        return res.status(500).json({
+          status: "failed",
+          message: "Something went wrong while saving the chart!",
+        });
       }
 
       res.writeHead(200, {
@@ -152,7 +151,7 @@ exports.createDiagram = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: error,
+      message: "Something went wrong!",
     });
   }
 };

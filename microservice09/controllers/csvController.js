@@ -1,5 +1,6 @@
 const lineChartController = require("./lineChartController");
 const multiAxisLineChartController = require("./multiAxisLineChartController");
+const radarChartController = require("./radarChartController");
 
 exports.readCSVFile = async (req, res, next) => {
   try {
@@ -40,6 +41,15 @@ exports.readCSVFile = async (req, res, next) => {
     } else if (data["type"] == "multi-axis-line-chart") {
       type = "multi-axis-line-chart";
       config = multiAxisLineChartController.getMultiAxisLineChartConfig(data);
+      if (!config) {
+        return res.status(400).json({
+          status: "failed",
+          message: "The file you uploaded contains errors!",
+        });
+      }
+    } else if (data["type"] == "radar-chart") {
+      type = "radar-chart";
+      config = radarChartController.getRadarChartConfig(data);
       if (!config) {
         return res.status(400).json({
           status: "failed",

@@ -10,102 +10,53 @@ function getRandomRGBColor() {
 
 exports.createDiagram = async (req, res, next) => {
   try {
-    if (
-      !req.body.xaxis ||
-      !req.body.yaxis ||
-      !req.body.xaxis.labels ||
-      !req.body.yaxis.datasets
-    ) {
+    if (!req.body.labels || !req.body.scale || !req.body.scale.datasets) {
       return res.status(400).json({
         status: "failed",
-        message: "The file you uploaded contains errors!",
+        message: "The configuration you uploaded contains errors!",
       });
     }
 
     const width = req.body.width ? req.body.width : 1000;
     const height = req.body.height ? req.body.height : 500;
 
-    let scales = {
-      x: {
-        display: true, // Show x-axis
-        title: {
-          display: req.body.xaxis.title ? true : false,
-          text: req.body.xaxis.title,
-        },
-        ticks: {
-          font: {
-            size: 12,
-            weight: "bold",
-          },
-          maxRotation: 90, // Rotate x-axis labels by 90 degrees
-        },
-        grid: {
-          display: req.body.xaxis.grid ? true : false, // Show x-axis grid lines
-        },
-      },
-    };
-
     const datasets = [];
-    for (i = 0; i < req.body.yaxis.datasets.length; i++) {
-      if (
-        !req.body.yaxis.datasets[i].data ||
-        !req.body.yaxis.datasets[i].yAxisID
-      ) {
+    for (i = 0; i < req.body.scale.datasets.length; i++) {
+      if (!req.body.scale.datasets[i].data) {
         return res.status(400).json({
           status: "failed",
-          message: "The file you uploaded contains errors!",
+          message: "The configuration you uploaded contains errors!",
         });
       }
 
-      lineColor = req.body.yaxis.datasets[i].color
-        ? req.body.yaxis.datasets[i].color
+      lineColor = req.body.scale.datasets[i].borderColor
+        ? req.body.scale.datasets[i].borderColor
+        : getRandomRGBColor();
+
+      fillColor = req.body.scale.datasets[i].fillColor
+        ? req.body.scale.datasets[i].fillColor
         : getRandomRGBColor();
 
       datasets.push({
-        label: req.body.yaxis.datasets[i].label
-          ? req.body.yaxis.datasets[i].label
+        label: req.body.scale.datasets[i].label
+          ? req.body.scale.datasets[i].label
           : `Dataset ${i + 1}`,
-        data: req.body.yaxis.datasets[i].data,
-        fill: req.body.yaxis.datasets[i].fill ? true : false,
-        borderColor: lineColor, // Line color
+        data: req.body.scale.datasets[i].data,
+        fill: req.body.scale.datasets[i].fill ? true : false,
+        borderColor: lineColor,
         borderWidth: 1,
-        backgroundColor: lineColor, // Background color
-        pointBackgroundColor: lineColor, // Data point background color
-        pointBorderColor: lineColor, // Data point border color
-        yAxisID: req.body.yaxis.datasets[i].yAxisID,
+        backgroundColor: req.body.scale.datasets[i].fill
+          ? fillColor
+          : lineColor,
+        pointBackgroundColor: lineColor,
+        pointBorderColor: lineColor,
       });
     }
 
-    for (i = 0; i < req.body.yaxis.axis.length; i++) {
-      scales[i == 0 ? "y" : `y${i}`] = {
-        type: req.body.yaxis.axis[i].type
-          ? req.body.yaxis.axis[i].type
-          : "linear",
-        position: req.body.yaxis.axis[i].position
-          ? req.body.yaxis.axis[i].position
-          : "left",
-        beginAtZero: req.body.yaxis.axis[i].beginAtZero ? true : false, // Start y-axis at zero
-        display: true, // Show y-axis
-        title: {
-          display: req.body.yaxis.axis[i].title ? true : false,
-          text: req.body.yaxis.axis[i].title,
-        },
-        ticks: {
-          font: {
-            size: 12,
-            weight: "bold",
-          },
-        },
-        grid: {
-          display: req.body.yaxis.axis[i].grid ? true : false, // Show y-axis grid lines
-        },
-      };
-    }
-
     const configuration = {
-      type: "line",
+      type: "radar",
       data: {
-        labels: req.body.xaxis.labels,
+        labels: req.body.labels,
         datasets: datasets,
       },
       options: {
@@ -119,21 +70,30 @@ exports.createDiagram = async (req, res, next) => {
             text: req.body.title,
           },
         },
-        scales: scales,
+        scales: {
+          r: {
+            ticks: {
+              backdropColor: "transparent",
+              display: req.body.scale.displayAxis ? true : false,
+            },
+            angleLines: {
+              color: req.body.scale.displayAngle ? "black" : null,
+            },
+          },
+        },
       },
     };
 
-    // Create a chart node canvas instance
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 
-    // Render the chart to a buffer
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
     fs.writeFile(`${__dirname}/../charts/chart.png`, image, async (err) => {
       if (err) {
-        // Handle error if needed
-        console.error(err);
-        return res.status(500).send("Failed to save image");
+        return res.status(500).json({
+          status: "failed",
+          message: "Something went wrong while saving the chart!",
+        });
       }
 
       res.writeHead(200, {
@@ -146,7 +106,7 @@ exports.createDiagram = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
+      message: "Somethig went wrong!",
     });
   }
 };

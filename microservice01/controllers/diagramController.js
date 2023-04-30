@@ -4,8 +4,10 @@ exports.createChart = async (req, res, next) => {
   try {
     let service;
     if (req.type == "line-chart") service = process.env.LINE_CHART_SERVICE;
-    else if ((req.type = "multi-axis-line-chart"))
+    else if (req.type == "multi-axis-line-chart")
       service = process.env.MULTI_AXIS_LINE_CHART_SERVICE;
+    else if (req.type == "radar-chart")
+      service = process.env.RADAR_CHART_SERVICE;
     else {
       return res.status(400).json({
         status: "failed",
