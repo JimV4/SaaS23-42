@@ -13,9 +13,7 @@ data:labels[<data>]
 DATASET1:(<name>),[<data>],(<fill>),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)
 (DATASET2: ...
 DATASET3: ...
-. 
-.
-.)
+...)
 
 
 
