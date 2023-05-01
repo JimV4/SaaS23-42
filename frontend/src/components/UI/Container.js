@@ -2,12 +2,13 @@ import classes from "./Container.module.css";
 import Instructions from "./Instructions";
 import GoogleButton from "./GoogleButton";
 import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
 
 import jwt_decode from "jwt-decode";
 
 function Container() {
+  const navigate = useNavigate();
   async function loginHandler(UserInfo) {
-    console.log(UserInfo);
     const response = await fetch(
       "http://127.0.0.1:8000/api/myCharts/auth/google/callback",
       {
@@ -23,8 +24,16 @@ function Container() {
       }
     );
 
-    const token = await response.json();
-    console.log(token);
+    const googleResponse = await response.json();
+
+    if (googleResponse.message === "Please verify your login!") {
+      localStorage.setItem("userID", googleResponse.userID);
+      navigate("/login");
+    } else if (googleResponse.message === "You were successfully logged in!") {
+      localStorage.setItem("token", googleResponse.token);
+      console.log(localStorage.getItem("token"));
+      navigate("/my-account");
+    }
   }
 
   return (
@@ -33,15 +42,12 @@ function Container() {
       {/* <GoogleButton /> */}
       <GoogleLogin
         onSuccess={(credentialResponse) => {
-          console.log(credentialResponse);
           let decoded = jwt_decode(credentialResponse.credential);
-          console.log(decoded);
           const UserInfo = {
             clientId: credentialResponse.clientId,
             email: decoded.email,
             name: decoded.name,
           };
-          console.log(UserInfo);
           loginHandler(UserInfo);
         }}
         onError={() => {
