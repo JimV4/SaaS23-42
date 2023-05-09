@@ -9,7 +9,7 @@ function Backdrop(props) {
 
 function ModalOverlay(props) {
   return (
-    <div className={classes.modal}>
+    <div className={classes[`${props.myclass}`]}>
       <div className={classes.content}>{props.children}</div>
     </div>
   );
@@ -18,6 +18,7 @@ function ModalOverlay(props) {
 const portalElement = document.getElementById("overlays");
 
 function Modal(props) {
+  console.log(props.myclass);
   return (
     <Fragment>
       {ReactDOM.createPortal(
@@ -25,7 +26,7 @@ function Modal(props) {
         portalElement
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay>{props.children}</ModalOverlay>,
+        <ModalOverlay myclass={props.myclass}>{props.children}</ModalOverlay>,
         portalElement
       )}
     </Fragment>
