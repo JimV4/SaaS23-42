@@ -17,8 +17,6 @@ exports.createChart = async (req, res, next) => {
 
     req.config.email = req.email;
 
-    console.log(req.config);
-
     const response = await axios({
       method: "post",
       url: `${service}/create`,
