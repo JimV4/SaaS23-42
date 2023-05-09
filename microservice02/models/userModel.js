@@ -12,7 +12,11 @@ const userSchema = new mongoose.Schema({
   },
   lastLogin: {
     type: Date,
-    default: Date.now(),
+    default: null,
+  },
+  currentLogin: {
+    type: Date,
+    default: null,
   },
   verified: {
     type: Boolean,

@@ -14,7 +14,8 @@ exports.verifyLogin = async (req, res, next) => {
     }
 
     user.verified = true;
-    user.lastLogin = Date.now();
+    user.lastLogin = user.currentLogin;
+    user.currentLogin = Date.now();
     user.save();
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
