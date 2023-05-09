@@ -13,13 +13,17 @@ function UploadForm() {
   async function sendCSVFile() {
     try {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      formData.append("csvFile", selectedFile);
 
-      const response = await axios.post("url here", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/myCharts/diagrams/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
     } catch (error) {
       console.error("Error uploading file:", error);
     }
