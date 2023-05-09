@@ -15,20 +15,17 @@ exports.createChart = async (req, res, next) => {
       });
     }
 
+    req.config.email = req.email;
+
+    console.log(req.config);
+
     const response = await axios({
       method: "post",
       url: `${service}/create`,
-      responseType: "arraybuffer",
       data: req.config,
     });
 
-    const image = Buffer.from(response.data, "binary");
-
-    res.writeHead(200, {
-      "Content-Type": "image/png",
-    });
-
-    res.end(image);
+    return res.status(response.status).json(response.data);
   } catch (err) {
     if (err.response) {
       return res.status(err.response.status).json({

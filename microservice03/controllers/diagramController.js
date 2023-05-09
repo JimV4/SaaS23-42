@@ -10,6 +10,7 @@ function getRandomRGBColor() {
 
 exports.createDiagram = async (req, res, next) => {
   try {
+    console.log(req.body);
     if (
       !req.body.xaxis ||
       !req.body.yaxis ||
@@ -122,25 +123,33 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    fs.writeFile(`${__dirname}/../charts/chart.png`, image, async (err) => {
-      if (err) {
-        return res.status(500).json({
-          status: "failed",
-          message: "Something went wrong while saving the chart!",
+    const path = `microservice03/charts/line-chart_${
+      req.body.email.split("@")[0]
+    }_${Date.now()}.png`;
+
+    fs.writeFile(
+      `${__dirname}/../charts/line-chart_${
+        req.body.email.split("@")[0]
+      }_${Date.now()}.png`,
+      image,
+      async (err) => {
+        if (err) {
+          return res.status(500).json({
+            status: "failed",
+            message: "Something went wrong while saving the chart!",
+          });
+        }
+
+        return res.status(200).json({
+          status: "success",
+          path: path,
         });
       }
-
-      res.writeHead(200, {
-        "Content-Type": "image/png",
-        "Content-Length": image.length,
-      });
-
-      res.end(image, "binary");
-    });
+    );
   } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
+      message: error.message,
     });
   }
 };
