@@ -25,25 +25,25 @@ function Demos() {
       imgClass: "multi-axis-line-chart-img",
     },
     {
-      title: "scatter",
+      title: "scatter-chart",
       img: ScatterImg,
       alt: "Scatter Chart",
       imgClass: "scatter-img",
     },
     {
-      title: "bubble",
+      title: "bubble-char",
       img: BubbleImg,
       alt: "Bubble Chart",
       imgClass: "bubble-chart-img",
     },
     {
-      title: "radar",
+      title: "radar-chart",
       img: RadarImg,
       alt: "Radar Chart",
       imgClass: "radar-img",
     },
     {
-      title: "polar-area",
+      title: "polar-area-chart",
       img: PolarAreaImg,
       alt: "Polar Area Chart",
       imgClass: "bubble-img",
@@ -65,22 +65,23 @@ function Demos() {
   async function handleCSVDownload(title) {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/myCharts/download/${title}`,
+        `http://127.0.0.1:8000/api/myCharts/templates/download/${title}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/octet-stream", // Set the appropriate content type
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           responseType: "blob", // Specify the response type as 'blob'
         }
       );
-
+      console.log(response);
       if (response.ok) {
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `${title}.txt`; // Replace with the desired filename and extension
+        link.download = `${title}-template.txt`; // Replace with the desired filename and extension
         link.click();
         URL.revokeObjectURL(url);
       } else {
@@ -115,7 +116,9 @@ function Demos() {
           img={chartItems[currentIndex].img}
           alt={chartItems[currentIndex].alt}
           imgClass={chartItems[currentIndex].imgClass}
-          onClick={handleCSVDownload(chartItems[currentIndex].title)}
+          onClick={() => {
+            handleCSVDownload(chartItems[currentIndex].title);
+          }}
         />
         <svg
           fill="none"
