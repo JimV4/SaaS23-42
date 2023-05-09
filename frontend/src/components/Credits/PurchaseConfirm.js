@@ -2,8 +2,9 @@ import Modal from "./Modal";
 import classes from "./PurchaseConfirm.module.css";
 
 function PurchaseConfirm(props) {
+  const myclass = "modal-credits";
   return (
-    <Modal>
+    <Modal myclass={myclass}>
       <p>Are you sure you want to purchase?</p>
       <div className={classes.container}>
         <button
