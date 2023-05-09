@@ -109,6 +109,8 @@ exports.GoogleCallback = async (req, res, next) => {
         Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
       httpOnly: true,
+      sameSite: "None",
+      secure: true,
     };
 
     res.cookie("jwt", response.data.token, cookieOptions);
@@ -133,6 +135,8 @@ exports.GoogleLogout = (req, res, next) => {
     res.cookie("jwt", "loggedout", {
       expires: new Date(Date.now() + 10 * 1000),
       httpOnly: true,
+      sameSite: "None",
+      secure: true,
     });
 
     res.status(200).json({ status: "success" });
