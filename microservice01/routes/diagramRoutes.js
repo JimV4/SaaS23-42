@@ -11,7 +11,7 @@ const upload = multer({ storage }); // Configure multer with storage
 
 router.post(
   "/create",
-  // authController.protect,
+  authController.protect,
   upload.single("csvFile"),
   csvController.readCSVFile,
   diagramController.createChart
