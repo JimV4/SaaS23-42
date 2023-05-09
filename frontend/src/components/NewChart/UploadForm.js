@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import classes from "./UploadForm.module.css";
 import Button from "../Login/Buttons/Button";
@@ -7,6 +8,21 @@ function UploadForm() {
 
   function handleFileChange(event) {
     setSelectedFile(event.target.files[0]);
+  }
+
+  async function sendCSVFile() {
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      const response = await axios.post("url here", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   }
 
   return (
@@ -20,6 +36,7 @@ function UploadForm() {
         {selectedFile && (
           <button
             className={`${classes["general-button"]} ${classes["upload-button"]}`}
+            onClick={sendCSVFile}
           >
             Upload
           </button>

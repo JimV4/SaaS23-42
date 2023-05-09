@@ -1,51 +1,52 @@
 import { useState } from "react";
 import classes from "./Demos.module.css";
+import axios from "axios";
 import ChartItem from "../Charts/ChartItem";
 
-import BasicLineImg from "../../assets/basic_line.png";
-import LineWithAnnotationsImg from "../../assets/line_with_annotations.png";
-import BasicColumnImg from "../../assets/basic_column.png";
-import PieChartImg from "../../assets/pie_chart.png";
-import DependencyWheelImg from "../../assets/basic_line.png";
-import NetworkGraphImg from "../../assets/network_graph.png";
+import LineChartImg from "../../assets/line_chart.png";
+import MultiAxisLineChartImg from "../../assets/multi_axis_line_chart.png";
+import ScatterImg from "../../assets/scatter.png";
+import BubbleImg from "../../assets/bubble.png";
+import RadarImg from "../../assets/radar.png";
+import PolarAreaImg from "../../assets/polar_area.png";
 
 function Demos() {
   const chartItems = [
     {
-      title: "basic-line",
-      img: BasicLineImg,
-      alt: "Basic Line Chart",
-      imgClass: "basic-line-img",
+      title: "line-chart",
+      img: LineChartImg,
+      alt: "Line Chart",
+      imgClass: "line-chart-img",
     },
     {
-      title: "line-with-annotations",
-      img: LineWithAnnotationsImg,
-      alt: "Line With Annotations Chart",
-      imgClass: "line-with-annotations-img",
+      title: "multi-axis-line-chart",
+      img: MultiAxisLineChartImg,
+      alt: "Multi Axis Line Chart",
+      imgClass: "multi-axis-line-chart-img",
     },
     {
-      title: "basic-column",
-      img: BasicColumnImg,
-      alt: "Basic Column Chart",
-      imgClass: "basic-column-img",
+      title: "scatter",
+      img: ScatterImg,
+      alt: "Scatter Chart",
+      imgClass: "scatter-img",
     },
     {
-      title: "pie-chart",
-      img: PieChartImg,
-      alt: "Pie Chart",
-      imgClass: "pie-chart-img",
+      title: "bubble",
+      img: BubbleImg,
+      alt: "Bubble Chart",
+      imgClass: "bubble-chart-img",
     },
     {
-      title: "dependency-wheel",
-      img: DependencyWheelImg,
-      alt: "Dependency Wheel Chart",
-      imgClass: "dependency-wheel-img",
+      title: "radar",
+      img: RadarImg,
+      alt: "Radar Chart",
+      imgClass: "radar-img",
     },
     {
-      title: "network-graph",
-      img: NetworkGraphImg,
-      alt: "Network Graph Chart",
-      imgClass: "network-graph-img",
+      title: "polar-area",
+      img: PolarAreaImg,
+      alt: "Polar Area Chart",
+      imgClass: "bubble-img",
     },
   ];
 
@@ -59,6 +60,35 @@ function Demos() {
   function handleNextClick() {
     const newIndex = (currentIndex + 1) % chartItems.length;
     setCurrentIndex(newIndex);
+  }
+
+  async function handleCSVDownload(title) {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/myCharts/download/${title}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/octet-stream", // Set the appropriate content type
+          },
+          responseType: "blob", // Specify the response type as 'blob'
+        }
+      );
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${title}.txt`; // Replace with the desired filename and extension
+        link.click();
+        URL.revokeObjectURL(url);
+      } else {
+        console.error("Error downloading the file:", response.status);
+      }
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    }
   }
 
   return (
@@ -85,6 +115,7 @@ function Demos() {
           img={chartItems[currentIndex].img}
           alt={chartItems[currentIndex].alt}
           imgClass={chartItems[currentIndex].imgClass}
+          onClick={handleCSVDownload(chartItems[currentIndex].title)}
         />
         <svg
           fill="none"

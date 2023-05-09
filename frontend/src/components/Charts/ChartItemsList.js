@@ -1,51 +1,52 @@
 import ChartsCard from "./ChartsCard";
 import ChartItem from "./ChartItem";
-import BasicLineImg from "../../assets/basic_line.png";
-import LineWithAnnotationsImg from "../../assets/line_with_annotations.png";
-import BasicColumnImg from "../../assets/basic_column.png";
-import PieChartImg from "../../assets/pie_chart.png";
-import DependencyWheelImg from "../../assets/basic_line.png";
-import NetworkGraphImg from "../../assets/network_graph.png";
+
+import LineChartImg from "../../assets/line_chart.png";
+import MultiAxisLineChartImg from "../../assets/multi_axis_line_chart.png";
+import ScatterImg from "../../assets/scatter.png";
+import BubbleImg from "../../assets/bubble.png";
+import RadarImg from "../../assets/radar.png";
+import PolarAreaImg from "../../assets/polar_area.png";
 
 export let chartItems = [];
 
 function ChartItemsList() {
-  chartItems = [
+  const chartItems = [
     {
-      title: "basic-line",
-      img: BasicLineImg,
-      alt: "Basic Line Chart",
-      imgClass: "basic-line-img",
+      title: "line-chart",
+      img: LineChartImg,
+      alt: "Line Chart",
+      imgClass: "line-chart-img",
     },
     {
-      title: "line-with-annotations",
-      img: LineWithAnnotationsImg,
-      alt: "Line With Annotations Chart",
-      imgClass: "line-with-annotations-img",
+      title: "multi-axis-line-chart",
+      img: MultiAxisLineChartImg,
+      alt: "Multi Axis Line Chart",
+      imgClass: "multi-axis-line-chart-img",
     },
     {
-      title: "basic-column",
-      img: BasicColumnImg,
-      alt: "Basic Column Chart",
-      imgClass: "basic-column-img",
+      title: "scatter",
+      img: ScatterImg,
+      alt: "Scatter Chart",
+      imgClass: "scatter-img",
     },
     {
-      title: "pie-chart",
-      img: PieChartImg,
-      alt: "Pie Chart",
-      imgClass: "pie-chart-img",
+      title: "bubble",
+      img: BubbleImg,
+      alt: "Bubble Chart",
+      imgClass: "bubble-chart-img",
     },
     {
-      title: "dependency-wheel",
-      img: DependencyWheelImg,
-      alt: "Dependency Wheel Chart",
-      imgClass: "dependency-wheel-img",
+      title: "radar",
+      img: RadarImg,
+      alt: "Radar Chart",
+      imgClass: "radar-img",
     },
     {
-      title: "network-graph",
-      img: NetworkGraphImg,
-      alt: "Network Graph Chart",
-      imgClass: "network-graph-img",
+      title: "polar-area",
+      img: PolarAreaImg,
+      alt: "Polar Area Chart",
+      imgClass: "bubble-img",
     },
   ];
 

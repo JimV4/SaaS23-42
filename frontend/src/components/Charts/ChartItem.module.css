@@ -4,7 +4,7 @@
   width: 350px;
 }
 
-.basic-line {
+.line-chart {
   margin-left: 20px;
 }
 
@@ -19,7 +19,7 @@
   opacity: 0.5;
 }
 
-.network-graph {
+.bubble {
   margin-right: 20px;
 }
 

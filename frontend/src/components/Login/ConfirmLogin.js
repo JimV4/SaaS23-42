@@ -12,33 +12,41 @@ function ConfirmLogin() {
 
   async function continueHandler() {
     const userID = localStorage.getItem("userID");
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/myCharts/auth/verifylogin/${userID}`,
-      {
-        method: "PATCH",
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/myCharts/auth/verifylogin/${userID}`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      const confirmLogin = await response.json();
+      console.log(confirmLogin);
+
+      if (confirmLogin.message === "You were successfully logged in!") {
+        localStorage.setItem("token", confirmLogin.token);
+        console.log(localStorage.getItem("token"));
+        navigate("/my-account");
       }
-    );
-
-    const confirmLogin = await response.json();
-    console.log(confirmLogin);
-
-    if (confirmLogin.message === "You were successfully logged in!") {
-      localStorage.setItem("token", confirmLogin.token);
-      console.log(localStorage.getItem("token"));
-      navigate("/my-account");
+    } catch (error) {
+      /* TODO */
     }
   }
 
   async function noHandler() {
     const userID = localStorage.getItem("userID");
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/myCharts/auth/cancellogin/${userID}`,
-      {
-        method: "DELETE",
-      }
-    );
-    localStorage.clear();
-    navigate("/");
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/myCharts/auth/cancellogin/${userID}`,
+        {
+          method: "DELETE",
+        }
+      );
+      localStorage.clear();
+      navigate("/");
+    } catch (error) {
+      /* TODO */
+    }
   }
 
   return (
