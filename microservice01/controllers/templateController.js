@@ -2,11 +2,11 @@ exports.downloadTemplate = (req, res, next) => {
   try {
     let file;
     if (req.params.diagram == "line-chart") {
-      file = `${__dirname}/../csvTemplates.line_chart_template.txt`;
+      file = `${__dirname}/../csvTemplates/line-chart-template.txt`;
     } else if (req.params.diagram == "multi-axis-line-chart") {
-      file = `${__dirname}/../csvTemplates.multi_axis_line_chart_template.txt`;
+      file = `${__dirname}/../csvTemplates/multi-axis-line-chart-template.txt`;
     } else if (req.params.diagram == "radar-chart") {
-      file = `${__dirname}/../csvTemplates.radar_chart_template.txt`;
+      file = `${__dirname}/../csvTemplates/radar-chart-template.txt`;
     } else {
       return res.status(400).json({
         status: "failed",

@@ -36,36 +36,11 @@ exports.GoogleCallback = async (req, res, next) => {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
-    const cookieOptions = {
-      expires: new Date(
-        Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-      ),
-      httpOnly: true,
-    };
-
-    res.cookie("jwt", token, cookieOptions);
-
     return res.status(200).json({
       status: "success",
       message: "You were successfully logged in!",
       token: token,
     });
-  } catch (err) {
-    return res.status(500).json({
-      status: "failed",
-      message: err.message,
-    });
-  }
-};
-
-exports.logout = (req, res, next) => {
-  try {
-    res.cookie("jwt", "loggedout", {
-      expires: new Date(Date.now() + 10 * 1000),
-      httpOnly: true,
-    });
-
-    res.status(200).json({ status: "success" });
   } catch (err) {
     return res.status(500).json({
       status: "failed",
