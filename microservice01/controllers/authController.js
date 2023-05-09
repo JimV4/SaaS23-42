@@ -8,7 +8,8 @@ exports.protect = async (req, res, next) => {
       req.headers.authorization.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split(" ")[1];
-    } else if (req.cookies.jwt) token = req.cookies.jwt;
+    } else if (req.cookies.jwt && req.cookies.jwt != "loggedout")
+      token = req.cookies.jwt;
 
     const response = await axios({
       method: "get",
@@ -103,6 +104,15 @@ exports.GoogleCallback = async (req, res, next) => {
       },
     });
 
+    const cookieOptions = {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+    };
+
+    res.cookie("jwt", response.data.token, cookieOptions);
+
     return res.status(response.status).json(response.data);
   } catch (err) {
     if (err.response) {
@@ -118,21 +128,15 @@ exports.GoogleCallback = async (req, res, next) => {
   }
 };
 
-exports.GoogleLogout = async (req, res, next) => {
+exports.GoogleLogout = (req, res, next) => {
   try {
-    const response = await axios({
-      method: "post",
-      url: `${process.env.LOGIN_SERVICE}/google/logout`,
+    res.cookie("jwt", "loggedout", {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true,
     });
 
-    return res.status(response.status).json(response.data);
+    res.status(200).json({ status: "success" });
   } catch (err) {
-    if (err.response) {
-      return res.status(err.response.status).json({
-        status: "failed",
-        message: err.response.data.message,
-      });
-    }
     return res.status(500).json({
       status: "failed",
       message: err.message,
