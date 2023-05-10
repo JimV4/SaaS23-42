@@ -16,7 +16,7 @@ function isYFormat(input) {
 
 function isValidColorString(colorString) {
   const regex =
-    /^((red|blue|black|purple|yellow)|(pink)|(rgb(a)?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*(\d*\.?\d+))?\s*\)))$/i;
+    /^((red|blue|black|purple|yellow|green)|(pink)|(rgb(a)?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*(\d*\.?\d+))?\s*\)))$/i;
   return regex.test(colorString);
 }
 
