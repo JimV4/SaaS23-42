@@ -47,19 +47,13 @@ exports.createDiagram = async (req, res, next) => {
           ? req.body.yaxis.datasets[i].label
           : `Dataset ${i + 1}`,
         data: req.body.yaxis.datasets[i].data,
-        fill: req.body.yaxis.datasets[i].fill ? true : false,
-        borderColor: lineColor,
-        borderWidth: 1,
-        backgroundColor: req.body.yaxis.datasets[i].fill
-          ? fillColor
-          : lineColor,
         pointBackgroundColor: lineColor,
-        pointBorderColor: lineColor,
+        pointBorderColor: fillColor,
       });
     }
 
     const configuration = {
-      type: "line",
+      type: "bubble",
       data: {
         labels: req.body.xaxis.labels,
         datasets: datasets,
@@ -122,12 +116,12 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `line-chart/line-chart_${
+    const path = `microservice07/charts/bubble-chart_${
       req.body.email.split("@")[0]
     }_${Date.now()}.png`;
 
     fs.writeFile(
-      `${__dirname}/../../frontend/src/assets/charts/line-chart/line-chart_${
+      `${__dirname}/../charts/bubble-chart_${
         req.body.email.split("@")[0]
       }_${Date.now()}.png`,
       image,
@@ -135,7 +129,7 @@ exports.createDiagram = async (req, res, next) => {
         if (err) {
           return res.status(500).json({
             status: "failed",
-            message: err.message,
+            message: "Something went wrong while saving the chart!",
           });
         }
 

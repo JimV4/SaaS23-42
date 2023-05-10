@@ -133,12 +133,12 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `microservice04/charts/multi-axis-line-chart_${
+    const path = `multi-axis-line-chart/multi-axis-line-chart_${
       req.body.email.split("@")[0]
     }_${Date.now()}.png`;
 
     fs.writeFile(
-      `${__dirname}/../charts/multi-axis-line-chart_${
+      `${__dirname}/../../frontend/src/assets/charts/multi-axis-line-chart/multi-axis-line-chart_${
         req.body.email.split("@")[0]
       }_${Date.now()}.png`,
       image,

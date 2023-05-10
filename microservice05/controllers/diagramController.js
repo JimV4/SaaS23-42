@@ -88,12 +88,12 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `microservice05/charts/radar-chart_${
+    const path = `radar/radar-chart_${
       req.body.email.split("@")[0]
     }_${Date.now()}.png`;
 
     fs.writeFile(
-      `${__dirname}/../charts/radar-chart_${
+      `${__dirname}/../../frontend/src/assets/charts/radar/radar-chart_${
         req.body.email.split("@")[0]
       }_${Date.now()}.png`,
       image,

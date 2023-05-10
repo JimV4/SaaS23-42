@@ -116,12 +116,12 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `microservice06/charts/scatter-chart_${
+    const path = `scatter/scatter-chart_${
       req.body.email.split("@")[0]
     }_${Date.now()}.png`;
 
     fs.writeFile(
-      `${__dirname}/../charts/scatter-chart_${
+      `${__dirname}/../../frontend/src/assets/charts/scatter/scatter-chart_${
         req.body.email.split("@")[0]
       }_${Date.now()}.png`,
       image,
