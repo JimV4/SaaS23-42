@@ -7,6 +7,8 @@ exports.downloadTemplate = (req, res, next) => {
       file = `${__dirname}/../csvTemplates/multi-axis-line-chart-template.txt`;
     } else if (req.params.diagram == "radar-chart") {
       file = `${__dirname}/../csvTemplates/radar-chart-template.txt`;
+    } else if (req.params.diagram == "scatter-chart") {
+      file = `${__dirname}/../csvTemplates/scatter-chart-template.txt`;
     } else {
       return res.status(400).json({
         status: "failed",
