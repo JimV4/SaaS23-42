@@ -19,8 +19,8 @@ Y1-axis title:<y1-axis title>
 (Y-axis position:<left/right>)
 (Y1-axis position:<left/right>)	
 ...								
-data:labels[<data>]
-DATASET1:(<name>),[<data>],((<fill>)(/<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>),<y/y1/y2/...>
+data:labels[<data ex x1 x2 x3 x4>]
+DATASET1:(<name>),[<data ex (x1 y6) (x4 y8)>],((<fill>)(/<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>),<y/y1/y2/...>
 (DATASET2: ...
 DATASET3: ...
 ...)
