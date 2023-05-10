@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./UploadForm.module.css";
 import Button from "../Login/Buttons/Button";
 import UploadError from "./UploadError";
@@ -7,6 +8,8 @@ import UploadError from "./UploadError";
 // let errorMessage = "";
 
 function UploadForm() {
+  const navigate = useNavigate();
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -40,7 +43,10 @@ function UploadForm() {
           },
         }
       );
-      console.log(response);
+      if (response.status === 200) {
+        let imgPath = response.data.path;
+        navigate("/new-chart/created-chart", { state: { imgPath } });
+      }
     } catch (error) {
       setErrorMessage(error.response.data.message);
       // errorMessage = error.response.data.message;
