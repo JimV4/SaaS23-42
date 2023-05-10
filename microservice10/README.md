@@ -1,6 +1,5 @@
-# MICROSERVICE
+# QUOTAS MANAGEMENT
 
 ## (name)
 
 (description)
-
