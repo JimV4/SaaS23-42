@@ -10,6 +10,8 @@ exports.createChart = async (req, res, next) => {
       service = process.env.RADAR_CHART_SERVICE;
     else if (req.type == "scatter-chart")
       service = process.env.SCATTER_CHART_SERVICE;
+    else if (req.type == "bubble-chart")
+      service = process.env.BUBBLE_CHART_SERVICE;
     else {
       return res.status(400).json({
         status: "failed",

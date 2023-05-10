@@ -116,12 +116,12 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `microservice07/charts/bubble-chart_${
+    const path = `bubble/bubble-chart_${
       req.body.email.split("@")[0]
     }_${Date.now()}.png`;
 
     fs.writeFile(
-      `${__dirname}/../charts/bubble-chart_${
+      `${__dirname}/../../frontend/src/assets/charts/bubble/bubble-chart_${
         req.body.email.split("@")[0]
       }_${Date.now()}.png`,
       image,
