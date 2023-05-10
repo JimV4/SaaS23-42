@@ -96,7 +96,7 @@ exports.getLineChartConfig = (data) => {
         let xy = pairs[j].split(")");
         let x = parseInt(xy[0].split(" ")[0]);
         let y = parseInt(xy[0].split(" ")[1]);
-        if (!array.includes(x)) return null;
+        if (!array.includes(x) || !y) return null;
         dataY.push({
           x,
           y,
