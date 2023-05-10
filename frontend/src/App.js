@@ -5,6 +5,7 @@ import MyAccountPage from "./pages/MyAccountPage";
 import BuyCreditsPage from "./pages/BuyCreditsPage";
 import NewChartPage from "./pages/NewChartPage";
 import ConfirmLoginPage from "./pages/ConfirmLoginPage";
+import CreatedChartPage from "./pages/CreatedChartPage";
 
 // const passport = require("passport");
 
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
   {
     path: "new-chart",
     element: <NewChartPage />,
+    children: [],
+  },
+  {
+    path: "new-chart/created-chart",
+    element: <CreatedChartPage />,
   },
 ]);
 
