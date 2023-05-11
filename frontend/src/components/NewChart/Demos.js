@@ -31,7 +31,7 @@ function Demos() {
       imgClass: "scatter-img",
     },
     {
-      title: "bubble-char",
+      title: "bubble-chart",
       img: BubbleImg,
       alt: "Bubble Chart",
       imgClass: "bubble-chart-img",

@@ -48,6 +48,7 @@ function UploadForm() {
         navigate("/new-chart/created-chart", { state: { imgPath } });
       }
     } catch (error) {
+      // check if there is an error with axios. TODO...
       setErrorMessage(error.response.data.message);
       // errorMessage = error.response.data.message;
       console.log(errorMessage);
