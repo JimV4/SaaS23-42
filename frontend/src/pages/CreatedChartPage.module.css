@@ -3,3 +3,10 @@
   flex-direction: column;
   align-items: center;
 }
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 30px;
+}

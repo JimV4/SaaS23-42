@@ -8,3 +8,9 @@
   align-items: center;
   margin-top: 20px;
 }
+
+.image {
+  height: 95%;
+  width: 95%;
+  object-fit: cover;
+}
