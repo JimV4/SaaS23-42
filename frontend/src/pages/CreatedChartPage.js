@@ -8,7 +8,7 @@ function CreatedChartPage() {
 
   const state = useLocation();
   const imgPath = state.state.imgPath;
-  const parts = imgPath.split("/");
+  /* const parts = imgPath.split("/");
   let newPath = parts[0];
 
   let chartTitle = newPath
@@ -18,7 +18,7 @@ function CreatedChartPage() {
 
   if (!chartTitle.includes("Chart")) {
     chartTitle = chartTitle + " Chart";
-  }
+  } */
 
   function handleDiscard() {
     navigate(-1);
@@ -30,7 +30,6 @@ function CreatedChartPage() {
 
   return (
     <div className={classes["container"]}>
-      <p>{`Your ${chartTitle} is ready!`}</p>
       <ChartPreview imgPath={imgPath} />
       <div className={classes["buttons-container"]}>
         <Button text="Save to My Charts" onClick={handleSave} />
