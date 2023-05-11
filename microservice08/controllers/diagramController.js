@@ -10,12 +10,7 @@ function getRandomRGBColor() {
 
 exports.createDiagram = async (req, res, next) => {
   try {
-    if (
-      !req.body.xaxis ||
-      !req.body.yaxis ||
-      !req.body.xaxis.labels ||
-      !req.body.yaxis.datasets
-    ) {
+    if (!req.body.labels || !req.body.scale || !req.body.scale.datasets) {
       return res.status(400).json({
         status: "failed",
         message: "The configuration you uploaded contains errors!",
@@ -26,36 +21,37 @@ exports.createDiagram = async (req, res, next) => {
     const height = req.body.height ? req.body.height : 500;
 
     const datasets = [];
-    for (i = 0; i < req.body.yaxis.datasets.length; i++) {
-      if (!req.body.yaxis.datasets[i].data) {
+    for (i = 0; i < req.body.scale.datasets.length; i++) {
+      if (!req.body.scale.datasets[i].data) {
         return res.status(400).json({
           status: "failed",
           message: "The configuration you uploaded contains errors!",
         });
       }
 
-      lineColor = req.body.yaxis.datasets[i].borderColor
-        ? req.body.yaxis.datasets[i].borderColor
-        : getRandomRGBColor();
+      for (j = 0; j < req.body.scale.datasets[i].backgroundColor.length; ++j) {
+        if (req.body.scale.datasets[i].backgroundColor[j] == "null")
+          req.body.scale.datasets[i].backgroundColor[j] = getRandomRGBColor();
 
-      fillColor = req.body.yaxis.datasets[i].fillColor
-        ? req.body.yaxis.datasets[i].fillColor
-        : getRandomRGBColor();
+        if (req.body.scale.datasets[i].borderColor[j] == "null")
+          req.body.scale.datasets[i].borderColor[j] =
+            req.body.scale.datasets[i].backgroundColor[j];
+      }
 
       datasets.push({
-        label: req.body.yaxis.datasets[i].label
-          ? req.body.yaxis.datasets[i].label
+        label: req.body.scale.datasets[i].label
+          ? req.body.scale.datasets[i].label
           : `Dataset ${i + 1}`,
-        data: req.body.yaxis.datasets[i].data,
-        pointBackgroundColor: lineColor,
-        pointBorderColor: fillColor,
+        data: req.body.scale.datasets[i].data,
+        backgroundColor: req.body.scale.datasets[i].backgroundColor,
+        borderColor: req.body.scale.datasets[i].borderColor,
       });
     }
 
     const configuration = {
-      type: "bubble",
+      type: "polarArea",
       data: {
-        labels: req.body.xaxis.labels,
+        labels: req.body.labels,
         datasets: datasets,
       },
       options: {
@@ -70,42 +66,10 @@ exports.createDiagram = async (req, res, next) => {
           },
         },
         scales: {
-          x: {
-            display: true,
-            title: {
-              display: req.body.xaxis.title ? true : false,
-              text: req.body.xaxis.title,
-            },
+          r: {
             ticks: {
-              font: {
-                size: 12,
-                weight: "bold",
-              },
-              maxRotation: 90,
-            },
-            grid: {
-              display: req.body.xaxis.grid ? true : false,
-            },
-          },
-          y: {
-            type: req.body.yaxis.type ? req.body.yaxis.type : "linear",
-            position: req.body.yaxis.position
-              ? req.body.yaxis.position
-              : "left",
-            beginAtZero: req.body.yaxis.beginAtZero ? true : false,
-            display: true,
-            title: {
-              display: req.body.yaxis.title ? true : false,
-              text: req.body.yaxis.title,
-            },
-            ticks: {
-              font: {
-                size: 12,
-                weight: "bold",
-              },
-            },
-            grid: {
-              display: req.body.yaxis.grid ? true : false,
+              backdropColor: "transparent",
+              display: req.body.scale.displayAxis ? true : false,
             },
           },
         },
@@ -116,12 +80,12 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `bubble/bubble-chart_${
+    const path = `polar-area/polar-area-chart_${
       req.body.email.split("@")[0]
     }_${Date.now()}.png`;
 
     fs.writeFile(
-      `${__dirname}/../../frontend/src/assets/charts/bubble/bubble-chart_${
+      `${__dirname}/../../frontend/src/assets/charts/polar-area/polar-area-chart_${
         req.body.email.split("@")[0]
       }_${Date.now()}.png`,
       image,
@@ -142,7 +106,7 @@ exports.createDiagram = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: error.message,
+      message: "Somethig went wrong!",
     });
   }
 };

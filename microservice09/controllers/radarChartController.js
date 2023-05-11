@@ -1,11 +1,3 @@
-function isValidScaleType(type) {
-  return ["linear", "logarithmic", "category"].includes(type);
-}
-
-function isValidScalePosition(position) {
-  return ["left", "right"].includes(position);
-}
-
 function isNumber(input) {
   return !isNaN(input);
 }

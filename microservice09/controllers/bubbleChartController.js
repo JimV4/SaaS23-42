@@ -96,10 +96,12 @@ exports.getBubbleChartConfig = (data) => {
         let xy = pairs[j].split(")");
         let x = parseInt(xy[0].split(" ")[0]);
         let y = parseInt(xy[0].split(" ")[1]);
-        if (!array.includes(x) || !y) return null;
+        let r = parseInt(xy[0].split(" ")[2]);
+        if (!array.includes(x) || !y || !r) return null;
         dataY.push({
           x,
           y,
+          r,
         });
       }
       let fillColor = dataset[2];

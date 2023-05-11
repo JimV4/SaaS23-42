@@ -2,6 +2,8 @@ const lineChartController = require("./lineChartController");
 const multiAxisLineChartController = require("./multiAxisLineChartController");
 const radarChartController = require("./radarChartController");
 const scatterChartController = require("./scatterChartController");
+const bubbleChartController = require("./bubbleChartController");
+const polarAreaChartController = require("./polarAreaChartController");
 
 exports.readCSVFile = async (req, res, next) => {
   try {
@@ -60,6 +62,24 @@ exports.readCSVFile = async (req, res, next) => {
     } else if (data["type"] == "scatter-chart") {
       type = "scatter-chart";
       config = scatterChartController.getScatterChartConfig(data);
+      if (!config) {
+        return res.status(400).json({
+          status: "failed",
+          message: "The file you uploaded contains errors!",
+        });
+      }
+    } else if (data["type"] == "bubble-chart") {
+      type = "bubble-chart";
+      config = bubbleChartController.getBubbleChartConfig(data);
+      if (!config) {
+        return res.status(400).json({
+          status: "failed",
+          message: "The file you uploaded contains errors!",
+        });
+      }
+    } else if (data["type"] == "polar-area-chart") {
+      type = "polar-area-chart";
+      config = polarAreaChartController.getPolarAreaChartConfig(data);
       if (!config) {
         return res.status(400).json({
           status: "failed",

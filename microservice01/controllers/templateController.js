@@ -9,6 +9,10 @@ exports.downloadTemplate = (req, res, next) => {
       file = `${__dirname}/../csvTemplates/radar-chart-template.txt`;
     } else if (req.params.diagram == "scatter-chart") {
       file = `${__dirname}/../csvTemplates/scatter-chart-template.txt`;
+    } else if (req.params.diagram == "bubble-chart") {
+      file = `${__dirname}/../csvTemplates/bubble-chart-template.txt`;
+    } else if (req.params.diagram == "polar-area-chart") {
+      file = `${__dirname}/../csvTemplates/polar-area-chart-template.txt`;
     } else {
       return res.status(400).json({
         status: "failed",
