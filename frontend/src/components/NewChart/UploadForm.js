@@ -43,6 +43,7 @@ function UploadForm() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: {
+            "Content-Type": "application/json",
             chart_type: fileTitle,
           },
         }
@@ -52,11 +53,12 @@ function UploadForm() {
         navigate("/new-chart/created-chart", { state: { imgPath } });
       }
     } catch (error) {
-      // check if there is an error with axios. TODO...
-      setErrorMessage(error.response.data.message);
-      // errorMessage = error.response.data.message;
-      console.log(errorMessage);
-      console.error("Error uploading file:", error);
+      if (error.message === "Network Error") {
+        setErrorMessage("Something Went Wrong! Please try again later...");
+      } else {
+        setErrorMessage(error.response.data.message);
+      }
+      console.log(error);
       showModalHandler();
     }
   }
