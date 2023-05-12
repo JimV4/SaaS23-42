@@ -8,4 +8,6 @@ router.post("/create", updateQuotasController.createUser);
 
 router.get("/check", getQuotasController.checkNumQuotas);
 
+router.patch("/sub", updateQuotasController.subQuotas);
+
 module.exports = router;
