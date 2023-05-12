@@ -19,6 +19,8 @@ exports.createUser = async (req, res, next) => {
 
     res.cookie("jwt", req.data.token, cookieOptions);
 
+    req.data.email = undefined;
+
     return res.status(response.status).json(req.data);
   } catch (err) {
     if (err.response) {
