@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./UploadForm.module.css";
 import Button from "../Login/Buttons/Button";
-import UploadError from "./UploadError";
+import UploadError from "../UI/UploadError";
+import useModal from "../hooks/useModal";
 
 // let errorMessage = "";
 
 function UploadForm() {
   const navigate = useNavigate();
+
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -16,16 +19,6 @@ function UploadForm() {
 
   function handleFileChange(event) {
     setSelectedFile(event.target.files[0]);
-  }
-
-  const [modalIsShown, setModalIsShown] = useState(false);
-
-  function showModalHandler() {
-    setModalIsShown(true);
-  }
-
-  function hideModalHandler() {
-    setModalIsShown(false);
   }
 
   async function sendCSVFile() {

@@ -3,21 +3,13 @@ import CreditsList from "../components/Credits/CreditsList";
 import CreditsButtons from "../components/Credits/CreditsButtons";
 import classes from "./BuyCreditsPage.module.css";
 import { useState } from "react";
-import Modal from "../components/Credits/Modal";
 import PurchaseConfirm from "../components/Credits/PurchaseConfirm";
+import useModal from "../components/hooks/useModal";
 
 function BuyCreditsPage() {
   const [selected, setSelected] = useState(null);
 
-  const [modalIsShown, setModalIsShown] = useState(false);
-
-  function showModalHandler() {
-    setModalIsShown(true);
-  }
-
-  function hideModalHandler() {
-    setModalIsShown(false);
-  }
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
   function handleSelected(index) {
     setSelected(index);
