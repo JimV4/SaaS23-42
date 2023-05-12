@@ -1,14 +1,17 @@
-/* import { useContext } from "react"; */
 import classes from "./ConfirmLogin.module.css";
 import ConfirmLoginInstructions from "./ConfirmLoginInstructions";
 import Button from "./Buttons/Button";
-// import ConfirmLoginContext from "../Context/confirm-login-context";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useModal from "../hooks/useModal";
+import UploadError from "../UI/UploadError";
 
 function ConfirmLogin() {
   const navigate = useNavigate();
-  /* const confirmLoginCtx = useContext(ConfirmLoginContext); */
+
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function continueHandler() {
     const userID = localStorage.getItem("userID");
@@ -29,7 +32,13 @@ function ConfirmLogin() {
         navigate("/my-account");
       }
     } catch (error) {
-      /* TODO */
+      if (error.message === "Network Error") {
+        setErrorMessage("Something Went Wrong! Please try again later...");
+      } else {
+        setErrorMessage(error.response.data.message);
+      }
+      console.log(error);
+      showModalHandler();
     }
   }
 
@@ -45,22 +54,29 @@ function ConfirmLogin() {
       localStorage.clear();
       navigate("/");
     } catch (error) {
-      /* TODO */
+      if (error.message === "Network Error") {
+        setErrorMessage("Something Went Wrong! Please try again later...");
+      } else {
+        setErrorMessage(error.response.data.message);
+      }
+      console.log(error);
+      showModalHandler();
     }
   }
 
   return (
-    <div className={classes.container}>
-      <ConfirmLoginInstructions />
-      <div className={classes.buttonsContainer}>
-        <Button text={"Continue"} onClick={continueHandler} />
-        <Button
-          text={"No thanks"}
-          onClick={noHandler}
-          // onClick={confirmLoginCtx.setConfirmLogin}
-        />
+    <>
+      {modalIsShown && (
+        <UploadError message={errorMessage} onClose={hideModalHandler} />
+      )}
+      <div className={classes.container}>
+        <ConfirmLoginInstructions />
+        <div className={classes.buttonsContainer}>
+          <Button text={"Continue"} onClick={continueHandler} />
+          <Button text={"No thanks"} onClick={noHandler} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
