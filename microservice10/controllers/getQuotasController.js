@@ -25,13 +25,13 @@ exports.checkNumQuotas = async (req, res, next) => {
       cost = process.env.LINE_CHART_COST;
     } else if (req.body.chart_type == "multi-axis-line-chart") {
       cost = process.env.MULTI_AXIS_LINE_CHART_COST;
-    } else if (req.body.chart_type == "radar") {
+    } else if (req.body.chart_type == "radar-chart") {
       cost = process.env.RADAR_CHART_COST;
-    } else if (req.body.chart_type == "scatter") {
+    } else if (req.body.chart_type == "scatter-chart") {
       cost = process.env.SCATTER_CHART_COST;
-    } else if (req.body.chart_type == "bubble") {
+    } else if (req.body.chart_type == "bubble-chart") {
       cost = process.env.BUBBLE_CHART_COST;
-    } else if (req.body.chart_type == "polar-area") {
+    } else if (req.body.chart_type == "polar-area-chart") {
       cost = process.env.POLAR_AREA_CHART_COST;
     } else {
       return res.status(400).json({

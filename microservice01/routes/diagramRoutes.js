@@ -11,11 +11,11 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.post(
-  "/create/:chart_type",
+  "/create",
   authController.protect,
   upload.single("csvFile"),
-  quotasController.checkNumQuotas,
   csvController.readCSVFile,
+  quotasController.checkNumQuotas,
   diagramController.createChart
 );
 
