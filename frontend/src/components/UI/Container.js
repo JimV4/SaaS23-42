@@ -12,6 +12,8 @@ function Container() {
   const navigate = useNavigate();
   const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   async function loginHandler(UserInfo) {
     try {
       const response = await fetch(
@@ -42,6 +44,12 @@ function Container() {
         navigate("/my-account");
       }
     } catch (error) {
+      if (error.message === "Network Error") {
+        setErrorMessage("Something Went Wrong! Please try again later...");
+      } else {
+        setErrorMessage(error.response.data.message);
+      }
+      console.log(error);
       showModalHandler();
     }
   }
