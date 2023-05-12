@@ -1,6 +1,5 @@
 import { useState } from "react";
 import classes from "./Demos.module.css";
-import axios from "axios";
 import ChartItem from "../Charts/ChartItem";
 
 import LineChartImg from "../../assets/line_chart.png";
@@ -9,8 +8,14 @@ import ScatterImg from "../../assets/scatter.png";
 import BubbleImg from "../../assets/bubble.png";
 import RadarImg from "../../assets/radar.png";
 import PolarAreaImg from "../../assets/polar_area.png";
+import UploadError from "../UI/UploadError";
+import useModal from "../hooks/useModal";
 
 function Demos() {
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const chartItems = [
     {
       title: "line-chart",
@@ -88,12 +93,21 @@ function Demos() {
         console.error("Error downloading the file:", response.status);
       }
     } catch (error) {
-      console.error("Error downloading the file:", error);
+      if (error.message === "Network Error") {
+        setErrorMessage("Something Went Wrong! Please try again later...");
+      } else {
+        setErrorMessage(error.response.data.message);
+      }
+      console.log(error);
+      showModalHandler();
     }
   }
 
   return (
     <>
+      {modalIsShown && (
+        <UploadError message={errorMessage} onClose={hideModalHandler} />
+      )}
       <div className={classes["demo-container"]}>
         <svg
           fill="none"

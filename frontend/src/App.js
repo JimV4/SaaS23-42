@@ -7,8 +7,8 @@ import NewChartPage from "./pages/NewChartPage";
 import ConfirmLoginPage from "./pages/ConfirmLoginPage";
 import CreatedChartPage from "./pages/CreatedChartPage";
 import NotFoundPage from "./pages/NotFoundPage";
-
-// const passport = require("passport");
+import useRequireAuth from "./components/hooks/useRequireAuth";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -25,22 +25,22 @@ const router = createBrowserRouter([
       },
       {
         path: "my-account",
-        element: <MyAccountPage />,
+        element: <ProtectedRoute element={MyAccountPage} />,
       },
       {
         path: "buy-credits",
-        element: <BuyCreditsPage />,
+        element: <ProtectedRoute element={BuyCreditsPage} />,
       },
     ],
   },
   {
     path: "new-chart",
-    element: <NewChartPage />,
+    element: <ProtectedRoute element={NewChartPage} />,
     children: [],
   },
   {
     path: "new-chart/created-chart",
-    element: <CreatedChartPage />,
+    element: <ProtectedRoute element={CreatedChartPage} />,
   },
   {
     path: "*",

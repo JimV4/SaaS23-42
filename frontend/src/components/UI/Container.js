@@ -57,10 +57,7 @@ function Container() {
   return (
     <>
       {modalIsShown && (
-        <UploadError
-          message="Something went wrong!"
-          onClose={hideModalHandler}
-        />
+        <UploadError message={errorMessage} onClose={hideModalHandler} />
       )}
       {
         <div className={classes.container}>
