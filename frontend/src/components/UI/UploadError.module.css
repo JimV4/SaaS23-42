@@ -1,0 +1,21 @@
+.close {
+  height: 40px;
+  width: 40px;
+  color: white;
+  position: absolute;
+  top: -40px;
+  right: 4px;
+  cursor: pointer;
+}
+
+.message {
+  text-align: center;
+  font-size: 28px;
+}
+
+/* .bord {
+  display: flex;
+  flex-direction: row;
+  background-color: #1098ad;
+  height: 50px;
+} */

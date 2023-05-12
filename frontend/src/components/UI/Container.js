@@ -1,13 +1,17 @@
 import classes from "./Container.module.css";
 import Instructions from "./Instructions";
+import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import RequestErrorPage from "./RequestErrorPage";
+import UploadError from "./UploadError";
+import useModal from "../hooks/useModal";
 
 import jwt_decode from "jwt-decode";
 
 function Container() {
   const navigate = useNavigate();
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
+
   async function loginHandler(UserInfo) {
     try {
       const response = await fetch(
@@ -38,34 +42,41 @@ function Container() {
         navigate("/my-account");
       }
     } catch (error) {
-      console.log("here");
-
-      return <RequestErrorPage />;
+      showModalHandler();
     }
   }
 
   return (
-    <div className={classes.container}>
-      <Instructions />
-      <GoogleLogin
-        onSuccess={(credentialResponse) => {
-          let decoded = jwt_decode(credentialResponse.credential);
-          const UserInfo = {
-            clientId: credentialResponse.clientId,
-            email: decoded.email,
-            name: decoded.name,
-          };
-          loginHandler(UserInfo);
-        }}
-        onError={() => {
-          console.log("Login Failed");
-          return <RequestErrorPage />;
-        }}
-      />
-      <a href="" className={classes.about}>
-        about
-      </a>
-    </div>
+    <>
+      {modalIsShown && (
+        <UploadError
+          message="Something went wrong!"
+          onClose={hideModalHandler}
+        />
+      )}
+      {
+        <div className={classes.container}>
+          <Instructions />
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              let decoded = jwt_decode(credentialResponse.credential);
+              const UserInfo = {
+                clientId: credentialResponse.clientId,
+                email: decoded.email,
+                name: decoded.name,
+              };
+              loginHandler(UserInfo);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          <a href="" className={classes.about}>
+            about
+          </a>
+        </div>
+      }
+    </>
   );
 }
 

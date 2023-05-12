@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../UI/Modal";
 import classes from "./PurchaseConfirm.module.css";
 
 function PurchaseConfirm(props) {

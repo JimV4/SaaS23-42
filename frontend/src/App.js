@@ -6,6 +6,7 @@ import BuyCreditsPage from "./pages/BuyCreditsPage";
 import NewChartPage from "./pages/NewChartPage";
 import ConfirmLoginPage from "./pages/ConfirmLoginPage";
 import CreatedChartPage from "./pages/CreatedChartPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 // const passport = require("passport");
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "new-chart/created-chart",
     element: <CreatedChartPage />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 

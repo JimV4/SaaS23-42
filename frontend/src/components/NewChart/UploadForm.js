@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./UploadForm.module.css";
 import Button from "../Login/Buttons/Button";
-import UploadError from "./UploadError";
+import UploadError from "../UI/UploadError";
+import useModal from "../hooks/useModal";
 
 // let errorMessage = "";
 
 function UploadForm() {
   const navigate = useNavigate();
+
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -18,20 +21,18 @@ function UploadForm() {
     setSelectedFile(event.target.files[0]);
   }
 
-  const [modalIsShown, setModalIsShown] = useState(false);
-
-  function showModalHandler() {
-    setModalIsShown(true);
-  }
-
-  function hideModalHandler() {
-    setModalIsShown(false);
-  }
-
   async function sendCSVFile() {
     try {
       const formData = new FormData();
       formData.append("csvFile", selectedFile);
+      let fileTitle = selectedFile.name;
+      const substringIndex = fileTitle.lastIndexOf("-");
+
+      fileTitle = fileTitle.substring(0, substringIndex);
+      if (!selectedFile.name.includes("line")) {
+        fileTitle = fileTitle.replace("-chart", "");
+      }
+      console.log(fileTitle);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/myCharts/diagrams/create",
@@ -40,6 +41,9 @@ function UploadForm() {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: {
+            chart_type: fileTitle,
           },
         }
       );
