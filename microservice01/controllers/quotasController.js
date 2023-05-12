@@ -32,7 +32,7 @@ exports.checkNumQuotas = async (req, res, next) => {
       url: `${process.env.QUOTAS_SERVICE}/check`,
       data: {
         email: req.email,
-        chart_type: req.body.chart_type,
+        chart_type: req.params.chart_type,
       },
     });
 
