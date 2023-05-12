@@ -38,32 +38,32 @@ exports.saveChart = async (req, res, next) => {
 
     let fullPath = `${__dirname}/../../frontend/src/assets/charts/${req.body.path}`;
 
-    fs.access(fullPath, fs.constants.F_OK, (err) => {
+    fs.access(fullPath, fs.constants.F_OK, async (err) => {
       if (err) {
         return res.status(400).json({
           status: "failed",
           message: "The chart no longer exists!",
         });
       }
-    });
 
-    const user = await StoredCharts.find({
-      email: req.body.email,
-    });
-
-    if (user.length == 0) {
-      return res.status(400).json({
-        status: "failed",
-        message: "The user no longer exists!",
+      const user = await StoredCharts.find({
+        email: req.body.email,
       });
-    }
 
-    user[0].storedCharts.push(req.body.path);
-    await user[0].save();
+      if (user.length == 0) {
+        return res.status(400).json({
+          status: "failed",
+          message: "The user no longer exists!",
+        });
+      }
 
-    return res.status(200).json({
-      status: "success",
-      message: "The user's chart was successfully saved in the DB.",
+      user[0].storedCharts.push(req.body.path);
+      await user[0].save();
+
+      return res.status(200).json({
+        status: "success",
+        message: "The user's chart was successfully saved in the DB.",
+      });
     });
   } catch (err) {
     return res.status(500).json({

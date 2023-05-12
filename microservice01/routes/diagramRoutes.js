@@ -4,6 +4,7 @@ const diagramController = require("../controllers/diagramController");
 const authController = require("../controllers/authController");
 const csvController = require("../controllers/csvController");
 const quotasController = require("../controllers/quotasController");
+const storedChartsController = require("../controllers/storedChartsController");
 
 const router = express.Router();
 
@@ -17,6 +18,13 @@ router.post(
   csvController.readCSVFile,
   quotasController.checkNumQuotas,
   diagramController.createChart
+);
+
+router.patch(
+  "/save-chart",
+  authController.protect,
+  quotasController.subQuotas,
+  storedChartsController.saveChart
 );
 
 module.exports = router;

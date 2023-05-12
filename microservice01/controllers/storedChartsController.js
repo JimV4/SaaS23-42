@@ -35,3 +35,29 @@ exports.createUser = async (req, res, next) => {
     });
   }
 };
+
+exports.saveChart = async (req, res, next) => {
+  try {
+    const response = await axios({
+      method: "patch",
+      url: `${process.env.STORED_CHARTS_SERVICE}/save-chart`,
+      data: {
+        email: req.email,
+        path: req.body.path,
+      },
+    });
+
+    return res.status(response.status).json(response.data);
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
+        status: "failed",
+        message: err.response.data.message,
+      });
+    }
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
