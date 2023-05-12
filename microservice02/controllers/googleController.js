@@ -45,7 +45,7 @@ exports.GoogleCallback = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -84,7 +84,7 @@ exports.isLoggedIn = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };

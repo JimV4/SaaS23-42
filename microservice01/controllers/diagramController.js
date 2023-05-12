@@ -39,7 +39,7 @@ exports.createChart = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
