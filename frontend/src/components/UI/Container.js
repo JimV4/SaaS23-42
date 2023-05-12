@@ -1,8 +1,8 @@
 import classes from "./Container.module.css";
 import Instructions from "./Instructions";
-import GoogleButton from "./GoogleButton";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import RequestErrorPage from "./RequestErrorPage";
 
 import jwt_decode from "jwt-decode";
 
@@ -38,14 +38,15 @@ function Container() {
         navigate("/my-account");
       }
     } catch (error) {
-      /* TODO */
+      console.log("here");
+
+      return <RequestErrorPage />;
     }
   }
 
   return (
     <div className={classes.container}>
       <Instructions />
-      {/* <GoogleButton /> */}
       <GoogleLogin
         onSuccess={(credentialResponse) => {
           let decoded = jwt_decode(credentialResponse.credential);
@@ -58,6 +59,7 @@ function Container() {
         }}
         onError={() => {
           console.log("Login Failed");
+          return <RequestErrorPage />;
         }}
       />
       <a href="" className={classes.about}>
