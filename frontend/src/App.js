@@ -7,8 +7,7 @@ import NewChartPage from "./pages/NewChartPage";
 import ConfirmLoginPage from "./pages/ConfirmLoginPage";
 import CreatedChartPage from "./pages/CreatedChartPage";
 import NotFoundPage from "./pages/NotFoundPage";
-
-// const passport = require("passport");
+import useRequireAuth from "./components/hooks/useRequireAuth";
 
 const router = createBrowserRouter([
   {
