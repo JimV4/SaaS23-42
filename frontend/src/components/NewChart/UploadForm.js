@@ -25,6 +25,14 @@ function UploadForm() {
     try {
       const formData = new FormData();
       formData.append("csvFile", selectedFile);
+      let fileTitle = selectedFile.name;
+      const substringIndex = fileTitle.lastIndexOf("-");
+
+      fileTitle = fileTitle.substring(0, substringIndex);
+      if (!selectedFile.name.includes("line")) {
+        fileTitle = fileTitle.replace("-chart", "");
+      }
+      console.log(fileTitle);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/myCharts/diagrams/create",
@@ -33,6 +41,9 @@ function UploadForm() {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: {
+            chart_type: fileTitle,
           },
         }
       );
