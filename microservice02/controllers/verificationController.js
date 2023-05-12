@@ -26,6 +26,7 @@ exports.verifyLogin = async (req, res, next) => {
       status: "success",
       message: "You were successfully logged in!",
       token: token,
+      email: user.email,
     });
   } catch (err) {
     return res.status(500).json({
