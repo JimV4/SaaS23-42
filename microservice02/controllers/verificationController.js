@@ -30,7 +30,7 @@ exports.verifyLogin = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -58,7 +58,7 @@ exports.cancelLogin = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };

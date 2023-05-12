@@ -142,7 +142,7 @@ exports.createDiagram = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: error.message,
+      message: "Something went wrong!",
     });
   }
 };

@@ -30,7 +30,7 @@ exports.protect = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -68,7 +68,7 @@ exports.verifyLogin = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -97,7 +97,7 @@ exports.cancelLogin = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -132,7 +132,7 @@ exports.GoogleCallback = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -148,7 +148,7 @@ exports.GoogleLogout = (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
