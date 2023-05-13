@@ -1,6 +1,6 @@
 import classes from "./CreatedChartPage.module.css";
 import ChartPreview from "../components/CreatedChart/ChartPreview";
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Login/Buttons/Button";
 import useModal from "../components/hooks/useModal";
 import { useState } from "react";
@@ -16,8 +16,35 @@ function CreatedChartPage() {
   const state = useLocation();
   const imgPath = state.state.imgPath;
 
-  function handleDiscard() {
-    navigate(-1);
+  async function handleDiscard() {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/myCharts/diagrams/delete-chart",
+        {
+          method: "DELETE",
+          body: JSON.stringify({
+            path: imgPath,
+          }), // takes a javascript object and converts it to json
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const jsonresponse = await response.json();
+      if (jsonresponse.status === "success") {
+        navigate(-1);
+      } else if (jsonresponse.status === "failed") {
+        console.log(jsonresponse);
+        setErrorMessage(jsonresponse.message);
+        showModalHandler();
+      }
+    } catch (error) {
+      setErrorMessage("Something went wrong! Please try again later...");
+      console.log(error);
+      showModalHandler();
+    }
   }
 
   async function handleSave() {
@@ -31,18 +58,21 @@ function CreatedChartPage() {
           }), // takes a javascript object and converts it to json
           headers: {
             "Content-Type": "application/json",
-            //Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      console.log(response);
-    } catch (error) {
-      setErrorMessage("Something Went Wrong! Please try again later...");
-      if (error.message === "Network Error") {
-        setErrorMessage("Something Went Wrong! Please try again later...");
-      } else {
-        setErrorMessage(error.response.data.message);
+
+      const jsonresponse = await response.json();
+      if (jsonresponse.status === "success") {
+        navigate(-1);
+      } else if (jsonresponse.status === "failed") {
+        console.log(jsonresponse);
+        setErrorMessage(jsonresponse.message);
+        showModalHandler();
       }
+    } catch (error) {
+      setErrorMessage("Something went wrong! Please try again later...");
       console.log(error);
       showModalHandler();
     }
