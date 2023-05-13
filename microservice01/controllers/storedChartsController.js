@@ -61,3 +61,28 @@ exports.saveChart = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteChart = async (req, res, next) => {
+  try {
+    const response = await axios({
+      method: "delete",
+      url: `${process.env.STORED_CHARTS_SERVICE}/delete-chart`,
+      data: {
+        path: req.body.path,
+      },
+    });
+
+    return res.status(response.status).json(response.data);
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
+        status: "failed",
+        message: err.response.data.message,
+      });
+    }
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};

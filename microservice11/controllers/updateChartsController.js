@@ -72,3 +72,35 @@ exports.saveChart = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteChart = async (req, res, next) => {
+  try {
+    if (!req.body.path) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the path of the chart to be deleted!",
+      });
+    }
+
+    let fullPath = `${__dirname}/../../frontend/src/assets/charts/${req.body.path}`;
+
+    fs.unlink(fullPath, (err) => {
+      if (err) {
+        return res.status(500).json({
+          status: "failed",
+          message: "Something went wrong deleting the chart image!",
+        });
+      }
+
+      return res.status(200).json({
+        status: "success",
+        message: "The chart image was successfully deleted.",
+      });
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};

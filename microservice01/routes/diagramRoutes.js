@@ -27,4 +27,10 @@ router.patch(
   storedChartsController.saveChart
 );
 
+router.delete(
+  "/delete-chart",
+  authController.protect,
+  storedChartsController.deleteChart
+);
+
 module.exports = router;

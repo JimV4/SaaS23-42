@@ -7,4 +7,6 @@ router.post("/create", updateChartsController.createUser);
 
 router.patch("/save-chart", updateChartsController.saveChart);
 
+router.delete("/delete-chart", updateChartsController.deleteChart);
+
 module.exports = router;
