@@ -145,3 +145,29 @@ exports.GoogleLogout = (req, res, next) => {
     });
   }
 };
+
+exports.getLastLogin = async (req, res, next) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${process.env.LOGIN_SERVICE}/google/last-login`,
+      data: {
+        email: req.email,
+      },
+    });
+
+    req.lastLogin = response.data.data;
+    next();
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
+        status: "failed",
+        message: err.response.data.message,
+      });
+    }
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};

@@ -10,4 +10,6 @@ router.get("/check", getQuotasController.checkNumQuotas);
 
 router.patch("/sub", updateQuotasController.subQuotas);
 
+router.get("/num-quotas", getQuotasController.getNumQuotas);
+
 module.exports = router;

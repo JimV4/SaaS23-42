@@ -17,4 +17,12 @@ router.patch(
 
 router.delete("/cancellogin/:userID", authController.cancelLogin);
 
+router.get(
+  "/my-account",
+  authController.protect,
+  authController.getLastLogin,
+  quotasController.getNumQuotas,
+  storedChartsController.getNumCharts
+);
+
 module.exports = router;

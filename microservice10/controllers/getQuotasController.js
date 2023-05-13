@@ -59,3 +59,35 @@ exports.checkNumQuotas = async (req, res, next) => {
     });
   }
 };
+
+exports.getNumQuotas = async (req, res, next) => {
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the user's email!",
+      });
+    }
+
+    let user = await Quotas.find({
+      email: req.body.email,
+    });
+
+    if (user.length == 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: "The user no longer exists!",
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      data: user[0].quotas,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
