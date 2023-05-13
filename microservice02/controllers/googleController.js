@@ -88,3 +88,60 @@ exports.isLoggedIn = async (req, res, next) => {
     });
   }
 };
+
+exports.getLastLogin = async (req, res, next) => {
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the user's email!",
+      });
+    }
+
+    const user = await User.find({
+      email: req.body.email,
+    });
+
+    if (user.length == 0) {
+      return res.status(400).json({
+        status: "success",
+        message: "The user no longer exists.",
+      });
+    }
+
+    let lastLogin;
+
+    if (user[0].lastLogin) {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        timeZone: "Europe/Athens",
+        timeZoneName: "short",
+      };
+
+      const formattedDate = user[0].lastLogin.toLocaleDateString(
+        "en-US",
+        options
+      );
+
+      lastLogin = formattedDate;
+    } else {
+      lastLogin = "-";
+    }
+
+    return res.status(200).json({
+      status: "success",
+      data: lastLogin,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: err.message,
+    });
+  }
+};

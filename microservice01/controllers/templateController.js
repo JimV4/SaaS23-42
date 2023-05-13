@@ -20,6 +20,15 @@ exports.downloadTemplate = (req, res, next) => {
       });
     }
 
+    res.set("Content-Type", "application/json");
+    res.set(
+      "X-Data",
+      JSON.stringify({
+        status: "success",
+        message: "The CSV template was successfully sent!",
+      })
+    );
+
     res.download(file);
   } catch (err) {
     return res.status(500).json({

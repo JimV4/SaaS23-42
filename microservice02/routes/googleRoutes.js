@@ -7,4 +7,6 @@ router.post("/callback", googleController.GoogleCallback);
 
 router.get("/checklogin", googleController.isLoggedIn);
 
+router.get("/last-login", googleController.getLastLogin);
+
 module.exports = router;
