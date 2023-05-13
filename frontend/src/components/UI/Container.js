@@ -13,6 +13,11 @@ function Container() {
   const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
   const [errorMessage, setErrorMessage] = useState("");
+  /* const [confirmLogin, setConfirmLogin] = useState("");
+
+  function handleConfirmLoginChild() {
+    setConfirmLogin(true);
+  } */
 
   async function loginHandler(UserInfo) {
     try {
@@ -42,14 +47,15 @@ function Container() {
         localStorage.setItem("token", googleResponse.token);
         console.log(localStorage.getItem("token"));
         navigate("/my-account");
+      } else {
+        setErrorMessage(googleResponse.message);
+        console.log(googleResponse);
+
+        showModalHandler();
       }
     } catch (error) {
-      if (error.message === "Network Error") {
-        setErrorMessage("Something Went Wrong! Please try again later...");
-      } else {
-        setErrorMessage(error.response.data.message);
-      }
-      console.log(error);
+      console.error(error);
+      setErrorMessage("Something Went Wrong! Please try again later...");
       showModalHandler();
     }
   }

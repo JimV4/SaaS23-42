@@ -80,7 +80,7 @@ function Demos() {
           responseType: "blob", // Specify the response type as 'blob'
         }
       );
-      console.log(response);
+
       if (response.ok) {
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
@@ -90,15 +90,11 @@ function Demos() {
         link.click();
         URL.revokeObjectURL(url);
       } else {
-        console.error("Error downloading the file:", response.status);
+        throw new Error("Something went wrong while downloading the file.");
       }
     } catch (error) {
-      if (error.message === "Network Error") {
-        setErrorMessage("Something Went Wrong! Please try again later...");
-      } else {
-        setErrorMessage(error.response.data.message);
-      }
-      console.log(error);
+      console.error(error);
+      setErrorMessage("Something went wrong while downloading the file.");
       showModalHandler();
     }
   }

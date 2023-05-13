@@ -36,10 +36,14 @@ function UploadForm() {
           },
         }
       );
+
+      const jsonresponse = await response.json();
+      console.log(jsonresponse);
       if (response.status === 200) {
         let imgPath = response.data.path;
         navigate("/new-chart/created-chart", { state: { imgPath } });
       }
+      console.log(response);
     } catch (error) {
       if (error.message === "Network Error") {
         setErrorMessage("Something Went Wrong! Please try again later...");

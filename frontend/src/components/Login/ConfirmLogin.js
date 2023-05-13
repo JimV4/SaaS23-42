@@ -14,6 +14,7 @@ function ConfirmLogin() {
   const [errorMessage, setErrorMessage] = useState("");
 
   async function continueHandler() {
+    console.log("here");
     const userID = localStorage.getItem("userID");
     try {
       const response = await fetch(
@@ -30,14 +31,14 @@ function ConfirmLogin() {
         localStorage.setItem("token", confirmLogin.token);
         console.log(localStorage.getItem("token"));
         navigate("/my-account");
+      } else {
+        setErrorMessage(confirmLogin.message);
+        showModalHandler();
+        console.log(confirmLogin);
       }
     } catch (error) {
-      if (error.message === "Network Error") {
-        setErrorMessage("Something Went Wrong! Please try again later...");
-      } else {
-        setErrorMessage(error.response.data.message);
-      }
       console.log(error);
+      setErrorMessage("Something Went Wrong! Please try again later...");
       showModalHandler();
     }
   }
@@ -53,13 +54,17 @@ function ConfirmLogin() {
       );
       localStorage.clear();
       navigate("/");
-    } catch (error) {
-      if (error.message === "Network Error") {
-        setErrorMessage("Something Went Wrong! Please try again later...");
-      } else {
-        setErrorMessage(error.response.data.message);
+
+      const jsonresponse = await response.json();
+      if (jsonresponse.status === "failed") {
+        setErrorMessage(jsonresponse.message);
+        console.log(jsonresponse);
+        showModalHandler();
       }
-      console.log(error);
+      console.log(jsonresponse);
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Something Went Wrong! Please try again later...");
       showModalHandler();
     }
   }

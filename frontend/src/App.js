@@ -25,22 +25,22 @@ const router = createBrowserRouter([
       },
       {
         path: "my-account",
-        element: <ProtectedRoute element={MyAccountPage} />,
+        element: <MyAccountPage />,
       },
       {
         path: "buy-credits",
-        element: <ProtectedRoute element={BuyCreditsPage} />,
+        element: <BuyCreditsPage />,
       },
     ],
   },
   {
     path: "new-chart",
-    element: <ProtectedRoute element={NewChartPage} />,
+    element: <NewChartPage />,
     children: [],
   },
   {
     path: "new-chart/created-chart",
-    element: <ProtectedRoute element={CreatedChartPage} />,
+    element: <CreatedChartPage />,
   },
   {
     path: "*",
