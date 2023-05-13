@@ -15,7 +15,7 @@ function AccountItemsList() {
   ];
 
   const accountItemsList = accountItems.map((item) => (
-    <AccountItem title={item.title} />
+    <AccountItem title={item.title} key={item.title} />
   ));
 
   return <ul>{accountItemsList}</ul>;

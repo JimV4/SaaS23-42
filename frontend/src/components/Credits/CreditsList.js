@@ -24,6 +24,7 @@ function CreditsList(props) {
 
   const creditsList = credits.map((item) => (
     <CreditItem
+      key={item.id}
       id={item.id}
       amount={item.amount}
       handleSelected={props.handleSelected}

@@ -52,6 +52,7 @@ function ChartItemsList() {
 
   const chartItemsList = chartItems.map((item) => (
     <ChartItem
+      key={item.title}
       title={item.title}
       img={item.img}
       alt={item.alt}
