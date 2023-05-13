@@ -86,3 +86,35 @@ exports.deleteChart = async (req, res, next) => {
     });
   }
 };
+
+exports.getNumCharts = async (req, res, next) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${process.env.STORED_CHARTS_SERVICE}/num-charts`,
+      data: {
+        email: req.email,
+      },
+    });
+
+    req.charts = response.data.data;
+    return res.status(200).json({
+      status: "success",
+      email: req.email,
+      lastLogin: req.lastLogin,
+      quotas: req.quotas,
+      charts: req.charts,
+    });
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
+        status: "failed",
+        message: err.response.data.message,
+      });
+    }
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
