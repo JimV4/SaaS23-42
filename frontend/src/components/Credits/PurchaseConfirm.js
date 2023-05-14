@@ -2,16 +2,17 @@ import Modal from "../UI/Modal";
 import classes from "./PurchaseConfirm.module.css";
 
 function PurchaseConfirm(props) {
-  const myclass = "modal-credits";
+  const a = 0;
+
   return (
-    <Modal myclass={myclass}>
+    <Modal myclass={"modal-credits"}>
       <p>Are you sure you want to purchase?</p>
       <div className={classes.container}>
         <button
           className={classes.purchase}
           onClick={function (event) {
             props.onClose();
-            props.handleSelected(null);
+            props.handleSelectedAmount(null);
           }}
         >
           Yes
@@ -20,7 +21,7 @@ function PurchaseConfirm(props) {
           className={classes.purchase}
           onClick={function (event) {
             props.onClose();
-            props.handleSelected(null);
+            props.handleSelectedAmount(null);
           }}
         >
           No

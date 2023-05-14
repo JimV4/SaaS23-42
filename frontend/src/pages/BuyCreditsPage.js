@@ -7,12 +7,13 @@ import PurchaseConfirm from "../components/Credits/PurchaseConfirm";
 import useModal from "../components/hooks/useModal";
 
 function BuyCreditsPage() {
-  const [selected, setSelected] = useState(null);
+  const [selectedAmount, setSelectedAmount] = useState(null);
 
   const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
-  function handleSelected(index) {
-    setSelected(index);
+  function handleSelectedAmount(amount) {
+    console.log(`selectedAmount: ${amount}`);
+    setSelectedAmount(amount);
   }
 
   return (
@@ -20,16 +21,19 @@ function BuyCreditsPage() {
       {modalIsShown && (
         <PurchaseConfirm
           onClose={hideModalHandler}
-          handleSelected={handleSelected}
+          handleSelectedAmount={handleSelectedAmount}
         />
       )}
       <FetchAccount
         text={"You are logged in as dhmhtrhs.vassiliou@gmail.com"}
       />
-      <CreditsList selected={selected} handleSelected={handleSelected} />
+      <CreditsList
+        selectedAmount={selectedAmount}
+        handleSelectedAmount={handleSelectedAmount}
+      />
       <CreditsButtons
-        selected={selected}
-        handleSelected={handleSelected}
+        selectedAmount={selectedAmount}
+        handleSelectedAmount={handleSelectedAmount}
         onShowModal={showModalHandler}
         onHideModal={hideModalHandler}
       />

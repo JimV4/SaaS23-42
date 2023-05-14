@@ -4,9 +4,9 @@ function CreditItem(props) {
   return (
     <div
       className={`credit-box ${
-        props.selected === props.id ? "credit-box-hovered" : ""
+        props.selectedAmount === props.amount ? "credit-box-hovered" : ""
       }`}
-      onClick={() => props.handleSelected(props.id)}
+      onClick={() => props.handleSelectedAmount(props.amount)}
     >{`${props.amount} Credits`}</div>
   );
 }

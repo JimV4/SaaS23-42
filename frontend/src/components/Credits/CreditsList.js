@@ -4,30 +4,17 @@ import CreditsContainer from "./CreditsContainer";
 
 function CreditsList(props) {
   const credits = [
-    {
-      id: "0",
-      amount: "5",
-    },
-    {
-      id: "1",
-      amount: "10",
-    },
-    {
-      id: "2",
-      amount: "20",
-    },
-    {
-      id: "3",
-      amount: "50",
-    },
+    { amount: "5" },
+    { amount: "10" },
+    { amount: "20" },
+    { amount: "50" },
   ];
 
   const creditsList = credits.map((item) => (
     <CreditItem
-      key={item.id}
-      id={item.id}
+      key={item.amount}
       amount={item.amount}
-      handleSelected={props.handleSelected}
+      handleSelectedAmount={props.handleSelectedAmount}
       selected={props.selected}
     />
   ));

@@ -9,7 +9,7 @@ function CreditsButtons(props) {
         gap: "15px",
       }}
     >
-      {props.selected && (
+      {props.selectedAmount && (
         <Button text={"Purchase"} onClick={props.onShowModal} />
       )}
       {/* {props.selected && <Button text={"Cancel"} />} */}
