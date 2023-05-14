@@ -1,6 +1,5 @@
 # MICROSERVICE
 
-## (name)
+## Credits Manager API
 
 (description)
-
