@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    container_name: microservice10
+    restart: always
+    build: .
+    ports:
+      - "3009:3009"
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
