@@ -1,7 +1,100 @@
 version: "3"
 
 services:
-  backend:
-    image: microservice01:1.0
-    ports: 8000:8000
-  depends_on:
+  microservice01:
+    build:
+      context: microservice01
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - microservice02
+      - microservice03
+      - microservice04
+      - microservice05
+      - microservice06
+      - microservice07
+      - microservice08
+      - microservice09
+      - microservice10
+      - microservice11
+
+  microservice02:
+    build:
+      context: microservice02
+      dockerfile: ./Dockerfile
+    ports:
+      - "3001:3001"
+
+  microservice03:
+    build:
+      context: microservice03
+      dockerfile: ./Dockerfile
+    ports:
+      - "3002:3002"
+
+  microservice04:
+    build:
+      context: microservice04
+      dockerfile: ./Dockerfile
+    ports:
+      - "3003:3003"
+
+  microservice05:
+    build:
+      context: microservice05
+      dockerfile: ./Dockerfile
+    ports:
+      - "3004:3004"
+
+  microservice06:
+    build:
+      context: microservice06
+      dockerfile: ./Dockerfile
+    ports:
+      - "3005:3005"
+
+  microservice07:
+    build:
+      context: microservice07
+      dockerfile: ./Dockerfile
+    ports:
+      - "3006:3006"
+
+  microservice08:
+    build:
+      context: microservice08
+      dockerfile: ./Dockerfile
+    ports:
+      - "3007:3007"
+
+  microservice09:
+    build:
+      context: microservice09
+      dockerfile: ./Dockerfile
+    ports:
+      - "3008:3008"
+
+  microservice10:
+    build:
+      context: microservice10
+      dockerfile: ./Dockerfile
+    ports:
+      - "3009:3009"
+
+  microservice11:
+    build:
+      context: microservice11
+      dockerfile: ./Dockerfile
+    ports:
+      - "3010:3010"
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - microservice01
+      - microservice02

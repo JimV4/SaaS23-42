@@ -22,7 +22,7 @@ function Container() {
   async function loginHandler(UserInfo) {
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/myCharts/auth/google/callback",
+        "http://microservice01:8000/api/myCharts/auth/google/callback",
         {
           method: "POST",
           body: JSON.stringify({
