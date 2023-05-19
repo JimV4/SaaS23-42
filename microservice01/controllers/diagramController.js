@@ -25,15 +25,14 @@ exports.createChart = async (req, res, next) => {
       method: "post",
       url: `${service}/create`,
       data: req.config,
-      responseType: "blob",
     });
 
-    const imageBlob = new Blob([response.data], { type: "image/png" });
+    console.log(response.data);
 
     const jsonResponse = {
       status: "success",
       message: "Chart created successfully",
-      image: imageBlob,
+      image: response.data.image,
     };
 
     return res.status(200).json(jsonResponse);
