@@ -9,6 +9,7 @@ exports.readCSVFile = async (req, res, next) => {
   try {
     let data = {};
     let type;
+    let title;
 
     if (!req.file) {
       return res.status(400).json({
@@ -41,6 +42,7 @@ exports.readCSVFile = async (req, res, next) => {
           message: "The file you uploaded contains errors!",
         });
       }
+      title = config.title ? config.title : "Line chart";
     } else if (data["type"] == "multi-axis-line-chart") {
       type = "multi-axis-line-chart";
       config = multiAxisLineChartController.getMultiAxisLineChartConfig(data);
@@ -50,6 +52,7 @@ exports.readCSVFile = async (req, res, next) => {
           message: "The file you uploaded contains errors!",
         });
       }
+      title = config.title ? config.title : "Multi axis line chart";
     } else if (data["type"] == "radar-chart") {
       type = "radar-chart";
       config = radarChartController.getRadarChartConfig(data);
@@ -59,6 +62,7 @@ exports.readCSVFile = async (req, res, next) => {
           message: "The file you uploaded contains errors!",
         });
       }
+      title = config.title ? config.title : "Radar chart";
     } else if (data["type"] == "scatter-chart") {
       type = "scatter-chart";
       config = scatterChartController.getScatterChartConfig(data);
@@ -68,6 +72,7 @@ exports.readCSVFile = async (req, res, next) => {
           message: "The file you uploaded contains errors!",
         });
       }
+      title = config.title ? config.title : "Scatter chart";
     } else if (data["type"] == "bubble-chart") {
       type = "bubble-chart";
       config = bubbleChartController.getBubbleChartConfig(data);
@@ -77,6 +82,7 @@ exports.readCSVFile = async (req, res, next) => {
           message: "The file you uploaded contains errors!",
         });
       }
+      title = config.title ? config.title : "Bubble chart";
     } else if (data["type"] == "polar-area-chart") {
       type = "polar-area-chart";
       config = polarAreaChartController.getPolarAreaChartConfig(data);
@@ -86,6 +92,7 @@ exports.readCSVFile = async (req, res, next) => {
           message: "The file you uploaded contains errors!",
         });
       }
+      title = config.title ? config.title : "Polar area chart";
     } else {
       return res.status(400).json({
         status: "failed",
@@ -98,6 +105,7 @@ exports.readCSVFile = async (req, res, next) => {
       status: "success",
       config,
       type,
+      title,
     });
   } catch (err) {
     return res.status(500).json({

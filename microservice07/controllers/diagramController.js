@@ -116,8 +116,10 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    res.set("Content-Type", "image/png");
-    res.send(image);
+    const dataURL = `data:image/png;base64,${image.toString("base64")}`;
+    res.status(200).json({
+      image: dataURL,
+    });
   } catch (error) {
     return res.status(500).json({
       status: "failed",

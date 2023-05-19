@@ -27,11 +27,10 @@ exports.createChart = async (req, res, next) => {
       data: req.config,
     });
 
-    console.log(response.data);
-
     const jsonResponse = {
       status: "success",
-      message: "Chart created successfully",
+      type: req.type,
+      title: req.title,
       image: response.data.image,
     };
 
