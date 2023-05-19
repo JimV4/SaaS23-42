@@ -25,7 +25,7 @@ exports.createChart = async (req, res, next) => {
       method: "post",
       url: `${service}/create`,
       data: req.config,
-      responseType: "arraybuffer",
+      responseType: "blob",
     });
 
     const imageBlob = new Blob([response.data], { type: "image/png" });
