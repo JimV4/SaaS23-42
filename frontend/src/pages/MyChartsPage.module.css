@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  height: 50px;
+  padding: 0 20px;
+}
+
+.email {
+  font-weight: bold;
+}
+
+.links {
+  margin-bottom: 15px;
+}
+
+.links a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #1098ad;
+}
+
+.email {
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.boxes-container {
+  display: flex;
+  flex-direction: row;
+  gap: 500px;
+}

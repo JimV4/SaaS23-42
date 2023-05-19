@@ -9,6 +9,7 @@ import CreatedChartPage from "./pages/CreatedChartPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import useRequireAuth from "./components/hooks/useRequireAuth";
 import ProtectedRoute from "./ProtectedRoute";
+import MyChartsPage from "./pages/MyChartsPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "buy-credits",
         element: <BuyCreditsPage />,
+      },
+      {
+        path: "my-charts",
+        element: <MyChartsPage />,
       },
     ],
   },
