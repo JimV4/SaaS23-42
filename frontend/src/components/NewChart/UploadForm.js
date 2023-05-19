@@ -17,6 +17,8 @@ function UploadForm() {
 
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const [imageUrl, setImageUrl] = useState(null);
+
   function handleFileChange(event) {
     setSelectedFile(event.target.files[0]);
   }
@@ -34,14 +36,19 @@ function UploadForm() {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          responseType: "blob",
         }
       );
 
       if (response.status === 200) {
-        let imageURL = URL.createObjectURL(response.data);
-        navigate("/new-chart/created-chart", { state: { imageURL } });
+        const image = response.data.image;
+        const title = response.data.title;
+        const type = response.data.type;
+
+        setImageUrl(image);
+        navigate("/new-chart/created-chart", { state: { image, title, type } });
       }
+
+      console.log(response);
     } catch (error) {
       if (error.message === "Network Error") {
         setErrorMessage("Something Went Wrong! Please try again later...");
@@ -55,6 +62,7 @@ function UploadForm() {
 
   return (
     <>
+      {imageUrl && <img src={imageUrl} alt="shown" />}
       {modalIsShown && (
         <UploadError message={errorMessage} onClose={hideModalHandler} />
       )}

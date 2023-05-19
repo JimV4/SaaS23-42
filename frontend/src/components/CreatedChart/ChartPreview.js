@@ -2,12 +2,12 @@ import classes from "./ChartPreview.module.css";
 import { useEffect, useState } from "react";
 
 function ChartPreview(props) {
-  const [image, setImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [image, setImage] = useState(null);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  function handleIsLoading() {
-    setIsLoading(!isLoading);
-  }
+  // function handleIsLoading() {
+  //   setIsLoading(!isLoading);
+  // }
 
   /* useEffect(() => {
     async function loadImage() {
@@ -21,17 +21,17 @@ function ChartPreview(props) {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {/* {isLoading && <p>Loading...</p>} */}
       {/* {!isLoading && <p>{`Your ${chartTitle} is ready!`}</p>} */}
 
       <div className={classes["chart-preview"]}>
-        {image && (
+        {
           <img
             className={classes.image}
             src={props.image}
             alt="Your Created Chart"
           />
-        )}
+        }
       </div>
     </>
   );
