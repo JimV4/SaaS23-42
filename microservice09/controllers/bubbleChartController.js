@@ -97,7 +97,7 @@ exports.getBubbleChartConfig = (data) => {
         let x = parseInt(xy[0].split(" ")[0]);
         let y = parseInt(xy[0].split(" ")[1]);
         let r = parseInt(xy[0].split(" ")[2]);
-        if (!array.includes(x) || !y || !r) return null;
+        if (!array.includes(x) || (y != 0 && !y) || (r != 0 && !r)) return null;
         dataY.push({
           x,
           y,

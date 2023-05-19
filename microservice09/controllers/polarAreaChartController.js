@@ -63,7 +63,11 @@ exports.getPolarAreaChartConfig = (data) => {
         let r = parseInt(xy[0].split(" ")[0]);
         let back = xy[0].split(" ")[1] ? xy[0].split(" ")[1] : "null";
         let border = xy[0].split(" ")[2] ? xy[0].split(" ")[2] : "null";
-        if (!r || !isValidColorString(back) || !isValidColorString(border))
+        if (
+          (r != 0 && !r) ||
+          !isValidColorString(back) ||
+          !isValidColorString(border)
+        )
           return null;
         dataY.push(r);
         backgroundColor.push(back);
