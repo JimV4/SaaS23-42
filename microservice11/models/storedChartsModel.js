@@ -9,7 +9,7 @@ const storedChartsSchema = new mongoose.Schema({
   storedCharts: {
     type: [
       {
-        path: {
+        imageURL: {
           type: String,
           required: true,
           unique: true,

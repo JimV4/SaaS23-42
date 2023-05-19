@@ -23,7 +23,6 @@ router.post(
 router.patch(
   "/save-chart",
   authController.protect,
-  upload.single("image"),
   quotasController.subQuotas,
   storedChartsController.saveChart
 );

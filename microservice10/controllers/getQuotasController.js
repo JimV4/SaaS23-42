@@ -20,6 +20,7 @@ exports.checkNumQuotas = async (req, res, next) => {
       });
     }
 
+    console.log(req.body.chart_type);
     let cost;
     if (req.body.chart_type == "line-chart") {
       cost = process.env.LINE_CHART_COST;

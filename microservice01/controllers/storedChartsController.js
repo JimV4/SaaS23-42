@@ -38,18 +38,15 @@ exports.createUser = async (req, res, next) => {
 
 exports.saveChart = async (req, res, next) => {
   try {
-    const formData = new FormData();
-    const fileBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
-
-    formData.append("image", fileBlob, req.file.originalname);
-    formData.set("type", req.body.type);
-    formData.set("title", req.body.title);
-    formData.set("email", req.email);
-
     const response = await axios({
       method: "patch",
       url: `${process.env.STORED_CHARTS_SERVICE}/save-chart`,
-      data: formData,
+      data: {
+        image: req.body.image,
+        type: req.body.type,
+        title: req.body.title,
+        email: req.email,
+      },
     });
 
     return res.status(response.status).json(response.data);
