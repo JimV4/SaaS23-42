@@ -28,10 +28,12 @@ exports.createChart = async (req, res, next) => {
       responseType: "arraybuffer",
     });
 
+    const imageBlob = new Blob([response.data], { type: "image/png" });
+
     const jsonResponse = {
       status: "success",
       message: "Chart created successfully",
-      image: response.data,
+      image: imageBlob,
     };
 
     return res.status(200).json(jsonResponse);
