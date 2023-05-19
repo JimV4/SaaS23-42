@@ -21,15 +21,27 @@ exports.createChart = async (req, res, next) => {
       });
     }
 
-    req.config.email = req.email;
-
     const response = await axios({
       method: "post",
       url: `${service}/create`,
       data: req.config,
+      responseType: "arraybuffer",
     });
 
-    return res.status(response.status).json(response.data);
+    // res.set("Content-Type", "image/png");
+    // res.set("Content-Length", response.data.length);
+
+    // return res.send(response.data);
+
+    const imageBuffer = response.data;
+
+    const jsonResponse = {
+      status: "success",
+      message: "Chart created successfully",
+      image: response.data,
+    };
+
+    return res.status(200).json(jsonResponse);
   } catch (err) {
     if (err.response) {
       return res.status(err.response.status).json({
