@@ -72,7 +72,7 @@ exports.getPolarAreaChartConfig = (data) => {
 
       polarAreaChartConfiguration.scale.datasets.push({
         label: dataset[0],
-        data: JSON.parse(jsonStr),
+        data: dataY,
         backgroundColor,
         borderColor,
       });
