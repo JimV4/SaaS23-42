@@ -14,7 +14,7 @@ function CreatedChartPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const state = useLocation();
-  const imgPath = state.state.imgPath;
+  const image = state.state.image;
 
   async function handleDiscard() {
     try {
@@ -23,7 +23,7 @@ function CreatedChartPage() {
         {
           method: "DELETE",
           body: JSON.stringify({
-            path: imgPath,
+            path: image,
           }), // takes a javascript object and converts it to json
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function CreatedChartPage() {
         {
           method: "PATCH",
           body: JSON.stringify({
-            path: imgPath,
+            path: image,
           }), // takes a javascript object and converts it to json
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +84,7 @@ function CreatedChartPage() {
         <UploadError message={errorMessage} onClose={hideModalHandler} />
       )}
       <div className={classes["container"]}>
-        <ChartPreview imgPath={imgPath} />
+        <ChartPreview image={image} />
         <div className={classes["buttons-container"]}>
           <Button text="Save to My Charts" onClick={handleSave} />
           <Button text="Discard" onClick={handleDiscard} />

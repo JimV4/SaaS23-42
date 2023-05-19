@@ -34,13 +34,13 @@ function UploadForm() {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          responseType: "blob",
         }
       );
-      console.log(response);
 
       if (response.status === 200) {
-        let imgPath = response.data.path;
-        navigate("/new-chart/created-chart", { state: { imgPath } });
+        let imageURL = URL.createObjectURL(response.data);
+        navigate("/new-chart/created-chart", { state: { imageURL } });
       }
     } catch (error) {
       if (error.message === "Network Error") {
