@@ -38,13 +38,18 @@ exports.createUser = async (req, res, next) => {
 
 exports.saveChart = async (req, res, next) => {
   try {
+    const formData = new FormData();
+    const fileBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
+
+    formData.append("image", fileBlob, req.file.originalname);
+    formData.set("type", req.body.type);
+    formData.set("title", req.body.title);
+    formData.set("email", req.email);
+
     const response = await axios({
       method: "patch",
       url: `${process.env.STORED_CHARTS_SERVICE}/save-chart`,
-      data: {
-        email: req.email,
-        path: req.body.path,
-      },
+      data: formData,
     });
 
     return res.status(response.status).json(response.data);
@@ -57,32 +62,7 @@ exports.saveChart = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
-    });
-  }
-};
-
-exports.deleteChart = async (req, res, next) => {
-  try {
-    const response = await axios({
-      method: "delete",
-      url: `${process.env.STORED_CHARTS_SERVICE}/delete-chart`,
-      data: {
-        path: req.body.path,
-      },
-    });
-
-    return res.status(response.status).json(response.data);
-  } catch (err) {
-    if (err.response) {
-      return res.status(err.response.status).json({
-        status: "failed",
-        message: err.response.data.message,
-      });
-    }
-    return res.status(500).json({
-      status: "failed",
-      message: "Something went wrong!",
+      message: err.message,
     });
   }
 };

@@ -23,14 +23,9 @@ router.post(
 router.patch(
   "/save-chart",
   authController.protect,
+  upload.single("image"),
   quotasController.subQuotas,
   storedChartsController.saveChart
-);
-
-router.delete(
-  "/delete-chart",
-  authController.protect,
-  storedChartsController.deleteChart
 );
 
 module.exports = router;

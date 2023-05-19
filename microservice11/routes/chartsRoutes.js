@@ -16,8 +16,6 @@ router.patch(
   updateChartsController.saveChart
 );
 
-router.delete("/delete-chart", updateChartsController.deleteChart);
-
 router.get("/num-charts", getChartsController.getNumCharts);
 
 module.exports = router;
