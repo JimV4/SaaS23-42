@@ -88,29 +88,8 @@ exports.createDiagram = async (req, res, next) => {
 
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    const path = `radar/radar-chart_${
-      req.body.email.split("@")[0]
-    }_${Date.now()}.png`;
-
-    fs.writeFile(
-      `${__dirname}/../../frontend/src/assets/charts/radar/radar-chart_${
-        req.body.email.split("@")[0]
-      }_${Date.now()}.png`,
-      image,
-      async (err) => {
-        if (err) {
-          return res.status(500).json({
-            status: "failed",
-            message: "Something went wrong while saving the chart!",
-          });
-        }
-
-        return res.status(200).json({
-          status: "success",
-          path: path,
-        });
-      }
-    );
+    res.set("Content-Type", "image/png");
+    res.send(image);
   } catch (error) {
     return res.status(500).json({
       status: "failed",
