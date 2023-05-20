@@ -1,5 +1,0 @@
-# AUTHENTICATION
-
-## (name)
-
-(description)

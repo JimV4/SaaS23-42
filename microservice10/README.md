@@ -1,5 +1,0 @@
-# QUOTAS MANAGEMENT
-
-## (name)
-
-(description)

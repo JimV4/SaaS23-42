@@ -1,5 +1,0 @@
-# Polar area
-
-## (name)
-
-(description)
