@@ -7,10 +7,10 @@ function convertToSlug(string) {
 }
 
 exports.downloadImageAsPDF = (req, res, next) => {
-  if (!req.body.imageURL || !req.body.title) {
+  if (!req.body.imageURL) {
     return res.status(400).json({
       status: "failed",
-      message: "Please provide the title of the chart and the imageURL!",
+      message: "Please provide the imageURL!",
     });
   }
   const imageURL = req.body.imageURL;

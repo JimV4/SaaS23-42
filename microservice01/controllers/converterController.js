@@ -6,11 +6,17 @@ function convertToSlug(string) {
 
 exports.downloadPDF = async (req, res, next) => {
   try {
+    if (!req.body.title) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the title of the chart!",
+      });
+    }
+
     const response = await axios({
       method: "post",
       url: `${process.env.PDF_SERVICE}/download`,
       data: {
-        title: req.body.title,
         imageURL: req.body.imageURL,
       },
     });
