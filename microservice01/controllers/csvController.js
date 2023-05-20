@@ -18,6 +18,7 @@ exports.readCSVFile = async (req, res, next) => {
 
     req.config = response.data.config;
     req.type = response.data.type;
+    req.title = response.data.title;
     next();
   } catch (err) {
     if (err.response) {

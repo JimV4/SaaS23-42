@@ -7,7 +7,29 @@ const storedChartsSchema = new mongoose.Schema({
     required: true,
   },
   storedCharts: {
-    type: [String],
+    type: [
+      {
+        imageURL: {
+          type: String,
+          required: true,
+          unique: true,
+        },
+        title: {
+          type: String,
+          required: true,
+          unique: true,
+        },
+        type: {
+          type: String,
+          required: true,
+          unique: true,
+        },
+        createdOn: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
+    ],
     default: [],
   },
 });

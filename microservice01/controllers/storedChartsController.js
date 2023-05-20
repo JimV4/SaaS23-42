@@ -42,8 +42,10 @@ exports.saveChart = async (req, res, next) => {
       method: "patch",
       url: `${process.env.STORED_CHARTS_SERVICE}/save-chart`,
       data: {
+        image: req.body.image,
+        type: req.body.type,
+        title: req.body.title,
         email: req.email,
-        path: req.body.path,
       },
     });
 
@@ -57,32 +59,7 @@ exports.saveChart = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
-    });
-  }
-};
-
-exports.deleteChart = async (req, res, next) => {
-  try {
-    const response = await axios({
-      method: "delete",
-      url: `${process.env.STORED_CHARTS_SERVICE}/delete-chart`,
-      data: {
-        path: req.body.path,
-      },
-    });
-
-    return res.status(response.status).json(response.data);
-  } catch (err) {
-    if (err.response) {
-      return res.status(err.response.status).json({
-        status: "failed",
-        message: err.response.data.message,
-      });
-    }
-    return res.status(500).json({
-      status: "failed",
-      message: "Something went wrong!",
+      message: err.message,
     });
   }
 };

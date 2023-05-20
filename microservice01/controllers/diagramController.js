@@ -21,15 +21,20 @@ exports.createChart = async (req, res, next) => {
       });
     }
 
-    req.config.email = req.email;
-
     const response = await axios({
       method: "post",
       url: `${service}/create`,
       data: req.config,
     });
 
-    return res.status(response.status).json(response.data);
+    const jsonResponse = {
+      status: "success",
+      type: req.type,
+      title: req.title,
+      image: response.data.image,
+    };
+
+    return res.status(200).json(jsonResponse);
   } catch (err) {
     if (err.response) {
       return res.status(err.response.status).json({
