@@ -95,3 +95,28 @@ exports.getNumCharts = async (req, res, next) => {
     });
   }
 };
+
+exports.getUserCharts = async (req, res, next) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${process.env.STORED_CHARTS_SERVICE}/user-charts`,
+      data: {
+        email: req.email,
+      },
+    });
+
+    return res.status(200).json(response.data);
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
+        status: "failed",
+        message: err.response.data.message,
+      });
+    }
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};

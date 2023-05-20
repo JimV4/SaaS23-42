@@ -27,4 +27,10 @@ router.patch(
   storedChartsController.saveChart
 );
 
+router.get(
+  "/my-charts",
+  authController.protect,
+  storedChartsController.getUserCharts
+);
+
 module.exports = router;
