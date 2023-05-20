@@ -70,7 +70,7 @@ function CreatedChartPage() {
 
       const jsonresponse = await response.json();
       if (jsonresponse.status === "success") {
-        navigate(-1);
+        navigate("/my-charts");
       } else if (jsonresponse.status === "failed") {
         console.log(jsonresponse);
         setErrorMessage(jsonresponse.message);
