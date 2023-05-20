@@ -1,0 +1,39 @@
+type:multi-axis-line-chart					
+(width:<width>)						
+(height:<height>)							
+(title:<title>)					
+(X-axis title:<x-axis title>)							
+Y-axis title:<y-axis title>	
+Y1-axis title:<y1-axis title>
+...								
+(X-axis grid:<true/false>)						
+(Y-axis grid:<true/false>)
+(Y1-axis grid:<true/false>)
+...						
+(Y-axis beginAtZero:<true/false>)
+(Y1-axis beginAtZero:<true/false>)
+...
+(Y-axis type:<linear/logarithmic/category>)
+(Y1-axis type:<linear/logarithmic/category>)
+...
+(Y-axis position:<left/right>)
+(Y1-axis position:<left/right>)	
+...								
+data:labels[<data ex x1 x2 x3 x4>]
+DATASET1:(<name>),[<data ex (x1 y6) (x4 y8)>],((<fill>)(/<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>),<y/y1/y2/...>
+(DATASET2: ...
+DATASET3: ...
+...)
+
+
+
+
+
+
+
+
+
+
+
+
+

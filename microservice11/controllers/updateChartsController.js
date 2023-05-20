@@ -1,0 +1,72 @@
+const fs = require("fs");
+const StoredCharts = require("../models/storedChartsModel");
+
+exports.createUser = async (req, res, next) => {
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the email!",
+      });
+    }
+
+    await StoredCharts.create({
+      email: req.body.email,
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "The user was successfully stored in the DB with no charts.",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
+
+exports.saveChart = async (req, res, next) => {
+  try {
+    if (
+      !req.body.type ||
+      !req.body.title ||
+      !req.body.email ||
+      !req.body.image
+    ) {
+      return res.status(400).json({
+        status: "failed",
+        message:
+          "Please provide the type, title and image of the chart to be stored and the user's email!",
+      });
+    }
+
+    const user = await StoredCharts.find({
+      email: req.body.email,
+    });
+
+    if (user.length == 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: "The user no longer exists!",
+      });
+    }
+
+    user[0].storedCharts.push({
+      imageURL: req.body.image,
+      type: req.body.type,
+      title: req.body.title,
+    });
+    await user[0].save();
+
+    return res.status(200).json({
+      status: "success",
+      message: "The user's chart was successfully saved in the DB.",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: err.message,
+    });
+  }
+};
