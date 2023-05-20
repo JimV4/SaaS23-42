@@ -1,5 +1,0 @@
-# Scatter
-
-## (name)
-
-(description)
