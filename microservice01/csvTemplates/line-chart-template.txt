@@ -1,0 +1,28 @@
+type:line-chart					
+(width:<width>)					
+(height:<height>)							
+(title:<title>)						
+(X-axis title:<x-axis title>)							
+(Y-axis title:<y-axis title>)						
+(X-axis grid:<true/false>)						
+(Y-axis grid:<true/false>)						
+(Y-axis beginAtZero:<true/false>)
+(Y-axis type:<linear/logarithmic/category>)
+(Y-axis position:<left/right>)									
+data:labels[<data ex x1 x2 x3 x4>]
+DATASET1:(<name>),[<data ex (x1 y7) (x2 y3) etc>],((<fill>)(/<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)),(<red/blue/green/pink/black/purple/yellow/rgb(a,b,c)/rgba(a,b,c,d)>)
+(DATASET2: ...
+DATASET3: ...
+...)
+
+
+
+
+
+
+
+
+
+
+
+
