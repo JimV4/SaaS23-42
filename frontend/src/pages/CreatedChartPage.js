@@ -14,16 +14,18 @@ function CreatedChartPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const state = useLocation();
-  const imgPath = state.state.imgPath;
+  const image = state.state.image;
+  const title = state.state.title;
+  const type = state.state.type;
 
   async function handleDiscard() {
-    try {
+    /* try {
       const response = await fetch(
         "http://127.0.0.1:8000/api/myCharts/diagrams/delete-chart",
         {
           method: "DELETE",
           body: JSON.stringify({
-            path: imgPath,
+            path: image,
           }), // takes a javascript object and converts it to json
           headers: {
             "Content-Type": "application/json",
@@ -44,7 +46,8 @@ function CreatedChartPage() {
       setErrorMessage("Something went wrong! Please try again later...");
       console.log(error);
       showModalHandler();
-    }
+    } */
+    navigate(-1);
   }
 
   async function handleSave() {
@@ -54,7 +57,9 @@ function CreatedChartPage() {
         {
           method: "PATCH",
           body: JSON.stringify({
-            path: imgPath,
+            image: image,
+            title: title,
+            type: type,
           }), // takes a javascript object and converts it to json
           headers: {
             "Content-Type": "application/json",
@@ -84,7 +89,7 @@ function CreatedChartPage() {
         <UploadError message={errorMessage} onClose={hideModalHandler} />
       )}
       <div className={classes["container"]}>
-        <ChartPreview imgPath={imgPath} />
+        <ChartPreview image={image} />
         <div className={classes["buttons-container"]}>
           <Button text="Save to My Charts" onClick={handleSave} />
           <Button text="Discard" onClick={handleDiscard} />
