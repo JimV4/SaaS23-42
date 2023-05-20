@@ -10,4 +10,6 @@ router.patch("/save-chart", updateChartsController.saveChart);
 
 router.get("/num-charts", getChartsController.getNumCharts);
 
+router.get("/user-charts", getChartsController.getUserCharts);
+
 module.exports = router;
