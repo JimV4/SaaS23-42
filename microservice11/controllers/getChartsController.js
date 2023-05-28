@@ -1,3 +1,4 @@
+const fs = require("fs");
 const StoredCharts = require("../models/storedChartsModel");
 
 exports.getNumCharts = async (req, res, next) => {
@@ -90,8 +91,6 @@ exports.getUserCharts = async (req, res, next) => {
   }
 };
 
-const fs = require("fs");
-
 exports.downloadChart = (req, res, next) => {
   try {
     if (!req.body.type || !req.body.image) {
@@ -105,7 +104,7 @@ exports.downloadChart = (req, res, next) => {
 
     fs.access(file, fs.constants.F_OK, (err) => {
       if (err) {
-        return res.status(404).json({
+        return res.status(400).json({
           status: "failed",
           message: "The requested file does not exist.",
         });
