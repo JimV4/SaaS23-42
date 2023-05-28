@@ -1,5 +1,5 @@
 const express = require("express");
-const pdfConverterController = require("../controllers/pdfConverterController");
+const htmlConverterController = require("../controllers/htmlConverterController");
 const getPNGController = require("../controllers/getPNGController");
 
 const router = express.Router();
@@ -7,7 +7,7 @@ const router = express.Router();
 router.get(
   "/download",
   getPNGController.getPNG,
-  pdfConverterController.downloadImageAsPDF
+  htmlConverterController.downloadImageAsHTML
 );
 
 module.exports = router;
