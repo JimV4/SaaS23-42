@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 const diagramRouter = require("./routes/diagramRoutes");
 const authRouter = require("./routes/authRoutes");
 const templateRouter = require("./routes/templateRoutes");
-const converterRouter = require("./routes/converterRoutes");
 
 const app = express();
 
@@ -31,6 +30,5 @@ app.use((req, res, next) => {
 app.use("/api/myCharts/diagrams", diagramRouter);
 app.use("/api/myCharts/auth", authRouter);
 app.use("/api/myCharts/templates", templateRouter);
-app.use("/api/myCharts/convert", converterRouter);
 
 module.exports = app;
