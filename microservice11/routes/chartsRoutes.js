@@ -12,4 +12,6 @@ router.get("/num-charts", getChartsController.getNumCharts);
 
 router.get("/user-charts", getChartsController.getUserCharts);
 
+router.get("/download-png", getChartsController.downloadChart);
+
 module.exports = router;

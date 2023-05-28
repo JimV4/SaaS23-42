@@ -89,3 +89,35 @@ exports.getUserCharts = async (req, res, next) => {
     });
   }
 };
+
+const fs = require("fs");
+
+exports.downloadChart = (req, res, next) => {
+  try {
+    if (!req.body.type || !req.body.image) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the name and the type of the PNG file!",
+      });
+    }
+
+    let file = `${__dirname}/../public/${req.body.type}/${req.body.image}`;
+
+    fs.access(file, fs.constants.F_OK, (err) => {
+      if (err) {
+        return res.status(404).json({
+          status: "failed",
+          message: "The requested file does not exist.",
+        });
+      }
+
+      res.set("Content-Type", "application/json");
+      res.download(file);
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
