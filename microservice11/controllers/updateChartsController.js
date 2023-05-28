@@ -52,17 +52,34 @@ exports.saveChart = async (req, res, next) => {
       });
     }
 
-    user[0].storedCharts.push({
-      imageURL: req.body.image,
-      type: req.body.type,
-      title: req.body.title,
-    });
-    await user[0].save();
+    const base64Data = req.body.image.split(";base64,").pop();
+    const imageName = `${req.body.email.split("@")[0]}_${Date.now()}.png`;
 
-    return res.status(200).json({
-      status: "success",
-      message: "The user's chart was successfully saved in the DB.",
-    });
+    fs.writeFile(
+      `${__dirname}/../public/${req.body.type}/${imageName}`,
+      base64Data,
+      { encoding: "base64" },
+      async (err) => {
+        if (err) {
+          return res.status(500).json({
+            status: "failed",
+            message: "Error creating PNG file!",
+          });
+        } else {
+          user[0].storedCharts.push({
+            imageURL: imageName,
+            type: req.body.type,
+            title: req.body.title,
+          });
+          await user[0].save();
+
+          return res.status(200).json({
+            status: "success",
+            message: "The user's chart was successfully saved in the DB.",
+          });
+        }
+      }
+    );
   } catch (err) {
     return res.status(500).json({
       status: "failed",
