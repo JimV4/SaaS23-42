@@ -62,7 +62,7 @@ function UploadForm() {
 
   return (
     <>
-      {imageUrl && <img src={imageUrl} alt="shown" />}
+      {/* {imageUrl && <img src={imageUrl} alt="shown" />} */}
       {modalIsShown && (
         <UploadError message={errorMessage} onClose={hideModalHandler} />
       )}
