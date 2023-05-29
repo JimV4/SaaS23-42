@@ -13,7 +13,7 @@ router.get("/num-charts", getChartsController.getNumCharts);
 
 router.get("/user-charts", getChartsController.getUserCharts);
 
-router.get(
+router.post(
   "/download-png",
   authController.protect,
   getChartsController.downloadChart
