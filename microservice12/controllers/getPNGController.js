@@ -9,6 +9,13 @@ exports.getPNG = async (req, res, next) => {
       });
     }
 
+    if (req.body.image.split("_")[0] != req.email.split("@")[0]) {
+      return res.status(403).json({
+        status: "failed",
+        message: "You cannot download a chart PDF that you have not purchased!",
+      });
+    }
+
     const response = await axios({
       method: "get",
       url: `${process.env.STORED_CHARTS_SERVICE}/${req.body.type}/${req.body.image}`,
