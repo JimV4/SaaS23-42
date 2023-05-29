@@ -5,7 +5,7 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
-router.get(
+router.post(
   "/download",
   authController.protect,
   getPNGController.getPNG,
