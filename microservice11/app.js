@@ -3,11 +3,13 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const storedChartsRouter = require("./routes/chartsRoutes");
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(logger("dev"));
