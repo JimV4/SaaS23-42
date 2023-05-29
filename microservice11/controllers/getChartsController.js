@@ -100,6 +100,14 @@ exports.downloadChart = (req, res, next) => {
       });
     }
 
+    if (req.body.image.split("_")[0] != req.email.split("@")[0]) {
+      return res.status(403).json({
+        status: "failed",
+        message:
+          "You cannot download a chart PNG image that you have not purchased!",
+      });
+    }
+
     let file = `${__dirname}/../public/${req.body.type}/${req.body.image}`;
 
     fs.access(file, fs.constants.F_OK, (err) => {

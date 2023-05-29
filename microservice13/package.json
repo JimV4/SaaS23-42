@@ -6,17 +6,14 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "autotrace": "^0.0.2",
     "axios": "^1.4.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "express": "~4.16.1",
     "fs": "^0.0.1-security",
-    "imagetracerjs": "^1.2.6",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.22",
-    "potrace": "^2.1.8",
-    "sharp": "^0.32.1"
+    "potrace": "^2.1.8"
   }
 }
