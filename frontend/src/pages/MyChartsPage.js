@@ -1,9 +1,13 @@
 import classes from "./MyChartsPage.module.css";
-import ChartsTable from "../components/Charts Table/ChartsTable";
-import ShowedChart from "../components/Charts Table/ShowedChart";
+import ChartsTable from "../components/ChartsTable/ChartsTable";
+import ShowedChart from "../components/ChartsTable/ShowedChart";
+import { useNavigate } from "react-router-dom";
+
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function MyChartsPage() {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   const [imageURL, setImageURL] = useState("");
@@ -29,8 +33,28 @@ function MyChartsPage() {
     } catch (error) {}
   }
 
-  function handleChartClick(url) {
-    setImageURL(url);
+  function handleChartClick(url, imageType) {
+    axios
+      .get(`http://127.0.0.1:3010/${imageType}/${url}`, {
+        responseType: "arraybuffer", // Set the response type to 'arraybuffer'
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        const imageData = response.data;
+        const blob = new Blob([imageData], { type: "image/png" });
+        const imageUrl = URL.createObjectURL(blob);
+        console.log(imageUrl);
+        setImageURL(imageUrl);
+        console.log(response);
+        /* navigate("/new-chart/created-chart", {
+          state: { imageUrl },
+        }); */
+      })
+      .catch((error) => {
+        console.error("Error fetching image:", error);
+      });
   }
 
   return (
