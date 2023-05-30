@@ -87,3 +87,39 @@ exports.subQuotas = async (req, res, next) => {
     });
   }
 };
+
+exports.addQuotas = async (req, res, next) => {
+  try {
+    if (!req.body.quotas || !req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message:
+          "Please provide the email of the user and the number of quotas they want to purchase!",
+      });
+    }
+
+    let user = await Quotas.find({
+      email: req.body.email,
+    });
+
+    if (user.length == 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: "The user no longer exists!",
+      });
+    }
+
+    user[0].quotas = user[0].quotas + parseInt(req.body.quotas);
+    await user[0].save();
+
+    return res.status(200).json({
+      status: "success",
+      message: "The user's quotas were successfully updated.",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: err.message,
+    });
+  }
+};
