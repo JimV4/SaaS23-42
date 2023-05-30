@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import classes from "./ChartsTable.module.css";
 
 import axios from "axios";
 
@@ -145,98 +146,32 @@ function ChartsTable(props) {
 
   const data = props.charts;
   console.log(data);
+  if (!data) {
+    return (
+      <div className={classes.tablee}>
+        <table style={{ borderCollapse: "collapse", width: "100%" }}>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>chart came</th>
+              <th>created On</th>
+              <th>download</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    );
+  }
+
   return (
-    // <div>
-    //   <table>
-    //     <thead>
-    //       <tr>
-    //         <th>Type</th>
-    //         <th>chart came</th>
-    //         <th>created On</th>
-    //         <th>download</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {data.map((item) => (
-    //         <tr
-    //           key={item.imageURL}
-    //           onClick={() => handleClick(item.imageURL, item.type)}
-    //           style={{ cursor: "pointer" }}
-    //         >
-    //           <td>{item.type}</td>
-    //           <td>{item.title}</td>
-    //           <td>{item.createdOn}</td>
-    //           <td>
-    //             <span
-    //               onClick={() => handlePDF(item.imageURL, item.type)}
-    //               style={{ cursor: "pointer" }}
-    //             >
-    //               pdf
-    //             </span>
-    //             <span
-    //               onClick={() => handlePng(item.imageURL, item.type)}
-    //               style={{ cursor: "pointer" }}
-    //             >
-    //               png
-    //             </span>
-    //             <span
-    //               onClick={() => handleSvg(item.imageURL, item.type)}
-    //               style={{ cursor: "pointer" }}
-    //             >
-    //               svg
-    //             </span>
-    //             <span
-    //               onClick={() => handleHtml(item.imageURL, item.type)}
-    //               style={{ cursor: "pointer" }}
-    //             >
-    //               html
-    //             </span>
-    //           </td>
-    //         </tr>
-    //       ))}
-    //     </tbody>
-    //   </table>
-    // </div>
-    <div>
+    <div className={classes.tablee}>
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr>
-            <th
-              style={{
-                color: "#1098ad",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              Type
-            </th>
-            <th
-              style={{
-                color: "#1098ad",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              Chart Name
-            </th>
-            <th
-              style={{
-                color: "#1098ad",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              Created On
-            </th>
-            <th
-              style={{
-                color: "#1098ad",
-                border: "1px solid black",
-                padding: "8px",
-              }}
-            >
-              Download
-            </th>
+            <th>Type</th>
+            <th>chart came</th>
+            <th>created On</th>
+            <th>download</th>
           </tr>
         </thead>
         <tbody>
@@ -246,52 +181,40 @@ function ChartsTable(props) {
               onClick={() => handleClick(item.imageURL, item.type)}
               style={{ cursor: "pointer" }}
             >
-              <td style={{ border: "1px solid black", padding: "8px" }}>
-                {item.type}
-              </td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>
-                {item.title}
-              </td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>
-                {item.createdOn}
-              </td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>
-                <span
-                  onClick={() => handlePDF(item.imageURL, item.type)}
-                  style={{
-                    cursor: "pointer",
-                    marginRight: "8px",
-                    color: "blue",
-                  }}
-                >
-                  pdf
-                </span>
-                <span
-                  onClick={() => handlePng(item.imageURL, item.type)}
-                  style={{
-                    cursor: "pointer",
-                    marginRight: "8px",
-                    color: "blue",
-                  }}
-                >
-                  png
-                </span>
-                <span
-                  onClick={() => handleSvg(item.imageURL, item.type)}
-                  style={{
-                    cursor: "pointer",
-                    marginRight: "8px",
-                    color: "blue",
-                  }}
-                >
-                  svg
-                </span>
-                <span
-                  onClick={() => handleHtml(item.imageURL, item.type)}
-                  style={{ cursor: "pointer", color: "blue" }}
-                >
-                  html
-                </span>
+              <td>{item.type}</td>
+              <td>{item.title}</td>
+              <td>{item.createdOn}</td>
+              <td>
+                <div className={classes.downloadContainer}>
+                  <div className={classes.inlineContainer}>
+                    <span
+                      onClick={() => handlePDF(item.imageURL, item.type)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      pdf
+                    </span>
+                    <span
+                      onClick={() => handlePng(item.imageURL, item.type)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      png
+                    </span>
+                  </div>
+                  <div className={classes.inlineContainer}>
+                    <span
+                      onClick={() => handleSvg(item.imageURL, item.type)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      svg
+                    </span>
+                    <span
+                      onClick={() => handleHtml(item.imageURL, item.type)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      html
+                    </span>
+                  </div>
+                </div>
               </td>
             </tr>
           ))}

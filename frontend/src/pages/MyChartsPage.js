@@ -13,25 +13,30 @@ function MyChartsPage() {
   const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("here");
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/myCharts/diagrams/my-charts",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        const jsonData = await response.json();
+        setData(jsonData.data);
+        console.log(jsonData.data);
+      } catch (error) {
+        // Handle any error that occurred during the fetch request
+      }
+    };
+
+    // Fetch the data only when the component is initially mounted
     fetchData();
   }, []);
-
-  async function fetchData() {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/myCharts/diagrams/my-charts",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      const jsonData = await response.json();
-      setData(jsonData.data);
-      console.log(jsonData.data);
-    } catch (error) {}
-  }
 
   function handleChartClick(url, imageType) {
     axios
@@ -60,9 +65,9 @@ function MyChartsPage() {
   return (
     <>
       <div className={classes.header}>
-        <p className={classes.email}>dhmhtrhs.vassiliou@gmail.com</p>
+        <p className={classes.email}>{localStorage.getItem("email")}</p>
         <div className={classes.links}>
-          <a href="#">My Account</a>
+          <a href="/my-account">My Account</a>
           <a href="#">Logout</a>
         </div>
       </div>

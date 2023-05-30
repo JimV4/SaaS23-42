@@ -45,7 +45,8 @@ function Container() {
         googleResponse.message === "You were successfully logged in!"
       ) {
         localStorage.setItem("token", googleResponse.token);
-        console.log(localStorage.getItem("token"));
+        localStorage.setItem("email", UserInfo.email);
+
         navigate("/my-account");
       } else {
         setErrorMessage(googleResponse.message);
