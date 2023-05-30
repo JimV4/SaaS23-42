@@ -1,4 +1,5 @@
 const axios = require("axios");
+const fs = require("fs");
 
 exports.getPNG = async (req, res, next) => {
   try {
@@ -16,14 +17,38 @@ exports.getPNG = async (req, res, next) => {
       });
     }
 
-    const response = await axios({
-      method: "get",
-      url: `${process.env.STORED_CHARTS_SERVICE}/${req.body.type}/${req.body.image}`,
-      responseType: "arraybuffer",
-    });
+    fs.access(
+      `${__dirname}/../public/${req.body.type}/${
+        req.body.image.split(".")[0]
+      }.pdf`,
+      fs.constants.F_OK,
+      async (err) => {
+        if (err) {
+          const response = await axios({
+            method: "get",
+            url: `${process.env.STORED_CHARTS_SERVICE}/${req.body.type}/${req.body.image}`,
+            responseType: "arraybuffer",
+          });
 
-    req.image = response.data;
-    next();
+          req.image = response.data;
+          next();
+        } else {
+          res.set("Content-Type", "application/pdf");
+          res.set(
+            "Content-Disposition",
+            `attachment; filename="${req.body.image.split(".")[0]}.pdf"`
+          );
+
+          return fs
+            .createReadStream(
+              `${__dirname}/../public/${req.body.type}/${
+                req.body.image.split(".")[0]
+              }.pdf`
+            )
+            .pipe(res);
+        }
+      }
+    );
   } catch (err) {
     if (err.response) {
       return res.status(err.response.status).json({
