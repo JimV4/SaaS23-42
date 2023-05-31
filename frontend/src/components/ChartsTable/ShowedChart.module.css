@@ -9,3 +9,9 @@
   margin-top: 20px;
   margin-right: 70px;
 }
+
+.image {
+  height: 345px;
+  width: auto;
+  object-fit: cover;
+}
