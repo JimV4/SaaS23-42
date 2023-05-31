@@ -11,7 +11,11 @@ function ShowedChart(props) {
   }
   return (
     <div className={classes["chart-preview"]}>
-      <img src={props.chartImage} alt="selected chart" />
+      <img
+        src={props.chartImage}
+        alt="selected chart"
+        className={classes.image}
+      />
     </div>
   );
 }
