@@ -5,8 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import useModal from "../components/hooks/useModal";
+import UploadError from "../components/UI/UploadError";
 
 function MyChartsPage() {
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 
@@ -27,10 +33,16 @@ function MyChartsPage() {
         );
 
         const jsonData = await response.json();
-        setData(jsonData.data);
-        console.log(jsonData.data);
+        if (response.ok) {
+          setData(jsonData.data);
+        } else {
+          setErrorMessage("Something went wrong!");
+          showModalHandler();
+        }
       } catch (error) {
-        // Handle any error that occurred during the fetch request
+        console.error(error);
+        setErrorMessage("Something went wrong!");
+        showModalHandler();
       }
     };
 
@@ -38,32 +50,41 @@ function MyChartsPage() {
     fetchData();
   }, []);
 
-  function handleChartClick(url, imageType) {
-    axios
-      .get(`http://127.0.0.1:3010/${imageType}/${url}`, {
-        responseType: "arraybuffer", // Set the response type to 'arraybuffer'
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((response) => {
+  async function handleChartClick(url, imageType) {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:3010/${imageType}/${url}`,
+        {
+          responseType: "arraybuffer",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
         const imageData = response.data;
         const blob = new Blob([imageData], { type: "image/png" });
         const imageUrl = URL.createObjectURL(blob);
         console.log(imageUrl);
         setImageURL(imageUrl);
         console.log(response);
-        /* navigate("/new-chart/created-chart", {
-          state: { imageUrl },
-        }); */
-      })
-      .catch((error) => {
-        console.error("Error fetching image:", error);
-      });
+      } else {
+        setErrorMessage("Something went wrong!");
+        showModalHandler();
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Something went wrong!");
+      showModalHandler();
+    }
   }
 
   return (
     <>
+      {modalIsShown && (
+        <UploadError message={errorMessage} onClose={hideModalHandler} />
+      )}
       <div className={classes.header}>
         <p className={classes.email}>{localStorage.getItem("email")}</p>
         <div className={classes.links}>
