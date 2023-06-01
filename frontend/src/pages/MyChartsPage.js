@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import useModal from "../components/hooks/useModal";
 import UploadError from "../components/UI/UploadError";
+import { Link } from "react-router-dom";
 
 function MyChartsPage() {
   const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
@@ -17,6 +18,11 @@ function MyChartsPage() {
   const [data, setData] = useState([]);
 
   const [imageURL, setImageURL] = useState("");
+
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/");
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,7 +95,7 @@ function MyChartsPage() {
         <p className={classes.email}>{localStorage.getItem("email")}</p>
         <div className={classes.links}>
           <a href="/my-account">My Account</a>
-          <a href="#">Logout</a>
+          <Link onClick={handleLogout}>Logout</Link>
         </div>
       </div>
       <div className={classes["boxes-container"]}>
