@@ -13,11 +13,6 @@ function Container() {
   const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
   const [errorMessage, setErrorMessage] = useState("");
-  /* const [confirmLogin, setConfirmLogin] = useState("");
-
-  function handleConfirmLoginChild() {
-    setConfirmLogin(true);
-  } */
 
   async function loginHandler(UserInfo) {
     try {
@@ -26,10 +21,9 @@ function Container() {
         {
           method: "POST",
           body: JSON.stringify({
-            // clientId: UserInfo.clientId,
             email: UserInfo.email,
             name: UserInfo.name,
-          }), // takes a javascript object and converts it to json
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -40,6 +34,7 @@ function Container() {
 
       if (googleResponse.message === "Please verify your login!") {
         localStorage.setItem("userID", googleResponse.userID);
+        localStorage.setItem("email", UserInfo.email);
         navigate("/login");
       } else if (
         googleResponse.message === "You were successfully logged in!"
@@ -51,12 +46,11 @@ function Container() {
       } else {
         setErrorMessage(googleResponse.message);
         console.log(googleResponse);
-
         showModalHandler();
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage("Something Went Wrong! Please try again later...");
+      setErrorMessage("Something Went Wrong!");
       showModalHandler();
     }
   }
@@ -81,6 +75,11 @@ function Container() {
             }}
             onError={() => {
               console.log("Login Failed");
+
+              <UploadError
+                message="Something Went Wrong!"
+                onClose={hideModalHandler}
+              />;
             }}
           />
           <a href="" className={classes.about}>

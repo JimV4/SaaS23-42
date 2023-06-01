@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import classes from "./ChartsTable.module.css";
+import useModal from "../hooks/useModal";
+import UploadError from "../UI/UploadError";
 
 import axios from "axios";
 
 function ChartsTable(props) {
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   function handleClick(imageURL, imageType) {
     props.onClick(imageURL, imageType);
   }
@@ -35,10 +41,12 @@ function ChartsTable(props) {
         link.click();
         URL.revokeObjectURL(url);
       } else {
-        throw new Error("Something went wrong while downloading the file.");
+        throw new Error("Something went wrong while downloading the file!");
       }
     } catch (error) {
       console.error(error);
+      setErrorMessage("Something went wrong while downloading the file!");
+      showModalHandler();
     }
   }
 
@@ -69,10 +77,12 @@ function ChartsTable(props) {
         link.click();
         URL.revokeObjectURL(url);
       } else {
-        throw new Error("Something went wrong while downloading the file.");
+        throw new Error("Something went wrong while downloading the file!");
       }
     } catch (error) {
       console.error(error);
+      setErrorMessage("Something went wrong while downloading the file!");
+      showModalHandler();
     }
   }
 
@@ -103,10 +113,12 @@ function ChartsTable(props) {
         link.click();
         URL.revokeObjectURL(url);
       } else {
-        throw new Error("Something went wrong while downloading the file.");
+        throw new Error("Something went wrong while downloading the file!");
       }
     } catch (error) {
       console.error(error);
+      setErrorMessage("Something went wrong while downloading the file!");
+      showModalHandler();
     }
   }
 
@@ -137,10 +149,12 @@ function ChartsTable(props) {
         link.click();
         URL.revokeObjectURL(url);
       } else {
-        throw new Error("Something went wrong while downloading the file.");
+        throw new Error("Something went wrong while downloading the file!");
       }
     } catch (error) {
       console.error(error);
+      setErrorMessage("Something went wrong while downloading the file!");
+      showModalHandler();
     }
   }
 
@@ -164,63 +178,68 @@ function ChartsTable(props) {
   }
 
   return (
-    <div className={classes.tablee}>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>chart came</th>
-            <th>created On</th>
-            <th>download</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr
-              key={item.imageURL}
-              onClick={() => handleClick(item.imageURL, item.type)}
-              style={{ cursor: "pointer" }}
-            >
-              <td>{item.type}</td>
-              <td>{item.title}</td>
-              <td>{item.createdOn}</td>
-              <td>
-                <div className={classes.downloadContainer}>
-                  <div className={classes.inlineContainer}>
-                    <span
-                      onClick={() => handlePDF(item.imageURL, item.type)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      pdf
-                    </span>
-                    <span
-                      onClick={() => handlePng(item.imageURL, item.type)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      png
-                    </span>
-                  </div>
-                  <div className={classes.inlineContainer}>
-                    <span
-                      onClick={() => handleSvg(item.imageURL, item.type)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      svg
-                    </span>
-                    <span
-                      onClick={() => handleHtml(item.imageURL, item.type)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      html
-                    </span>
-                  </div>
-                </div>
-              </td>
+    <>
+      {modalIsShown && (
+        <UploadError message={errorMessage} onClose={hideModalHandler} />
+      )}
+      <div className={classes.tablee}>
+        <table style={{ borderCollapse: "collapse", width: "100%" }}>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>chart came</th>
+              <th>created On</th>
+              <th>download</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr
+                key={item.imageURL}
+                onClick={() => handleClick(item.imageURL, item.type)}
+                style={{ cursor: "pointer" }}
+              >
+                <td>{item.type}</td>
+                <td>{item.title}</td>
+                <td>{item.createdOn}</td>
+                <td>
+                  <div className={classes.downloadContainer}>
+                    <div className={classes.inlineContainer}>
+                      <span
+                        onClick={() => handlePDF(item.imageURL, item.type)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        pdf
+                      </span>
+                      <span
+                        onClick={() => handlePng(item.imageURL, item.type)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        png
+                      </span>
+                    </div>
+                    <div className={classes.inlineContainer}>
+                      <span
+                        onClick={() => handleSvg(item.imageURL, item.type)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        svg
+                      </span>
+                      <span
+                        onClick={() => handleHtml(item.imageURL, item.type)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        html
+                      </span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 

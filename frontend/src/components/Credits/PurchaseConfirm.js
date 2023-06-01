@@ -1,8 +1,15 @@
 import Modal from "../UI/Modal";
 import classes from "./PurchaseConfirm.module.css";
 import { useNavigate } from "react-router-dom";
+import useModal from "../hooks/useModal";
+import { useState } from "react";
+import UploadError from "../UI/UploadError";
 
 function PurchaseConfirm(props) {
+  const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
   async function buyQuotas() {
     try {
@@ -23,28 +30,39 @@ function PurchaseConfirm(props) {
         console.log("here");
         navigate("/my-account");
         props.onClose();
+      } else {
+        throw new Error("Something went wrong while buying credits!");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Something went wrong while buying credits!");
+      showModalHandler();
+    }
   }
 
   return (
-    <Modal myclass="modal-credits">
-      <p>Are you sure you want to purchase?</p>
-      <div className={classes.container}>
-        <button className={classes.purchase} onClick={buyQuotas}>
-          Yes
-        </button>
-        <button
-          className={classes.purchase}
-          onClick={function (event) {
-            props.onClose();
-            props.handleSelected(null);
-          }}
-        >
-          No
-        </button>
-      </div>
-    </Modal>
+    <>
+      {modalIsShown && (
+        <UploadError message={errorMessage} onClose={hideModalHandler} />
+      )}
+      <Modal myclass="modal-credits">
+        <p>Are you sure you want to purchase?</p>
+        <div className={classes.container}>
+          <button className={classes.purchase} onClick={buyQuotas}>
+            Yes
+          </button>
+          <button
+            className={classes.purchase}
+            onClick={function (event) {
+              props.onClose();
+              props.handleSelected(null);
+            }}
+          >
+            No
+          </button>
+        </div>
+      </Modal>
+    </>
   );
 }
 
