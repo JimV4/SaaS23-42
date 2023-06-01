@@ -1,24 +1,20 @@
-import AccountItem from "../Account/AccountItem";
 import classes from "./AccountItemsList.module.css";
 
 function AccountItemsList() {
-  const accountItems = [
-    {
-      title: "Number of charts",
-    },
-    {
-      title: "Available credits",
-    },
-    {
-      title: "Last login",
-    },
-  ];
-
-  const accountItemsList = accountItems.map((item) => (
-    <AccountItem title={item.title} key={item.title} />
-  ));
-
-  return <ul>{accountItemsList}</ul>;
+  return (
+    <div className={classes.container}>
+      <div className={classes.wordsContainer}>
+        <span>Number of Charts</span>
+        <span>Available Credits</span>
+        <span>Last Login</span>
+      </div>
+      <div className={classes.boxesContainer}>
+        <div className={classes.box}></div>
+        <div className={classes.box}></div>
+        <div className={classes.box}></div>
+      </div>
+    </div>
+  );
 }
 
 export default AccountItemsList;
