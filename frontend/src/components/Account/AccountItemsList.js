@@ -1,6 +1,8 @@
 import classes from "./AccountItemsList.module.css";
 
 function AccountItemsList() {
+  async function loadAccountData() {}
+
   return (
     <div className={classes.container}>
       <div className={classes.wordsContainer}>
