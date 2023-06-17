@@ -14,7 +14,7 @@ exports.createUser = async (req, res, next) => {
     if (!req.body.email) {
       return res.status(400).json({
         status: "failed",
-        message: "Please provide the email!",
+        message: "Please provide the user's email!",
       });
     }
 
@@ -22,7 +22,7 @@ exports.createUser = async (req, res, next) => {
 
     return res.status(200).json({
       status: "success",
-      message: "The user was successfully stored in the DB with 0 quotas.",
+      message: "The user's email was successfully stored with 0 quotas.",
     });
   } catch (error) {
     return res.status(500).json({
@@ -46,7 +46,7 @@ exports.subQuotas = async (req, res, next) => {
     if (!req.body.chart_type || !req.body.email) {
       return res.status(400).json({
         status: "failed",
-        message: "Please provide the type of the chart and the email!",
+        message: "Please provide the type of the chart and the user's email!",
       });
     }
 
@@ -89,7 +89,7 @@ exports.subQuotas = async (req, res, next) => {
     if (user.quotas < cost) {
       return res.status(403).json({
         status: "failed",
-        message: "You do not have enough quotas to create this chart!",
+        message: "The user does not have enough quotas to create this chart!",
       });
     }
 
@@ -123,7 +123,7 @@ exports.addQuotas = async (req, res, next) => {
       return res.status(400).json({
         status: "failed",
         message:
-          "Please provide the email and the number of quotas to be purchased!",
+          "Please provide the user's email and the number of quotas to be purchased!",
       });
     }
 
