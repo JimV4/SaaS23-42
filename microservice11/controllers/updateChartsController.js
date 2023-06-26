@@ -49,5 +49,64 @@ exports.createUser = async (req, res, next) => {
  * URL: {baseURL}/stored-charts/save-chart
  */
 exports.saveChart = async (req, res, next) => {
-  next();
+  try {
+    if (
+      !req.body.type ||
+      !req.body.title ||
+      !req.body.email ||
+      !req.body.image
+    ) {
+      return res.status(400).json({
+        status: "failed",
+        message:
+          "Please provide the type, title and image of the chart to be stored and the user's email!",
+      });
+    }
+
+    const [user, ...users] = await StoredCharts.find({ email: req.body.email });
+
+    if (user === undefined || users !== []) {
+      return res.status(400).json({
+        status: "failed",
+        message:
+          user === undefined
+            ? "The user doesn't exist/no longer exists!"
+            : "Error! Multiple users share the same email address!",
+      });
+    }
+
+    const base64Data = req.body.image.split(";base64,").pop();
+    const imageName = `${req.body.email.split("@")[0]}_${Date.now()}.png`;
+    fs.writeFile(
+      `${__dirname}/../public/${req.body.type}/${imageName}`,
+      base64Data,
+      { encoding: "base64" },
+      async (error) => {
+        if (error) {
+          return res.status(500).json({
+            status: "failed",
+            message: "Error occured while creating PNG file!",
+          });
+        } else {
+          user.storedCharts.push({
+            imageURL: imageName,
+            type: req.body.type,
+            title: req.body.title,
+          });
+
+          await user.save();
+
+          return res.status(200).json({
+            status: "success",
+            message: "The user's chart was successfully saved in the DB.",
+          });
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({
+      status: "failed",
+      message: error.message,
+    });
+  }
 };
