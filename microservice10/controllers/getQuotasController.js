@@ -2,9 +2,9 @@ const Quotas = require(`${__dirname}/../models/quotasModel`);
 
 /**
  * Checks if a user has enough quotas to purchase a specified diagram.
- * @param {*} req - JSON object containing a body with the user's email and the type of the diagram.
- * @param {*} res - JSON object containing a confirmation/rejection of the request.
- * @param {*} next - Pointer to the next function in the middleware stack.
+ * @param {JSON} req - JSON object containing a body with the user's email and the type of the diagram.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack.
  * @return {JSON} - The response object.
  *
  * URL: {baseURL}/quotas/check
@@ -75,9 +75,9 @@ exports.checkNumQuotas = async (req, res, next) => {
 
 /**
  * Returns the number of quotas that a user has.
- * @param {*} req - JSON object containing a body with the user's email.
- * @param {*} res - JSON object containing a confirmation/rejection of the request.
- * @param {*} next - Pointer to the next function in the middleware stack.
+ * @param {JSON} req - JSON object containing a body with the user's email.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack.
  * @return {JSON} - The response object.
  *
  * URL: {baseURL}/quotas/num-quotas
