@@ -12,7 +12,6 @@ const storedChartsSchema = new mongoose.Schema({
         imageURL: {
           type: String,
           required: [true, "The imageURL is needed."],
-          unique: true,
         },
         title: {
           type: String,
