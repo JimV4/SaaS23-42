@@ -15,7 +15,35 @@ const StoredCharts = require(`${__dirname}/../models/storedChartsModel`);
  * URL: {baseURL}/stored-charts/num-charts
  */
 exports.getNumCharts = async (req, res, next) => {
-  next();
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the user's email!",
+      });
+    }
+
+    let [user] = await StoredCharts.find({
+      email: req.body.email,
+    });
+
+    if (user === undefined) {
+      return res.status(400).json({
+        status: "failed",
+        message: "The user doesn't exist/no longer exists!",
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      data: user.storedCharts.length,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
 };
 
 /**
@@ -32,7 +60,60 @@ exports.getNumCharts = async (req, res, next) => {
  * URL: {baseURL}/stored-charts/user-charts
  */
 exports.getUserCharts = async (req, res, next) => {
-  next();
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the user's email!",
+      });
+    }
+
+    let [user] = await StoredCharts.find({
+      email: req.body.email,
+    });
+
+    if (user === undefined) {
+      return res.status(400).json({
+        status: "failed",
+        message: "The user doesn't exist/no longer exists!",
+      });
+    }
+
+    const options = [
+      "en-US",
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "Europe/Athens",
+      },
+    ];
+
+    let charts = [];
+    user.storedCharts.forEach((storedChart) => {
+      const createdOn = storedChart.createdOn;
+      const formattedDate = `${createdOn.getDate()}:${
+        createdOn.getMonth() + 1
+      }:${createdOn.getFullYear()} ${createdOn.toLocaleTimeString(...options)}`;
+
+      charts.push({
+        imageURL: storedChart.imageURL,
+        title: storedChart.title,
+        type: storedChart.type,
+        createdOn: formattedDate,
+      });
+    });
+
+    return res.status(200).json({
+      status: "success",
+      data: charts,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "failed",
+      message: error.message,
+    });
+  }
 };
 
 /**
