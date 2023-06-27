@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const storedChartsSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: [true, "The email is needed here."],
-    required: true,
+    unique: [true, "This email is already in use."],
+    required: [true, "The email is needed here."],
   },
   storedCharts: {
     type: [
       {
         imageURL: {
           type: String,
-          required: [true, "The imageURL is needed."],
+          required: [true, "The imageURL of the chart is needed."],
         },
         title: {
           type: String,
