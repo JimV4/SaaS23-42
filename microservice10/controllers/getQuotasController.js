@@ -18,12 +18,15 @@ exports.checkNumQuotas = async (req, res, next) => {
       });
     }
 
-    let [user] = await Quotas.find({ email: req.body.email });
+    let [user, ...users] = await Quotas.find({ email: req.body.email });
 
-    if (user === undefined) {
+    if (user === undefined || users !== []) {
       return res.status(400).json({
         status: "failed",
-        message: "The user does not exist!",
+        message:
+          user === undefined
+            ? "The user doesn't exist/no longer exists!"
+            : "Error! Multiple users share the same email address!",
       });
     }
 
@@ -91,12 +94,15 @@ exports.getNumQuotas = async (req, res, next) => {
       });
     }
 
-    let [user] = await Quotas.find({ email: req.body.email });
+    let [user, ...users] = await Quotas.find({ email: req.body.email });
 
-    if (user === undefined) {
+    if (user === undefined || users !== []) {
       return res.status(400).json({
         status: "failed",
-        message: "The user does not exist!",
+        message:
+          user === undefined
+            ? "The user doesn't exist/no longer exists!"
+            : "Error! Multiple users share the same email address!",
       });
     }
 
