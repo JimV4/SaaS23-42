@@ -1,3 +1,4 @@
+const axios = require("axios");
 const fs = require("fs");
 
 /**
@@ -14,6 +15,45 @@ const fs = require("fs");
  * URL: {baseURL}/html-converter/download
  */
 exports.getPNG = async (req, res, next) => {
-  return res.status(418).json({ message: "I'm a teapot" });
-  next();
+  try {
+    if (!req.body.type || !req.body.image) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the type and the name of the PNG file!",
+      });
+    }
+
+    if (req.body.image.split("_")[0] != req.email.split("@")[0]) {
+      return res.status(403).json({
+        status: "failed",
+        message: "You cannot download a PDF file that you have not purchased!",
+      });
+    }
+
+    let pdfFileName = `${req.body.image.split(".")[0]}.pdf`;
+    let pdfFilePath = `${__dirname}/../public/${req.body.type}/${pdfFileName}`;
+
+    fs.access(pdfFilePath, fs.constants.F_OK, async (error) => {
+      if (error) {
+        const { data, ...rest } = await axios({
+          method: "get",
+          url: `${process.env.STORED_CHARTS_SERVICE}/${req.body.type}/${req.body.image}`,
+          responseType: "arraybuffer",
+        });
+
+        if (data) req.image = data;
+        else throw { message: "Error while getting the PNG image!" };
+        next();
+      } else {
+        res.set("Content-Type", "application/pdf");
+        res.set("Content-Disposition", `attachment; filename="${pdfFileName}"`);
+        return fs.createReadStream(pdfFilePath).pipe(res);
+      }
+    });
+  } catch (error) {
+    return res.status(error.response ? error.response.status : 500).json({
+      status: "failed",
+      message: error.response ? error.response.data.message : error.message,
+    });
+  }
 };
