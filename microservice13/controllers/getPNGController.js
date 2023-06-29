@@ -11,7 +11,7 @@ const fs = require("fs");
  * - status: "failed"
  * - message: <error message>
  *
- * URL: {baseURL}/pdf-converter/download
+ * URL: {baseURL}/svg-converter/download
  */
 exports.getPNG = async (req, res, next) => {
   return res.status(418).json({ message: "I'm a teapot" });
