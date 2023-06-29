@@ -19,6 +19,7 @@ exports.createUser = async (req, res, next) => {
       message: "The user was successfully stored in the DB with no charts.",
     });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       status: "failed",
       message: "Something went wrong!",

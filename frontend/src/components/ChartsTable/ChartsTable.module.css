@@ -35,9 +35,11 @@ span {
 .downloadContainer {
   display: flex;
   flex-direction: column;
+  margin-left: 50px;
 }
 
 .inlineContainer {
   display: flex;
   flex-direction: row;
+  gap: 50px;
 }
