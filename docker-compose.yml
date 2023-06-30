@@ -18,6 +18,9 @@ services:
       - microservice09
       - microservice10
       - microservice11
+      - microservice12
+      - microservice13
+      - microservice14
 
   microservice02:
     build:
@@ -88,6 +91,27 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "3010:3010"
+
+  microservice12:
+    build:
+      context: microservice12
+      dockerfile: ./Dockerfile
+    ports:
+      - "3011:3012"
+
+  microservice13:
+    build:
+      context: microservice13
+      dockerfile: ./Dockerfile
+    ports:
+      - "3012:3012"
+
+  microservice14:
+    build:
+      context: microservice14
+      dockerfile: ./Dockerfile
+    ports:
+      - "3013:3013"
 
   frontend:
     build:
