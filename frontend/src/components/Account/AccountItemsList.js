@@ -1,6 +1,6 @@
 import useModal from "../hooks/useModal";
 import UploadError from "../UI/UploadError";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./AccountItemsList.module.css";
 
 function AccountItemsList() {
@@ -12,36 +12,37 @@ function AccountItemsList() {
   const [quotas, setQuotas] = useState(null);
   const [charts, setCharts] = useState(null);
 
-  async function loadAccountData() {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/myCharts/auth/my-account",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+  useEffect(() => {
+    async function loadAccountData() {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/myCharts/auth/my-account",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        const jsonresponse = await response.json();
+
+        if (jsonresponse.status === "success") {
+          setLastLogin(jsonresponse.lastLogin);
+          setQuotas(jsonresponse.quotas);
+          setCharts(jsonresponse.charts);
+        } else {
+          setErrorMessage("Something went wrong!");
+          showModalHandler();
         }
-      );
-
-      /** TODO: DEAL WITH RESPONSE **/
-
-      const jsonresponse = await response.json();
-
-      if (jsonresponse.ok) {
-        setLastLogin(jsonresponse.lastLogin);
-        setQuotas(jsonresponse.quotas);
-        setCharts(jsonresponse.charts);
-      } else {
+      } catch (error) {
+        console.error(error);
         setErrorMessage("Something went wrong!");
         showModalHandler();
       }
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Something went wrong!");
-      showModalHandler();
     }
-  }
+    loadAccountData();
+  }, []);
 
   return (
     <>
