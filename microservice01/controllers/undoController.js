@@ -39,3 +39,24 @@ exports.undoCreateUser = async (req, res, next) => {
     });
   }
 };
+
+exports.undoSubQuotas = async (req, res, next) => {
+  try {
+    if (!req.free) {
+      const response = await axios({
+        method: "patch",
+        url: `${process.env.QUOTAS_SERVICE}/undosub`,
+        data: {
+          email: req.email,
+          chart_type: req.body.type,
+        },
+      });
+    }
+    next();
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong causing inconsistencies!",
+    });
+  }
+};

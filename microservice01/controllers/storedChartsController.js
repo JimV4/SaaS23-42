@@ -55,6 +55,8 @@ exports.saveChart = async (req, res, next) => {
 
     return res.status(response.status).json(response.data);
   } catch (err) {
+    undoController.undoSubQuotas(req, res, next);
+
     if (err.response) {
       return res.status(err.response.status).json({
         status: "failed",
