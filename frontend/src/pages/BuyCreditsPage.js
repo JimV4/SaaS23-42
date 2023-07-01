@@ -24,7 +24,7 @@ function BuyCreditsPage() {
         />
       )}
       <FetchAccount
-        text={`You are logged in as ${localStorage.getItem("email")}`}
+        text={"You are logged in as dhmhtrhs.vassiliou@gmail.com"}
       />
       <CreditsList selected={selected} handleSelected={handleSelected} />
       <CreditsButtons

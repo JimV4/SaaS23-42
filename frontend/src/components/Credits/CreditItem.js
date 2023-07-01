@@ -1,16 +1,12 @@
 import "./CreditItem.css";
 
 function CreditItem(props) {
-  function chooseItem() {
-    props.handleSelected(props.id);
-    localStorage.setItem("amount", props.amount);
-  }
   return (
     <div
       className={`credit-box ${
         props.selected === props.id ? "credit-box-hovered" : ""
       }`}
-      onClick={chooseItem}
+      onClick={() => props.handleSelected(props.id)}
     >{`${props.amount} Credits`}</div>
   );
 }

@@ -14,8 +14,8 @@ function ConfirmLogin() {
   const [errorMessage, setErrorMessage] = useState("");
 
   async function continueHandler() {
+    console.log("here");
     const userID = localStorage.getItem("userID");
-    console.log(userID);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/myCharts/auth/verifylogin/${userID}`,
@@ -29,6 +29,7 @@ function ConfirmLogin() {
 
       if (confirmLogin.message === "You were successfully logged in!") {
         localStorage.setItem("token", confirmLogin.token);
+        console.log(localStorage.getItem("token"));
         navigate("/my-account");
       } else {
         setErrorMessage(confirmLogin.message);
@@ -37,7 +38,7 @@ function ConfirmLogin() {
       }
     } catch (error) {
       console.log(error);
-      setErrorMessage("Something Went Wrong!");
+      setErrorMessage("Something Went Wrong! Please try again later...");
       showModalHandler();
     }
   }
@@ -52,19 +53,18 @@ function ConfirmLogin() {
         }
       );
       localStorage.clear();
+      navigate("/");
 
       const jsonresponse = await response.json();
-
-      if (jsonresponse.ok) {
-        navigate("/");
-      } else {
+      if (jsonresponse.status === "failed") {
         setErrorMessage(jsonresponse.message);
         console.log(jsonresponse);
         showModalHandler();
       }
+      console.log(jsonresponse);
     } catch (error) {
       console.error(error);
-      setErrorMessage("Something Went Wrong!");
+      setErrorMessage("Something Went Wrong! Please try again later...");
       showModalHandler();
     }
   }
@@ -84,5 +84,7 @@ function ConfirmLogin() {
     </>
   );
 }
+
+export async function loader() {}
 
 export default ConfirmLogin;

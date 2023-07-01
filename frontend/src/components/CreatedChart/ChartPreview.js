@@ -2,13 +2,28 @@ import classes from "./ChartPreview.module.css";
 import { useEffect, useState } from "react";
 
 function ChartPreview(props) {
-  const newType = props.type
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  // const [image, setImage] = useState(null);
+  // const [isLoading, setIsLoading] = useState(true);
+
+  // function handleIsLoading() {
+  //   setIsLoading(!isLoading);
+  // }
+
+  /* useEffect(() => {
+    async function loadImage() {
+      const image = await import(`../../assets/charts/${props.imgPath}`);
+      handleIsLoading();
+      setImage(image.default);
+    }
+
+    loadImage();
+  }, [props.imgPath]); */
+
   return (
     <>
-      <p>{`Your ${newType} is ready!`}</p>
+      {/* {isLoading && <p>Loading...</p>} */}
+      {/* {!isLoading && <p>{`Your ${chartTitle} is ready!`}</p>} */}
+
       <div className={classes["chart-preview"]}>
         {
           <img
