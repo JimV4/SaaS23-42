@@ -8,27 +8,37 @@ function AccountItemsList() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [lastLogin, setLastLogin] = useState(null);
+  const [quotas, setQuotas] = useState(null);
+  const [charts, setCharts] = useState(null);
+
   async function loadAccountData() {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/my-account`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/myCharts/auth/my-account",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       /** TODO: DEAL WITH RESPONSE **/
 
       const jsonresponse = await response.json();
 
       if (jsonresponse.ok) {
+        setLastLogin(jsonresponse.lastLogin);
+        setQuotas(jsonresponse.quotas);
+        setCharts(jsonresponse.charts);
       } else {
-        setErrorMessage("Something went wrong while downloading the file!");
+        setErrorMessage("Something went wrong!");
         showModalHandler();
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage("Something went wrong while downloading the file!");
+      setErrorMessage("Something went wrong!");
       showModalHandler();
     }
   }
@@ -45,9 +55,9 @@ function AccountItemsList() {
           <span>Last Login</span>
         </div>
         <div className={classes.boxesContainer}>
-          <div className={classes.box}></div>
-          <div className={classes.box}></div>
-          <div className={classes.box}></div>
+          <div className={classes.box}>{charts}</div>
+          <div className={classes.box}>{quotas}</div>
+          <div className={classes.box}>{lastLogin}</div>
         </div>
       </div>
     </>

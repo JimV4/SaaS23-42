@@ -97,7 +97,7 @@ services:
       context: microservice12
       dockerfile: ./Dockerfile
     ports:
-      - "3011:3012"
+      - "3011:3011"
 
   microservice13:
     build:
