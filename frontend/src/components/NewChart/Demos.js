@@ -90,11 +90,11 @@ function Demos() {
         link.click();
         URL.revokeObjectURL(url);
       } else {
-        throw new Error("Something went wrong while downloading the file.");
+        throw new Error("Something went wrong while downloading the file!");
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage("Something went wrong while downloading the file.");
+      setErrorMessage("Something went wrong while downloading the file!");
       showModalHandler();
     }
   }
