@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.post("/create", updateQuotasController.createUser);
 
+router.delete("/undocreate", updateQuotasController.undoCreateUser);
+
 router.get("/check", getQuotasController.checkNumQuotas);
 
 router.patch("/sub", updateQuotasController.subQuotas);

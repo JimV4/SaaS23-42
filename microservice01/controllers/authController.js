@@ -1,7 +1,5 @@
 const axios = require("axios");
 
-//
-
 exports.protect = async (req, res, next) => {
   try {
     let token;

@@ -1,4 +1,5 @@
 const axios = require("axios");
+const undoController = require("../controllers/undoController");
 
 exports.createUser = async (req, res, next) => {
   try {
@@ -23,6 +24,9 @@ exports.createUser = async (req, res, next) => {
 
     return res.status(response.status).json(req.data);
   } catch (err) {
+    undoController.undoVerifyLogin(req, res, next);
+    undoController.undoCreateUser(req, res, next);
+
     if (err.response) {
       return res.status(err.response.status).json({
         status: "failed",
@@ -59,7 +63,7 @@ exports.saveChart = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };

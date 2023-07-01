@@ -36,6 +36,34 @@ exports.verifyLogin = async (req, res, next) => {
   }
 };
 
+exports.undoVerifyLogin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userID);
+
+    if (!user) {
+      return res.status(400).json({
+        status: "failed",
+        message: "The user no longer exists!",
+      });
+    }
+
+    user.verified = false;
+    user.currentLogin = null;
+    user.lastLogin = null;
+    user.save();
+
+    return res.status(200).json({
+      status: "success",
+      message: "The verification was successfully undone!",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
+
 exports.cancelLogin = async (req, res, next) => {
   try {
     const user = await User.findOne({

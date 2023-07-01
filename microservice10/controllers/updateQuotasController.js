@@ -25,6 +25,31 @@ exports.createUser = async (req, res, next) => {
   }
 };
 
+exports.undoCreateUser = async (req, res, next) => {
+  try {
+    if (!req.body.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Please provide the email!",
+      });
+    }
+
+    await Quotas.deleteOne({
+      email: req.body.email,
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "The user was successfully deleted!",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
+
 exports.subQuotas = async (req, res, next) => {
   try {
     if (!req.body.chart_type || !req.body.email) {

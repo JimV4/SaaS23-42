@@ -1,4 +1,5 @@
 const axios = require("axios");
+const undoController = require("../controllers/undoController");
 
 exports.createUser = async (req, res, next) => {
   try {
@@ -12,6 +13,8 @@ exports.createUser = async (req, res, next) => {
 
     next();
   } catch (err) {
+    undoController.undoVerifyLogin(req, res, next);
+
     if (err.response) {
       return res.status(err.response.status).json({
         status: "failed",
@@ -20,7 +23,7 @@ exports.createUser = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -48,7 +51,7 @@ exports.checkNumQuotas = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -75,7 +78,7 @@ exports.subQuotas = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -101,7 +104,7 @@ exports.addQuotas = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
