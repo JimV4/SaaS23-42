@@ -8,7 +8,7 @@ function ConfirmLoginInstructions() {
       <br />
       If you continue, your email will be stored in our user database
       <br />
-      to allow you store your created chartsand purchase chart credits
+      to allow you store your created charts and purchase chart credits
     </p>
   );
 }

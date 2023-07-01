@@ -10,7 +10,9 @@ function AccountButtons() {
         gap: "15px",
       }}
     >
-      <Button text={"My Charts"} />
+      <Link to="/my-charts">
+        <Button text={"My Charts"} />
+      </Link>
       <Link to="/new-chart">
         <Button text={"New Chart"} />
       </Link>

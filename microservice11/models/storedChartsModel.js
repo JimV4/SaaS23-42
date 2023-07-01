@@ -3,26 +3,23 @@ const mongoose = require("mongoose");
 const storedChartsSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
-    required: true,
+    unique: [true, "This email is already in use."],
+    required: [true, "The email is needed here."],
   },
   storedCharts: {
     type: [
       {
         imageURL: {
           type: String,
-          required: true,
-          unique: true,
+          required: [true, "The imageURL of the chart is needed."],
         },
         title: {
           type: String,
-          required: true,
-          unique: true,
+          required: [true, "The title of the chart is needed."],
         },
         type: {
           type: String,
-          required: true,
-          unique: true,
+          required: [true, "The type of the chart is needed."],
         },
         createdOn: {
           type: Date,

@@ -3,11 +3,14 @@ import FetchAccount from "../components/Account/FetchAccount";
 import AccountItemsList from "../components/Account/AccountItemsList";
 import classes from "./MyAccountPage.module.css";
 import AccountButtons from "../components/Account/AccountButtons";
+import { useLocation } from "react-router-dom";
 
 function MyAccountPage() {
+  const userEmail = localStorage.getItem("email");
+  console.log(userEmail);
   return (
     <div className={classes.container}>
-      <FetchAccount text={"Hello dhmhtrhs.vassiliou@gmail.com"} />
+      <FetchAccount text={`Hello ${userEmail}`} />
       <AccountItemsList />
       <AccountButtons />
     </div>

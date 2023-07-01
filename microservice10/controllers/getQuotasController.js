@@ -1,94 +1,119 @@
-const Quotas = require("../models/quotasModel");
+const Quotas = require(`${__dirname}/../models/quotasModel`);
 
+/**
+ * Checks if a user has enough quotas to purchase a specified diagram.
+ * @param {JSON} req - JSON object containing a body with the user's email and the type of the diagram.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack.
+ * @return {JSON} - The response object.
+ *
+ * URL: {baseURL}/quotas/check
+ */
 exports.checkNumQuotas = async (req, res, next) => {
   try {
     if (!req.body.chart_type || !req.body.email) {
       return res.status(400).json({
         status: "failed",
-        message: "Please provide the type of the chart and the email!",
+        message: "Please provide the type of the chart and the user's email!",
       });
     }
 
-    let user = await Quotas.find({
-      email: req.body.email,
-    });
+    let [user, ...users] = await Quotas.find({ email: req.body.email });
 
-    if (user.length == 0) {
+    if (user === undefined || users !== []) {
       return res.status(400).json({
-        status: "failed",
-        message: "The user no longer exists!",
-      });
-    }
-
-    console.log(req.body.chart_type);
-    let cost;
-    if (req.body.chart_type == "line-chart") {
-      cost = process.env.LINE_CHART_COST;
-    } else if (req.body.chart_type == "multi-axis-line-chart") {
-      cost = process.env.MULTI_AXIS_LINE_CHART_COST;
-    } else if (req.body.chart_type == "radar-chart") {
-      cost = process.env.RADAR_CHART_COST;
-    } else if (req.body.chart_type == "scatter-chart") {
-      cost = process.env.SCATTER_CHART_COST;
-    } else if (req.body.chart_type == "bubble-chart") {
-      cost = process.env.BUBBLE_CHART_COST;
-    } else if (req.body.chart_type == "polar-area-chart") {
-      cost = process.env.POLAR_AREA_CHART_COST;
-    } else {
-      return res.status(400).json({
-        status: "failed",
-        message: "Please provide a supported chart type as a parameter.",
-      });
-    }
-
-    if (user[0].quotas < cost) {
-      return res.status(403).json({
         status: "failed",
         message:
-          "You do not have enough quotas to create this chart! Please buy some and come back.",
+          user === undefined
+            ? "The user doesn't exist/no longer exists!"
+            : "Error! Multiple users share the same email address!",
+      });
+    }
+
+    let cost;
+    switch (req.body.chart_type) {
+      case "line-chart":
+        cost = process.env.LINE_CHART_COST;
+        break;
+      case "multi-axis-line-chart":
+        cost = process.env.MULTI_AXIS_LINE_CHART_COST;
+        break;
+      case "radar_chart":
+        cost = process.env.RADAR_CHART_COST;
+        break;
+      case "scatter-chart":
+        cost = process.env.SCATTER_CHART_COST;
+        break;
+      case "bubble-chart":
+        cost = process.env.BUBBLE_CHART_COST;
+        break;
+      case "polar-area-chart":
+        cost = process.env.POLAR_AREA_CHART_COST;
+        break;
+      default:
+        return res.status(400).json({
+          status: "failed",
+          message: "Please provide a supported chart type as a parameter.",
+        });
+    }
+
+    if (user.quotas < cost) {
+      return res.status(403).json({
+        status: "failed",
+        message: "The user does not have enough quotas to create this chart!",
       });
     }
 
     return res.status(200).json({
       status: "success",
-      message: "The user has enough quotas to create this chart.",
+      message: "The user's quotas were successfully updated.",
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
+      message: error.message,
     });
   }
 };
 
+/**
+ * Returns the number of quotas that a user has.
+ * @param {JSON} req - JSON object containing a body with the user's email.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack.
+ * @return {JSON} - The response object.
+ *
+ * URL: {baseURL}/quotas/num-quotas
+ */
 exports.getNumQuotas = async (req, res, next) => {
   try {
     if (!req.body.email) {
       return res.status(400).json({
         status: "failed",
-        message: "Please provide the user's email!",
+        message: "Please provide the type of the chart and the user's email!",
       });
     }
 
-    let user = await Quotas.find({
-      email: req.body.email,
-    });
+    let [user, ...users] = await Quotas.find({ email: req.body.email });
 
-    if (user.length == 0) {
+    if (user === undefined || users !== []) {
       return res.status(400).json({
         status: "failed",
-        message: "The user no longer exists!",
+        message:
+          user === undefined
+            ? "The user doesn't exist/no longer exists!"
+            : "Error! Multiple users share the same email address!",
       });
     }
 
     return res.status(200).json({
       status: "success",
-      data: user[0].quotas,
+      data: user.quotas,
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: "failed",
-      message: "Something went wrong!",
+      message: error.message,
     });
   }
 };

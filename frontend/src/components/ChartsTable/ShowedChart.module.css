@@ -1,0 +1,17 @@
+.chart-preview {
+  display: flex;
+  height: 500px;
+  width: 700px;
+  background-color: #dad7d7be;
+  border: 3px solid #1098ad;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-right: 70px;
+}
+
+.image {
+  height: 345px;
+  width: auto;
+  object-fit: cover;
+}

@@ -3,7 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const quotasRouter = require("./routes/quotasRoutes");
+const quotasRouter = require(`${__dirname}/routes/quotasRoutes`);
 
 const app = express();
 

@@ -51,9 +51,9 @@ function UploadForm() {
       console.log(response);
     } catch (error) {
       if (error.message === "Network Error") {
-        setErrorMessage("Something Went Wrong! Please try again later...");
+        setErrorMessage("Something Went Wrong!"); // if server is down
       } else {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message); // response from orchestrator
       }
       console.log(error);
       showModalHandler();
@@ -62,7 +62,6 @@ function UploadForm() {
 
   return (
     <>
-      {imageUrl && <img src={imageUrl} alt="shown" />}
       {modalIsShown && (
         <UploadError message={errorMessage} onClose={hideModalHandler} />
       )}
