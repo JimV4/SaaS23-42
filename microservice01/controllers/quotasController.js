@@ -27,14 +27,16 @@ exports.createUser = async (req, res, next) => {
 
 exports.checkNumQuotas = async (req, res, next) => {
   try {
-    const response = await axios({
-      method: "get",
-      url: `${process.env.QUOTAS_SERVICE}/check`,
-      data: {
-        email: req.email,
-        chart_type: req.type,
-      },
-    });
+    if (!req.free) {
+      const response = await axios({
+        method: "get",
+        url: `${process.env.QUOTAS_SERVICE}/check`,
+        data: {
+          email: req.email,
+          chart_type: req.type,
+        },
+      });
+    }
 
     next();
   } catch (err) {
@@ -53,15 +55,16 @@ exports.checkNumQuotas = async (req, res, next) => {
 
 exports.subQuotas = async (req, res, next) => {
   try {
-    const response = await axios({
-      method: "patch",
-      url: `${process.env.QUOTAS_SERVICE}/sub`,
-      data: {
-        email: req.email,
-        chart_type: req.body.type,
-      },
-    });
-
+    if (!req.free) {
+      const response = await axios({
+        method: "patch",
+        url: `${process.env.QUOTAS_SERVICE}/sub`,
+        data: {
+          email: req.email,
+          chart_type: req.body.type,
+        },
+      });
+    }
     next();
   } catch (err) {
     if (err.response) {
