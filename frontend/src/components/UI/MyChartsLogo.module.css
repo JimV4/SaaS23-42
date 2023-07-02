@@ -1,7 +1,6 @@
 .logo {
-  margin-top: 10px;
   background-color: #dad7d7be;
-  height: 100px;
+  height: 15vh;
   border: 4px solid #1098ad;
   margin-left: 5px;
   margin-right: 5px;
@@ -9,6 +8,7 @@
   align-items: center;
   justify-content: center;
   gap: 25px;
+  margin-top: -20px;
 }
 
 .myCharts {

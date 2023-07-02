@@ -1,7 +1,8 @@
 .charts {
   border: 2px solid #1098ad;
-  height: 280px;
-  width: 350px;
+  height: 300px;
+  width: 400px;
+  background-color: white;
 }
 
 .line-chart {
