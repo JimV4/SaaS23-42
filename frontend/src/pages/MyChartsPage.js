@@ -102,6 +102,9 @@ function MyChartsPage() {
         <ChartsTable charts={data} onClick={handleChartClick} />
         <ShowedChart chartImage={imageURL} />
       </div>
+      <a href="/about" className={classes.about}>
+        about
+      </a>
     </>
   );
 }

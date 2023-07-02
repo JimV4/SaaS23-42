@@ -8,6 +8,6 @@
 
 .general {
   display: flex;
-  justify-content: space-between; /* Positions the divs with space between them */
+  justify-content: space-between;
   align-items: center;
 }

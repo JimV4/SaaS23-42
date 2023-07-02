@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font-size: 32px;
+  color: #1098ad;
+  margin-bottom: 2px;
+}
+
+.subcontainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #1098ad;
+  align-self: flex-start;
+}
+
+.whoweare {
+  border: 2px solid #1098ad;
+  height: 190px;
+  width: 1500px;
+  margin-top: 2px;
+}
+
+.end {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-self: flex-start;
+}
+
+a {
+  margin-top: 40px;
+  align-self: flex-start;
+  color: #1098ad;
+  margin-bottom: 40px;
+}
+
+div {
+  color: #1098ad;
+  font-size: 18px;
+  text-align: left;
+  padding: 4px;
+}

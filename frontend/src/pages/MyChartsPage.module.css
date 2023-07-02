@@ -31,3 +31,9 @@
   flex-direction: row;
   gap: 50px;
 }
+
+.about {
+  align-self: flex-start;
+  margin-left: 50px;
+  color: #1098ad;
+}

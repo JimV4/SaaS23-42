@@ -43,6 +43,7 @@ function ConfirmLogin() {
   }
 
   async function noHandler() {
+    console.log("hereeeeeeeeeeee");
     const userID = localStorage.getItem("userID");
     try {
       const response = await fetch(
@@ -51,11 +52,11 @@ function ConfirmLogin() {
           method: "DELETE",
         }
       );
-      localStorage.clear();
 
       const jsonresponse = await response.json();
 
-      if (jsonresponse.ok) {
+      if (jsonresponse.status === "success") {
+        localStorage.clear();
         navigate("/");
       } else {
         setErrorMessage(jsonresponse.message);
