@@ -37,6 +37,7 @@ function AboutPage() {
         <div className={classes.whoweare}>
           We are happy to inform you that the first 10 charts you will create
           are free of charge! After 10 charts, the pricing goes as follows:
+          <br></br>
           <br></br>Line Chart:
           <br></br>Multi Axis Line Chart:
           <br></br>Polar Chart:
