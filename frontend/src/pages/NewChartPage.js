@@ -6,7 +6,7 @@ import MyChartsLogoV from "../components/UI/MyChartsLogoV";
 function NewChartPage() {
   return (
     <div className={classes.general}>
-      <MyChartsLogoV />
+      {/* <MyChartsLogoV /> */}
       <div className={classes.container}>
         <p>Let's create your own chart!</p>
         <Demos />

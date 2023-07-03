@@ -42,13 +42,14 @@ const router = createBrowserRouter([
         path: "about",
         element: <AboutPage />,
       },
+      {
+        path: "new-chart",
+        element: <NewChartPage />,
+        children: [],
+      },
     ],
   },
-  {
-    path: "new-chart",
-    element: <NewChartPage />,
-    children: [],
-  },
+
   {
     path: "new-chart/created-chart",
     element: <CreatedChartPage />,
