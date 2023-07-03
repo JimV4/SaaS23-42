@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const quotasSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: [true, "This email is already in use."],
-    required: [true, "The email is needed here."],
+    unique: true,
+    required: true,
   },
   quotas: {
     type: Number,

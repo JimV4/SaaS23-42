@@ -46,6 +46,3 @@
 /frontend/node_modules/
 
 /node_modules
-
-# Microsoft files (word, excel, etc) create a temp file that begins with '~$'.
-~$*

@@ -16,6 +16,7 @@ router.post(
   authController.protect,
   upload.single("csvFile"),
   csvController.readCSVFile,
+  storedChartsController.checkNumCharts,
   quotasController.checkNumQuotas,
   diagramController.createChart
 );
@@ -23,6 +24,7 @@ router.post(
 router.patch(
   "/save-chart",
   authController.protect,
+  storedChartsController.checkNumCharts,
   quotasController.subQuotas,
   storedChartsController.saveChart
 );

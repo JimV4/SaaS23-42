@@ -1,18 +1,6 @@
 const fs = require("fs");
-const StoredCharts = require(`${__dirname}/../models/storedChartsModel`);
+const StoredCharts = require("../models/storedChartsModel");
 
-/**
- * Creates a user in the database so he/she can later store charts.
- * @param {JSON} req - JSON object containing a body with the user's email.
- * @param {JSON} res - JSON obejct containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON}
- * An object containing the fields below:
- * - status: "success" or "failed"
- * - message: a correlating message or an error message, if an error has occurred
- *
- * URL: {baseURL}/stored-charts/create
- */
 exports.createUser = async (req, res, next) => {
   try {
     if (!req.body.email) {
@@ -22,32 +10,23 @@ exports.createUser = async (req, res, next) => {
       });
     }
 
-    await StoredCharts.create({ email: req.body.email });
+    await StoredCharts.create({
+      email: req.body.email,
+    });
 
     return res.status(200).json({
       status: "success",
       message: "The user was successfully stored in the DB with no charts.",
     });
-  } catch (error) {
+  } catch (err) {
+    console.log(err);
     return res.status(500).json({
       status: "failed",
-      message: error.message,
+      message: "Something went wrong!",
     });
   }
 };
 
-/**
- * Saves a user's chart.
- * @param {JSON} req - JSON object containing a body with the chart's type, title and image, and the user's email.
- * @param {JSON} res - JSON object containing a confirmtion/rejection of the request.
- * @param {function} next - Pointer to the next function in the middlware stack.
- * @return {JSON}
- * An object containig the fields below:
- * - status: "success" or "failed"
- * - message: a correlating message or an error message, if an error has occurred
- *
- * URL: {baseURL}/stored-charts/save-chart
- */
 exports.saveChart = async (req, res, next) => {
   try {
     if (
@@ -63,38 +42,37 @@ exports.saveChart = async (req, res, next) => {
       });
     }
 
-    const [user, ...users] = await StoredCharts.find({ email: req.body.email });
+    const user = await StoredCharts.find({
+      email: req.body.email,
+    });
 
-    if (user === undefined || users !== []) {
+    if (user.length == 0) {
       return res.status(400).json({
         status: "failed",
-        message:
-          user === undefined
-            ? "The user doesn't exist/no longer exists!"
-            : "Error! Multiple users share the same email address!",
+        message: "The user no longer exists!",
       });
     }
 
     const base64Data = req.body.image.split(";base64,").pop();
     const imageName = `${req.body.email.split("@")[0]}_${Date.now()}.png`;
+
     fs.writeFile(
       `${__dirname}/../public/${req.body.type}/${imageName}`,
       base64Data,
       { encoding: "base64" },
-      async (error) => {
-        if (error) {
+      async (err) => {
+        if (err) {
           return res.status(500).json({
             status: "failed",
-            message: "Error occured while creating PNG file!",
+            message: "Error creating PNG file!",
           });
         } else {
-          user.storedCharts.push({
+          user[0].storedCharts.push({
             imageURL: imageName,
             type: req.body.type,
             title: req.body.title,
           });
-
-          await user.save();
+          await user[0].save();
 
           return res.status(200).json({
             status: "success",
@@ -103,10 +81,10 @@ exports.saveChart = async (req, res, next) => {
         }
       }
     );
-  } catch (error) {
+  } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: error.message,
+      message: err.message,
     });
   }
 };

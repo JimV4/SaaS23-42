@@ -1,4 +1,5 @@
 const axios = require("axios");
+const undoController = require("../controllers/undoController");
 
 exports.createUser = async (req, res, next) => {
   try {
@@ -23,6 +24,9 @@ exports.createUser = async (req, res, next) => {
 
     return res.status(response.status).json(req.data);
   } catch (err) {
+    undoController.undoVerifyLogin(req, res, next);
+    undoController.undoCreateUser(req, res, next);
+
     if (err.response) {
       return res.status(err.response.status).json({
         status: "failed",
@@ -51,6 +55,8 @@ exports.saveChart = async (req, res, next) => {
 
     return res.status(response.status).json(response.data);
   } catch (err) {
+    undoController.undoSubQuotas(req, res, next);
+
     if (err.response) {
       return res.status(err.response.status).json({
         status: "failed",
@@ -59,7 +65,7 @@ exports.saveChart = async (req, res, next) => {
     }
     return res.status(500).json({
       status: "failed",
-      message: err.message,
+      message: "Something went wrong!",
     });
   }
 };
@@ -82,6 +88,37 @@ exports.getNumCharts = async (req, res, next) => {
       quotas: req.quotas,
       charts: req.charts,
     });
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
+        status: "failed",
+        message: err.response.data.message,
+      });
+    }
+    return res.status(500).json({
+      status: "failed",
+      message: "Something went wrong!",
+    });
+  }
+};
+
+exports.checkNumCharts = async (req, res, next) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${process.env.STORED_CHARTS_SERVICE}/num-charts`,
+      data: {
+        email: req.email,
+      },
+    });
+
+    if (response.data.data < 10) {
+      req.free = true;
+    } else {
+      req.free = false;
+    }
+
+    next();
   } catch (err) {
     if (err.response) {
       return res.status(err.response.status).json({

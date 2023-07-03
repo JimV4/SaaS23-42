@@ -1,7 +1,7 @@
 const express = require("express");
-const authController = require(`${__dirname}/../controllers/authController`);
-const getPNGController = require(`${__dirname}/../controllers/getPNGController`);
-const svgConverterController = require(`${__dirname}/../controllers/svgConverterController`);
+const svgConverterController = require("../controllers/svgConverterController");
+const getPNGController = require("../controllers/getPNGController");
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.post(
   "/download",
   authController.protect,
   getPNGController.getPNG,
-  svgConverterController.downloadImageAsSVG
+  svgConverterController.convertImageToSVG
 );
 
 module.exports = router;

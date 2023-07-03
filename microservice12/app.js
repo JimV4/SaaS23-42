@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 
-const pdfConverterRouter = require(`${__dirname}/routes/pdfConverterRoutes`);
+const pdfConverterRouter = require("./routes/pdfConverterRoutes");
 
 const app = express();
 
