@@ -45,6 +45,7 @@ function ConfirmLogin() {
   async function noHandler() {
     console.log("hereeeeeeeeeeee");
     const userID = localStorage.getItem("userID");
+    console.log(userID);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/myCharts/auth/cancellogin/${userID}`,
