@@ -4,7 +4,6 @@ function AboutPage() {
   return (
     <div className={classes.container}>
       <p className={classes.title}>about myCharts</p>
-
       <div className={classes.subcontainer}>
         <span className={classes.subtitle}>who we are</span>
         <div className={classes.whoweare}>
@@ -31,22 +30,19 @@ function AboutPage() {
           that myCharts offers and unlock the true potential of your data.
         </div>
       </div>
-
       <div className={classes.subcontainer}>
         <span className={classes.subtitle}>pricing</span>
         <div className={classes.whoweare}>
           We are happy to inform you that the first 10 charts you will create
           are free of charge! After 10 charts, the pricing goes as follows:
           <br></br>
-          <br></br>Line Chart:
-          <br></br>Multi Axis Line Chart:
-          <br></br>Polar Chart:
-          <br></br>Scatter Chart:
-          <br></br>Radar Chart:
-          <br></br>Bubble Chart:
+          <br></br>Line Chart: 5<br></br>Multi Axis Line Chart: 10
+          <br></br>Polar Chart: 60
+          <br></br>Scatter Chart: 30
+          <br></br>Radar Chart: 20
+          <br></br>Bubble Chart: 45
         </div>
       </div>
-
       <div className={classes.subcontainer}>
         <span className={classes.subtitle}>for developers</span>
         <div className={classes.whoweare}>
