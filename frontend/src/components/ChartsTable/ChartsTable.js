@@ -205,32 +205,32 @@ function ChartsTable(props) {
                 <td>
                   <div className={classes.downloadContainer}>
                     <div className={classes.inlineContainer}>
-                      <span
+                      <p
                         onClick={() => handlePDF(item.imageURL, item.type)}
                         style={{ cursor: "pointer" }}
                       >
                         pdf
-                      </span>
-                      <span
+                      </p>
+                      <p
                         onClick={() => handlePng(item.imageURL, item.type)}
                         style={{ cursor: "pointer" }}
                       >
                         png
-                      </span>
+                      </p>
                     </div>
                     <div className={classes.inlineContainer}>
-                      <span
+                      <p
                         onClick={() => handleSvg(item.imageURL, item.type)}
                         style={{ cursor: "pointer" }}
                       >
                         svg
-                      </span>
-                      <span
+                      </p>
+                      <p
                         onClick={() => handleHtml(item.imageURL, item.type)}
                         style={{ cursor: "pointer" }}
                       >
                         html
-                      </span>
+                      </p>
                     </div>
                   </div>
                 </td>

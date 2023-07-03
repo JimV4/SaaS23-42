@@ -82,7 +82,7 @@ function Container() {
               />;
             }}
           />
-          <a href="" className={classes.about}>
+          <a href="/about" className={classes.about}>
             about
           </a>
         </div>

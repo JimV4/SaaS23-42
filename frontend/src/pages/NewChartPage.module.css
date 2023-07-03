@@ -3,11 +3,11 @@
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  transform: translateX(-50%);
+  /* transform: translateX(-50%); */
 }
 
 .general {
   display: flex;
-  justify-content: space-between; /* Positions the divs with space between them */
+  justify-content: space-between;
   align-items: center;
 }

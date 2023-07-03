@@ -1,6 +1,6 @@
 import useModal from "../hooks/useModal";
 import UploadError from "../UI/UploadError";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./AccountItemsList.module.css";
 
 function AccountItemsList() {
@@ -8,30 +8,41 @@ function AccountItemsList() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  async function loadAccountData() {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/my-account`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+  const [lastLogin, setLastLogin] = useState(null);
+  const [quotas, setQuotas] = useState(null);
+  const [charts, setCharts] = useState(null);
 
-      /** TODO: DEAL WITH RESPONSE **/
+  useEffect(() => {
+    async function loadAccountData() {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/myCharts/auth/my-account",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
-      const jsonresponse = await response.json();
+        const jsonresponse = await response.json();
 
-      if (jsonresponse.ok) {
-      } else {
-        setErrorMessage("Something went wrong while downloading the file!");
+        if (jsonresponse.status === "success") {
+          setLastLogin(jsonresponse.lastLogin);
+          setQuotas(jsonresponse.quotas);
+          setCharts(jsonresponse.charts);
+        } else {
+          setErrorMessage("Something went wrong!");
+          showModalHandler();
+        }
+      } catch (error) {
+        console.error(error);
+        setErrorMessage("Something went wrong!");
         showModalHandler();
       }
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Something went wrong while downloading the file!");
-      showModalHandler();
     }
-  }
+    loadAccountData();
+  }, []);
 
   return (
     <>
@@ -45,9 +56,9 @@ function AccountItemsList() {
           <span>Last Login</span>
         </div>
         <div className={classes.boxesContainer}>
-          <div className={classes.box}></div>
-          <div className={classes.box}></div>
-          <div className={classes.box}></div>
+          <div className={classes.box}>{charts}</div>
+          <div className={classes.box}>{quotas}</div>
+          <div className={classes.box}>{lastLogin}</div>
         </div>
       </div>
     </>

@@ -11,6 +11,7 @@ import useRequireAuth from "./components/hooks/useRequireAuth";
 import ProtectedRoute from "./ProtectedRoute";
 import MyChartsPage from "./pages/MyChartsPage";
 import MyChartsLogoV from "./components/UI/MyChartsLogoV";
+import AboutPage from "./pages/AboutPage";
 
 const router = createBrowserRouter([
   {
@@ -37,13 +38,18 @@ const router = createBrowserRouter([
         path: "my-charts",
         element: <MyChartsPage />,
       },
+      {
+        path: "about",
+        element: <AboutPage />,
+      },
+      {
+        path: "new-chart",
+        element: <NewChartPage />,
+        children: [],
+      },
     ],
   },
-  {
-    path: "new-chart",
-    element: <NewChartPage />,
-    children: [],
-  },
+
   {
     path: "new-chart/created-chart",
     element: <CreatedChartPage />,
