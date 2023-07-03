@@ -33,20 +33,23 @@ exports.getPNG = async (req, res, next) => {
     let pdfFileName = `${req.body.image.split(".")[0]}.pdf`;
     let pdfFilePath = `${__dirname}/../public/${req.body.type}/${pdfFileName}`;
 
-    fs.access(pdfFilePath, fs.constants.F_OK, async (error) => {
-      if (error) {
+    fs.access(pdfFilePath, fs.constants.F_OK, async (pdfFileNotFound) => {
+      if (pdfFileNotFound) {
         const { data, ...rest } = await axios({
           method: "get",
           url: `${process.env.STORED_CHARTS_SERVICE}/${req.body.type}/${req.body.image}`,
           responseType: "arraybuffer",
         });
 
-        if (data) req.image = data;
-        else throw { message: "Error while getting the PNG image!" };
+        if (data === undefined)
+          throw { message: "Error while getting the PNG image!" };
+        req.image = data;
         next();
       } else {
-        res.set("Content-Type", "application/pdf");
-        res.set("Content-Disposition", `attachment; filename="${pdfFileName}"`);
+        res.set({
+          "Content-Type": "application/pdf",
+          "Content-Disposition": `attachment; filename="${pdfFileName}"`,
+        });
         return fs.createReadStream(pdfFilePath).pipe(res);
       }
     });

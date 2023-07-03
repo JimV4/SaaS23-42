@@ -33,8 +33,8 @@ exports.getPNG = async (req, res, next) => {
     let pdfFileName = `${req.body.image.split(".")[0]}.pdf`;
     let pdfFilePath = `${__dirname}/../public/${req.body.type}/${pdfFileName}`;
 
-    fs.access(pdfFilePath, fs.constants.F_OK, async (error) => {
-      if (error) {
+    fs.access(pdfFilePath, fs.constants.F_OK, async (pdfFileNotFound) => {
+      if (pdfFileNotFound) {
         const { data, ...rest } = await axios({
           method: "get",
           url: `${process.env.STORED_CHARTS_SERVICE}/${req.body.type}/${req.body.image}`,

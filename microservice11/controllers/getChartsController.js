@@ -25,13 +25,10 @@ exports.getNumCharts = async (req, res, next) => {
 
     let [user, ...users] = await StoredCharts.find({ email: req.body.email });
 
-    if (user === undefined || users !== []) {
+    if (user === undefined) {
       return res.status(400).json({
         status: "failed",
-        message:
-          user === undefined
-            ? "The user doesn't exist/no longer exists!"
-            : "Error! Multiple users share the same email address!",
+        message: "The user doesn't exist/no longer exists!",
       });
     }
 
@@ -71,13 +68,10 @@ exports.getUserCharts = async (req, res, next) => {
 
     let [user, ...users] = await StoredCharts.find({ email: req.body.email });
 
-    if (user === undefined || users !== []) {
+    if (user === undefined) {
       return res.status(400).json({
         status: "failed",
-        message:
-          user === undefined
-            ? "The user doesn't exist/no longer exists!"
-            : "Error! Multiple users share the same email address!",
+        message: "The user doesn't exist/no longer exists!",
       });
     }
 
