@@ -71,6 +71,7 @@ exports.saveChart = async (req, res, next) => {
             imageURL: imageName,
             type: req.body.type,
             title: req.body.title,
+            createdOn: Date.now(),
           });
           await user[0].save();
 
