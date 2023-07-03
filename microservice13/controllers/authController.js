@@ -21,11 +21,11 @@ exports.protect = async (req, res, next) => {
 
     req.email = response.data.email;
     next();
-  } catch (error) {
-    if (error.response) {
-      return res.status(error.response.status).json({
+  } catch (err) {
+    if (err.response) {
+      return res.status(err.response.status).json({
         status: "failed",
-        message: error.response.data.message,
+        message: err.response.data.message,
       });
     }
     return res.status(500).json({

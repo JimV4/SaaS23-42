@@ -30,8 +30,6 @@ exports.undoCreateUser = async (req, res, next) => {
         email: req.data.email,
       },
     });
-
-    next();
   } catch (err) {
     return res.status(500).json({
       status: "failed",
@@ -52,7 +50,6 @@ exports.undoSubQuotas = async (req, res, next) => {
         },
       });
     }
-    next();
   } catch (err) {
     return res.status(500).json({
       status: "failed",
