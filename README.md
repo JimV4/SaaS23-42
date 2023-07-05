@@ -6,7 +6,7 @@
 
 Members: el18918, el19123, el19830
 
-myCharts is a software-as-a-service application developed bu undergraduate students of the department of Electrical And Computer Engineering, NTUA, Athens. This application is used for the creation and management of many kinds of charts.
+myCharts is a software-as-a-service application developed by undergraduate students of the department of Electrical And Computer Engineering, NTUA, Athens. This application is used for the creation and management of many kinds of charts.
 
 ## Contributors
 
