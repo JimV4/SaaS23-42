@@ -1,5 +1,14 @@
 const Quotas = require("../models/quotasModel");
 
+/**
+ * Checks if a user has enough quotas to purchase a specified diagram.
+ * @param {JSON} req - JSON object containing a body with the user's email and the type of the diagram.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack.
+ * @return {JSON} - The response object.
+ *
+ * URL: {baseURL}/quotas/check
+ */
 exports.checkNumQuotas = async (req, res, next) => {
   try {
     if (!req.body.chart_type || !req.body.email) {
@@ -61,6 +70,15 @@ exports.checkNumQuotas = async (req, res, next) => {
   }
 };
 
+/**
+ * Returns the number of quotas that a user has.
+ * @param {JSON} req - JSON object containing a body with the user's email.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack.
+ * @return {JSON} - The response object.
+ *
+ * URL: {baseURL}/quotas/num-quotas
+ */
 exports.getNumQuotas = async (req, res, next) => {
   try {
     if (!req.body.email) {

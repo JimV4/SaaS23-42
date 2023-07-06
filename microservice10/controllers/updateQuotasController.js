@@ -1,5 +1,14 @@
 const Quotas = require("../models/quotasModel");
 
+/**
+ * Creates and stores a user's email with the number of the user's quotas (initially zero).
+ * @param {JSON} req - JSON object containing a body with the user's email.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack
+ * @return {JSON} - The response object.
+ *
+ * URL: {baseURL}/quotas/create
+ */
 exports.createUser = async (req, res, next) => {
   try {
     if (!req.body.email) {
@@ -50,6 +59,15 @@ exports.undoCreateUser = async (req, res, next) => {
   }
 };
 
+/**
+ * Subtracts quotas from a user after they've done a purchase.
+ * @param {JSON} req - JSON object containing a body with the user's email and the used quotas.
+ * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
+ * @param {function} next - Pointer to the next function in the middleware stack
+ * @return {JSON} - The response object.
+ *
+ * URL: {baseURL}/quotas/sub
+ */
 exports.subQuotas = async (req, res, next) => {
   try {
     if (!req.body.chart_type || !req.body.email) {
