@@ -1,5 +1,24 @@
 const axios = require("axios");
 
+/**
+ * Middleware function to protect routes by verifying the user's authentication token.
+ *
+ * @param {Object} req - The HTTP request object. It contains the authorization header and the jwt cookie. Its structure is as follows:
+ * - headers: { authorization }
+ * - cookies: { jwt }
+ * - email: *email_address* (this is added as a result of the function)
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and error message. It is returned only if an error occurs. Its structure is as follows:
+ * - status: *"failed"*
+ * - message: *error_message*
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It either calls the next middleware or sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 401 Unauthorized - If the authentication token is missing or invalid.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
+ */
 exports.protect = async (req, res, next) => {
   try {
     let token;

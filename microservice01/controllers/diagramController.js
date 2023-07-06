@@ -1,5 +1,26 @@
 const axios = require("axios");
 
+/**
+ * Create a chart based on the provided configuration.
+ *
+ * @param {Object} req - The HTTP request object. It contains the chart's type. Its structure is as follows:
+ * - type: *chart's type*
+ *
+ * @param {Object} res - The HTTP response object. Its final structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: [ *error message* ] (only if an error occurs)
+ * - type: *chart's type*
+ * - title: *chart's title*
+ * - image: *chart's image*
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and data/error message.
+ *
+ * @throws {Error} 400 Bad Request - If there is no chart with the provided type.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
+ * @throws {Error} - If the chart service returns an error response.
+ */
 exports.createChart = async (req, res, next) => {
   try {
     let service;

@@ -2,17 +2,23 @@ const fs = require("fs");
 const StoredCharts = require("../models/storedChartsModel");
 
 /**
- * Returns the number of stored charts of a specific user.
- * @param {JSON} req - JSON object containing a body with the user's email.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON}
- * An object containing the fields below:
- * - status: "success" or "failed"
- * - data: the number of the user's stored charts.
- * - message: (only if an error has occured)
+ * Get the number of stored charts for a user.
  *
- * URL: {baseURL}/stored-charts/num-charts
+ * @param {Object} req - The HTTP request object. It contains the user's email. Its structure is as follows:
+ * body: { email }
+ *
+ * @param {Object} res - The HTTP response object. It contains the appropriate status code, and the data or an error message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* ),
+ * - data: [ *number_of_charts* ] (only if an error doesn't occur)
+ * - message: [ *error_message* ] (only if an error occurs)
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and data/error message.
+ *
+ * @throws {Error} 400 Bad Request - If the email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.getNumCharts = async (req, res, next) => {
   try {
@@ -47,17 +53,23 @@ exports.getNumCharts = async (req, res, next) => {
 };
 
 /**
- * Returns the stored charts of a specific user.
- * @param {JSON} req - JSON object containing a body with the user's email.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON}
- * An object containing the fields below:
- * - status: "success" or "failed"
- * - data: an array containing the stored charts of the user
- * - message: (only if an error has occured)
+ * Get the stored charts of a user.
  *
- * URL: {baseURL}/stored-charts/user-charts
+ * @param {Object} req - The HTTP request object. It contains the user's email. Its structure is as follows:
+ * body: { email }
+ *
+ * @param {Object} res - The HTTP response object. It contains the appropriate status code, and the data or an error message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* ),
+ * - data: [ *number_of_charts* ] (only if an error doesn't occur)
+ * - message: [ *error_message* ] (only if an error occurs)
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and data/error message.
+ *
+ * @throws {Error} 400 Bad Request - If the user's email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.getUserCharts = async (req, res, next) => {
   try {
@@ -118,16 +130,24 @@ exports.getUserCharts = async (req, res, next) => {
 };
 
 /**
- * Downloads a stored chart of a specific user.
- * @param {JSON} req - JSON object containing the user's email and a body with the chart's type and PNG image.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON}
- * An object containing the fields below:
- * - status: "success" or "failed"
- * - message: (only if an error has occured)
+ * Download a PNG chart image.
  *
- * URL: {baseURL}/stored-charts/download-png
+ * @param {Object} req - The HTTP request object. It contains the user's email and the chart's type and image. Its structure is as follows:
+ * - email: *email_address*
+ * - body: { type, image }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the name or type of the PNG file is missing in the request body.
+ * @throws {Error} 403 Forbidden - If the user tries to download a chart PNG image they have not purchased.
+ * @throws {Error} 400 Bad Request - If the requested file does not exist.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.downloadChart = (req, res, next) => {
   try {

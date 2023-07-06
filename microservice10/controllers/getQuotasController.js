@@ -1,13 +1,24 @@
 const Quotas = require("../models/quotasModel");
 
 /**
- * Checks if a user has enough quotas to purchase a specified diagram.
- * @param {JSON} req - JSON object containing a body with the user's email and the type of the diagram.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON} - The response object.
+ * Check the number of quotas available for a user to create a chart.
  *
- * URL: {baseURL}/quotas/check
+ * @param {Object} req - Τhe HTTP request object. It contains the user's email and the chart's type. Its structure is as follows:
+ * - body: { email, chart_type }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and error message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and error message.
+ *
+ * @throws {Error} 400 Bad Request - If the chart type or email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 400 Bad Request - If an unsupported chart type is provided.
+ * @throws {Error} 403 Forbidden - If the user does not have enough quotas to create the chart.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.checkNumQuotas = async (req, res, next) => {
   try {
@@ -29,7 +40,7 @@ exports.checkNumQuotas = async (req, res, next) => {
       });
     }
 
-    console.log(req.body.chart_type);
+    // console.log(req.body.chart_type);
     let cost;
     if (req.body.chart_type == "line-chart") {
       cost = process.env.LINE_CHART_COST;
@@ -71,13 +82,23 @@ exports.checkNumQuotas = async (req, res, next) => {
 };
 
 /**
- * Returns the number of quotas that a user has.
- * @param {JSON} req - JSON object containing a body with the user's email.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON} - The response object.
+ * Get the number of quotas available for a user.
  *
- * URL: {baseURL}/quotas/num-quotas
+ * @param {Object} req - The HTTP request object. It contains the user's email. Its strutcure is as follows:
+ * - body: { email }
+ *
+ * @param {Object} res - The HTTP response object. It contains the appropriate status code, and the data or an error message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* ),
+ * - data: [ *number_of_quotas* ] (only if an error doesn't occur)
+ * - message: [ *error_message* ] (only if an error occurs)
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and data/error message.
+ *
+ * @throws {Error} 400 Bad Request - If the user's email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.getNumQuotas = async (req, res, next) => {
   try {

@@ -2,17 +2,22 @@ const fs = require("fs");
 const potrace = require("potrace");
 
 /**
- * Creates the SVG file from the PNG image and sends it to the user.
- * @param {JSON} req - JSON object containing a body with
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {Function} next - Pointer to the next function in the middleware stack.
- * @returns
- * The function returns a read stream for the SVG file to be sent to the user or,
- * if an error has occurred, an object with the fields below:
- * - status: "failed",
- * - message: <error message>
+ * Convert an image file to SVG format.
  *
- * URL: {baseURL}/svg-converter/download
+ * @param {Object} req - The HTTP request object. It contains the chart's type and image. Its structure is as follows:
+ * - body: { type, image }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and error message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the SVG file.
+ *
+ * @throws {Error} 400 Bad Request - If the requested file does not exist.
+ * @throws {Error} 500 Internal Server Error - If an error occurs while converting the image to SVG.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.convertImageToSVG = async (req, res, next) => {
   try {

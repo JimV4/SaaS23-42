@@ -2,17 +2,23 @@ const axios = require("axios");
 const fs = require("fs");
 
 /**
- * Downloads the PNG image of the chart from the user.
- * @param {JSON} req - JSON object containing a body with the image and type of the chart.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON}
- * The function returns a read stream for the PNG image to be downloaded or,
- * if an error has occurred, an object containing the fields below:
- * - status: "failed"
- * - message: <error message>
+ * Get a PNG image of a chart or generate a PDF file if not available.
  *
- * URL: {baseURL}/pdf-converter/download
+ * @param {Object} req - The HTTP request object. It contains the user's email and the chart's type and image. Its structure is as follows:
+ * - email: *email_address*
+ * - body: { type, image }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and error message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and error message.
+ *
+ * @throws {Error} 400 Bad Request - If the type or name of the PNG file is missing in the request body.
+ * @throws {Error} 403 Forbidden - If the user tries to download a chart PDF they have not purchased.
+ * @throws {Error} 500 Internal Server Error - If an error occurs while accessing or generating the PDF file.
  */
 exports.getPNG = async (req, res, next) => {
   try {

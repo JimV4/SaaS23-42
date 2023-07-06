@@ -1,3 +1,17 @@
+/**
+ * Download a CSV template for a specific chart type.
+ *
+ * @param {Object} req - The HTTP request object. It contains the type of the diagram. Its struture is as follows:
+ * - params: { diagram }
+ *
+ * @param {Object} res - The HTTP response object.
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and the CSV file or an error message.
+ *
+ * @throws {Error} 400 Bad Request - If the provided chart type is not supported.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
+ */
 exports.downloadTemplate = (req, res, next) => {
   try {
     let file;

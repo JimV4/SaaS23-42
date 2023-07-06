@@ -1,13 +1,21 @@
 const Quotas = require("../models/quotasModel");
 
 /**
- * Creates and stores a user's email with the number of the user's quotas (initially zero).
- * @param {JSON} req - JSON object containing a body with the user's email.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack
- * @return {JSON} - The response object.
+ * Create a new user and store their information in the database.
  *
- * URL: {baseURL}/quotas/create
+ * @param {Object} req - The HTTP request object. It contains the user's email. Its strutcure is as follows:
+ * - body: { email }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the email is missing in the request body.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.createUser = async (req, res, next) => {
   try {
@@ -34,6 +42,23 @@ exports.createUser = async (req, res, next) => {
   }
 };
 
+/**
+ * Deletes a user from the quotas collection.
+ *
+ * @param {Object} req - The HTTP request object. It contains the user's email. Its strutcure is as follows:
+ * - body: { email }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the email is missing in the request body.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
+ */
 exports.undoCreateUser = async (req, res, next) => {
   try {
     if (!req.body.email) {
@@ -60,13 +85,24 @@ exports.undoCreateUser = async (req, res, next) => {
 };
 
 /**
- * Subtracts quotas from a user after they've done a purchase.
- * @param {JSON} req - JSON object containing a body with the user's email and the used quotas.
- * @param {JSON} res - JSON object containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack
- * @return {JSON} - The response object.
+ * Subtract quotas from a user's account for creating a chart.
  *
- * URL: {baseURL}/quotas/sub
+ * @param {Object} req - The HTTP request object. It contains the user's email and the chart's type. Its structure is as follows:
+ * - body: { email, chart_type }
+ *
+ * @param {Object} res - The HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the chart type or email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 400 Bad Request - If an unsupported chart type is provided.
+ * @throws {Error} 403 Forbidden - If the user does not have enough quotas to create the chart.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.subQuotas = async (req, res, next) => {
   try {
@@ -131,6 +167,25 @@ exports.subQuotas = async (req, res, next) => {
   }
 };
 
+/**
+ * Undo the subtraction of quotas for a user's chart creation.
+ *
+ * @param {Object} req - The HTTP request object. It contains the user's email and the chart's type. Its structure is as follows:
+ * - body: { email, chart_type }
+ *
+ * @param {Object} res - The HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the chart type or email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 400 Bad Request - If an unsupported chart type is provided.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
+ */
 exports.undoSubQuotas = async (req, res, next) => {
   try {
     if (!req.body.chart_type || !req.body.email) {
@@ -186,6 +241,24 @@ exports.undoSubQuotas = async (req, res, next) => {
   }
 };
 
+/**
+ * Add quotas to a user's account.
+ *
+ * @param {Object} req - The HTTP request object. It contains the user's email and the number of quotas to add. Its structure is as follows:
+ * - body: { email, quotas }
+ *
+ * @param {Object} res - The HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the number of quotas or email is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
+ */
 exports.addQuotas = async (req, res, next) => {
   try {
     if (!req.body.quotas || !req.body.email) {

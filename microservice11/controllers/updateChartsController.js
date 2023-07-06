@@ -2,16 +2,21 @@ const fs = require("fs");
 const StoredCharts = require("../models/storedChartsModel");
 
 /**
- * Creates a user in the database so he/she can later store charts.
- * @param {JSON} req - JSON object containing a body with the user's email.
- * @param {JSON} res - JSON obejct containing a confirmation/rejection of the request.
- * @param {function} next - Pointer to the next function in the middleware stack.
- * @return {JSON}
- * An object containing the fields below:
- * - status: "success" or "failed"
- * - message: a correlating message or an error message, if an error has occurred
+ * Create a user in the database with no charts.
  *
- * URL: {baseURL}/stored-charts/create
+ * @param {Object} req - The HTTP request object. It contains the user's email. Its structure is as follows:
+ * - body: { email }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the email is missing in the request body.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.createUser = async (req, res, next) => {
   try {
@@ -40,16 +45,23 @@ exports.createUser = async (req, res, next) => {
 };
 
 /**
- * Saves a user's chart.
- * @param {JSON} req - JSON object containing a body with the chart's type, title and image, and the user's email.
- * @param {JSON} res - JSON object containing a confirmtion/rejection of the request.
- * @param {function} next - Pointer to the next function in the middlware stack.
- * @return {JSON}
- * An object containig the fields below:
- * - status: "success" or "failed"
- * - message: a correlating message or an error message, if an error has occurred
+ * Save a chart image in the database.
  *
- * URL: {baseURL}/stored-charts/save-chart
+ * @param {Object} req - The HTTP request object. It contains the user's email and the chart's type, title and image. Its structure is as follows:
+ * body: { email, type, title, image }
+ *
+ * @param {Object} res - Τhe HTTP response object. It contains the appropriate status code and message. Its structure is as follows:
+ * - status: ( *"success"* | *"failed"* )
+ * - message: ( *message* | *error_message* )
+ *
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If the type, title, email, or image of the chart is missing in the request body.
+ * @throws {Error} 400 Bad Request - If the user no longer exists.
+ * @throws {Error} 500 Internal Server Error - If an error occurs while creating the PNG file.
+ * @throws {Error} 500 Internal Server Error - If something goes wrong while processing the request.
  */
 exports.saveChart = async (req, res, next) => {
   try {
