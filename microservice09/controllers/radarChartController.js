@@ -8,6 +8,15 @@ function isValidColorString(colorString) {
   return regex.test(colorString);
 }
 
+/**
+ * Generates a configuration object for a radar chart based on the provided data.
+ *
+ * @param {Object} data - The data object containing the chart configuration.
+ *
+ * @returns {Object|null} The radar chart configuration object, or null if the data is invalid.
+ *
+ * @throws {Error} If an error occurs during the configuration generation process.
+ */
 exports.getRadarChartConfig = (data) => {
   try {
     const radarChartConfiguration = {

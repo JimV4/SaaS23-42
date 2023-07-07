@@ -20,6 +20,15 @@ function isValidColorString(colorString) {
   return regex.test(colorString);
 }
 
+/**
+ * Generates a configuration object for a multi-axis line chart based on the provided data.
+ *
+ * @param {Object} data - The data object containing the chart configuration.
+ *
+ * @returns {Object|null} The multi-axis line chart configuration object, or null if the data is invalid.
+ *
+ * @throws {Error} If an error occurs during the configuration generation process.
+ */
 exports.getMultiAxisLineChartConfig = (data) => {
   try {
     const multiAxisLineChartConfiguration = {

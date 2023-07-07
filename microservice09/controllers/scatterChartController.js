@@ -16,6 +16,15 @@ function isValidColorString(colorString) {
   return regex.test(colorString);
 }
 
+/**
+ * Generates a configuration object for a scatter chart based on the provided data.
+ *
+ * @param {Object} data - The data object containing the chart configuration.
+ *
+ * @returns {Object|null} The scatter chart configuration object, or null if the data is invalid.
+ *
+ * @throws {Error} If an error occurs during the configuration generation process.
+ */
 exports.getScatterChartConfig = (data) => {
   try {
     const scatterChartConfiguration = {

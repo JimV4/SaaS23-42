@@ -16,6 +16,13 @@ function isValidColorString(colorString) {
   return regex.test(colorString);
 }
 
+/**
+ * Generate a line chart configuration based on the provided data.
+ *
+ * @param {Object} data - The data object containing the chart configuration.
+ *
+ * @returns {Object|null} The generated line chart configuration object, or null if the data is invalid.
+ */
 exports.getLineChartConfig = (data) => {
   try {
     const lineChartConfiguration = {

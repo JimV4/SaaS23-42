@@ -16,6 +16,13 @@ function isValidColorString(colorString) {
   return regex.test(colorString);
 }
 
+/**
+ * Generate a bubble chart configuration based on the provided data.
+ *
+ * @param {Object} data - The data object containing the chart configuration.
+ *
+ * @returns {Object|null} The generated bubble chart configuration object, or null if the data is invalid.
+ */
 exports.getBubbleChartConfig = (data) => {
   try {
     const bubbleChartConfiguration = {

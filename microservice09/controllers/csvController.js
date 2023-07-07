@@ -5,6 +5,23 @@ const scatterChartController = require("./scatterChartController");
 const bubbleChartController = require("./bubbleChartController");
 const polarAreaChartController = require("./polarAreaChartController");
 
+/**
+ * Read and process a CSV file to generate a chart configuration.
+ *
+ * @param {Object} req - The HTTP request object. It contains the chart's type and title, and the file. Its structure is as follows:
+ * - file
+ * - config
+ * - type
+ * - title
+ *
+ * @param {Object} res - The HTTP response object.
+ * @param {Function} next - The callback function to invoke the next middleware.
+ *
+ * @returns {void} This function does not return a value directly. It sends an HTTP response with the appropriate status code and message.
+ *
+ * @throws {Error} 400 Bad Request - If no CSV file is uploaded or the chart type does not match any of the provided charts.
+ * @throws {Error} 500 Internal Server Error - If the file contains errors or something goes wrong while processing the request.
+ */
 exports.readCSVFile = async (req, res, next) => {
   try {
     let data = {};
