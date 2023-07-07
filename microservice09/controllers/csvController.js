@@ -1,9 +1,9 @@
-const lineChartController = require("./lineChartController");
-const multiAxisLineChartController = require("./multiAxisLineChartController");
-const radarChartController = require("./radarChartController");
-const scatterChartController = require("./scatterChartController");
-const bubbleChartController = require("./bubbleChartController");
-const polarAreaChartController = require("./polarAreaChartController");
+const lineChartController = require(`${__dirname}/lineChartController`);
+const multiAxisLineChartController = require(`${__dirname}/multiAxisLineChartController`);
+const radarChartController = require(`${__dirname}/radarChartController`);
+const scatterChartController = require(`${__dirname}/scatterChartController`);
+const bubbleChartController = require(`${__dirname}/bubbleChartController`);
+const polarAreaChartController = require(`${__dirname}/polarAreaChartController`);
 
 /**
  * Read and process a CSV file to generate a chart configuration.

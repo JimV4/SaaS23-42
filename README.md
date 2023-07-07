@@ -20,6 +20,6 @@ myCharts is a software-as-a-service application developed by undergraduate stude
 
 1. Clone the github repo
 
-2. Install docker desktop and on the project's root folder run the command
+2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and on the project's root folder run the command.
 
 > docker compose up

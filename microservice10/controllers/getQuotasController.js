@@ -1,4 +1,4 @@
-const Quotas = require("../models/quotasModel");
+const Quotas = require(`${__dirname}/../models/quotasModel`);
 
 /**
  * Check the number of quotas available for a user to create a chart.
@@ -40,7 +40,6 @@ exports.checkNumQuotas = async (req, res, next) => {
       });
     }
 
-    // console.log(req.body.chart_type);
     let cost;
     if (req.body.chart_type == "line-chart") {
       cost = process.env.LINE_CHART_COST;

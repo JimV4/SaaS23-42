@@ -1,7 +1,7 @@
 const express = require("express");
-const authController = require("../controllers/authController");
-const quotasController = require("../controllers/quotasController");
-const storedChartsController = require("../controllers/storedChartsController");
+const authController = require(`${__dirname}/../controllers/authController`);
+const quotasController = require(`${__dirname}/../controllers/quotasController`);
+const storedChartsController = require(`${__dirname}/../controllers/storedChartsController`);
 
 const router = express.Router();
 

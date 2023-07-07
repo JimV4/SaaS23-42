@@ -5,7 +5,7 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const storedChartsRouter = require("./routes/chartsRoutes");
+const storedChartsRouter = require(`${__dirname}/routes/chartsRoutes`);
 
 const app = express();
 

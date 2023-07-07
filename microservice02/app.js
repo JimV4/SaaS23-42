@@ -4,8 +4,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 
-const googleRouter = require("./routes/googleRoutes");
-const verificationRouter = require("./routes/verificationRoutes");
+const googleRouter = require(`${__dirname}/routes/googleRoutes`);
+const verificationRouter = require(`${__dirname}/routes/verificationRoutes`);
 
 const app = express();
 

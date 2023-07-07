@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 
-const svgConverterRouter = require("./routes/svgConverterRoutes");
+const svgConverterRouter = require(`${__dirname}/routes/svgConverterRoutes`);
 
 const app = express();
 

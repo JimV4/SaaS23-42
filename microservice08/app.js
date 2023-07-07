@@ -3,7 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const diagramRouter = require("./routes/diagramRoutes");
+const diagramRouter = require(`${__dirname}/routes/diagramRoutes`);
 
 const app = express();
 

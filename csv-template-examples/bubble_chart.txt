@@ -1,0 +1,14 @@
+type:bubble-chart
+width:1000
+height:500
+title:Example Chart
+X-axis title:x-axis
+Y-axis title:y-axis
+X-axis grid:TRUE
+Y-axis grid:TRUE
+Y-axis beginAtZero:FALSE
+Y-axis type:linear
+Y-axis position:left
+data:labels[1 2 3 4 5 6 7]
+DATASET1:dataset1,[(1 75 5) (2 89 10) (4 100 20) (6 11 5) (7 66 40) ],,
+DATASET2:dataset2,[(1 65 8) (2 59 23) (3 80 9) (4 81 18) (5 56 45) (6 55 6) (7 40 10)],green,green

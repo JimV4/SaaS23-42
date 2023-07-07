@@ -24,7 +24,6 @@ function CreatedChartPage() {
 
   async function handleSave() {
     try {
-      console.log(image);
       const response = await fetch(
         "http://127.0.0.1:8000/api/myCharts/diagrams/save-chart",
         {
@@ -45,7 +44,6 @@ function CreatedChartPage() {
       if (jsonresponse.status === "success") {
         navigate("/my-charts");
       } else if (jsonresponse.status === "failed") {
-        console.log(jsonresponse);
         setErrorMessage(jsonresponse.message);
         showModalHandler();
       }

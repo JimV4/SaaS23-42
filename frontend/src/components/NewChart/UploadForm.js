@@ -6,8 +6,6 @@ import Button from "../Login/Buttons/Button";
 import UploadError from "../UI/UploadError";
 import useModal from "../hooks/useModal";
 
-// let errorMessage = "";
-
 function UploadForm() {
   const navigate = useNavigate();
 
@@ -47,8 +45,6 @@ function UploadForm() {
         setImageUrl(image);
         navigate("/new-chart/created-chart", { state: { image, title, type } });
       }
-
-      console.log(response);
     } catch (error) {
       if (error.message === "Network Error") {
         setErrorMessage("Something Went Wrong!"); // if server is down

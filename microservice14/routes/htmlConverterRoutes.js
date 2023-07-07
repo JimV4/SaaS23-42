@@ -1,7 +1,7 @@
 const express = require("express");
-const htmlConverterController = require("../controllers/htmlConverterController");
-const getPNGController = require("../controllers/getPNGController");
-const authController = require("../controllers/authController");
+const htmlConverterController = require(`${__dirname}/../controllers/htmlConverterController`);
+const getPNGController = require(`${__dirname}/../controllers/getPNGController`);
+const authController = require(`${__dirname}/../controllers/authController`);
 
 const router = express.Router();
 

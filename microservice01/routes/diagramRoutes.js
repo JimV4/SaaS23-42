@@ -1,10 +1,10 @@
 const express = require("express");
 const multer = require("multer");
-const diagramController = require("../controllers/diagramController");
-const authController = require("../controllers/authController");
-const csvController = require("../controllers/csvController");
-const quotasController = require("../controllers/quotasController");
-const storedChartsController = require("../controllers/storedChartsController");
+const diagramController = require(`${__dirname}/../controllers/diagramController`);
+const authController = require(`${__dirname}/../controllers/authController`);
+const csvController = require(`${__dirname}/../controllers/csvController`);
+const quotasController = require(`${__dirname}/../controllers/quotasController`);
+const storedChartsController = require(`${__dirname}/../controllers/storedChartsController`);
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-const Quotas = require("../models/quotasModel");
+const Quotas = require(`${__dirname}/../models/quotasModel`);
 
 /**
  * Create a new user and store their information in the database.

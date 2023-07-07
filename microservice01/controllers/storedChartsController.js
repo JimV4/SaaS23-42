@@ -1,5 +1,5 @@
 const axios = require("axios");
-const undoController = require("../controllers/undoController");
+const undoController = require(`${__dirname}/../controllers/undoController`);
 
 exports.createUser = async (req, res, next) => {
   try {

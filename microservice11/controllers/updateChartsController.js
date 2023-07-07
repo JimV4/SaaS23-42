@@ -1,5 +1,5 @@
 const fs = require("fs");
-const StoredCharts = require("../models/storedChartsModel");
+const StoredCharts = require(`${__dirname}/../models/storedChartsModel`);
 
 /**
  * Create a user in the database with no charts.

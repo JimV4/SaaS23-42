@@ -1,6 +1,6 @@
 const express = require("express");
-const quotasController = require("../controllers/quotasController");
-const authController = require("../controllers/authController");
+const quotasController = require(`${__dirname}/../controllers/quotasController`);
+const authController = require(`${__dirname}/../controllers/authController`);
 
 const router = express.Router();
 

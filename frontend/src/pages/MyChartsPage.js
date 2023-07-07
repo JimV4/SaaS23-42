@@ -27,7 +27,6 @@ function MyChartsPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("here");
         const response = await fetch(
           "http://127.0.0.1:8000/api/myCharts/diagrams/my-charts",
           {
@@ -72,9 +71,7 @@ function MyChartsPage() {
         const imageData = response.data;
         const blob = new Blob([imageData], { type: "image/png" });
         const imageUrl = URL.createObjectURL(blob);
-        console.log(imageUrl);
         setImageURL(imageUrl);
-        console.log(response);
       } else {
         setErrorMessage("Something went wrong!");
         showModalHandler();

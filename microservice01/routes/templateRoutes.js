@@ -1,6 +1,6 @@
 const express = require("express");
-const templateController = require("../controllers/templateController");
-const authController = require("../controllers/authController");
+const templateController = require(`${__dirname}/../controllers/templateController`);
+const authController = require(`${__dirname}/../controllers/authController`);
 
 const router = express.Router();
 

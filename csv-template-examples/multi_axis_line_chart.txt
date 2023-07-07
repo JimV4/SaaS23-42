@@ -1,0 +1,25 @@
+type:multi-axis-line-chart
+width:1000
+height:500
+X-axis title:x-axis
+Y-axis title:y-axis
+Y1-axis title:y1-axis
+Y2-axis title:y2-axis
+X-axis grid:TRUE
+Y-axis grid:TRUE
+Y1-axis grid:TRUE
+Y2-axis grid:TRUE
+Y-axis beginAtZero:true
+Y1-axis beginAtZero:FALSE
+Y2-axis beginAtZero:FALSE
+Y-axis type:linear
+Y1-axis type:linear
+Y2-axis type:logarithmic
+Y-axis position:left
+Y1-axis position:right
+Y2-axis position:left
+data:labels[1 2 3 4 5 6 7]
+DATASET1:dataset1,[(1 75) (2 89) (4 100) (6 11) (7 66) ],,,y
+DATASET2:dataset2,[(1 65) (2 59) (3 80) (4 81) (5 56) (6 55) (7 40)],,,y1
+DATASET3:dataset3,[(1 70) (2 69) (4 10) (7 26) ],,,y2
+DATASET4:dataset4,[(1 5) (2 39) (3 85) (4 24) (5 16) (6 105) (7 40)],,,y6

@@ -1,0 +1,7 @@
+type:polar-area-chart
+width:1000
+height:500
+title:Example Chart
+displayAxis:true
+data:labels[1 2 3 4 5 6]
+DATASET1:dataset1,[(65 purple green) (0) (100 blue green) (76 pink purple) (66 black black) (10 yellow yellow)]

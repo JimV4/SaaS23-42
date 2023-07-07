@@ -3,7 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const csvRouter = require("./routes/csvRoutes");
+const csvRouter = require(`${__dirname}/routes/csvRoutes`);
 
 const app = express();
 

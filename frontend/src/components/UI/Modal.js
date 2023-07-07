@@ -18,7 +18,6 @@ function ModalOverlay(props) {
 const portalElement = document.getElementById("overlays");
 
 function Modal(props) {
-  console.log(props.myclass);
   return (
     <Fragment>
       {ReactDOM.createPortal(

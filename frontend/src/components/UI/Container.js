@@ -45,7 +45,6 @@ function Container() {
         navigate("/my-account");
       } else {
         setErrorMessage(googleResponse.message);
-        console.log(googleResponse);
         showModalHandler();
       }
     } catch (error) {

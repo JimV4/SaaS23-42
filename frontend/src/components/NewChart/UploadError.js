@@ -3,7 +3,6 @@ import Modal from "../Credits/Modal";
 import classes from "./UploadError.module.css";
 
 function UploadError(props) {
-  console.log("props.message:", props.message);
   const myclass = "modal-error";
   return (
     <Modal myclass={myclass}>

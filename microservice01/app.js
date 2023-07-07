@@ -5,10 +5,10 @@ const logger = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const diagramRouter = require("./routes/diagramRoutes");
-const authRouter = require("./routes/authRoutes");
-const templateRouter = require("./routes/templateRoutes");
-const quotasRouter = require("./routes/quotasRoutes");
+const diagramRouter = require(`${__dirname}/routes/diagramRoutes`);
+const authRouter = require(`${__dirname}/routes/authRoutes`);
+const templateRouter = require(`${__dirname}/routes/templateRoutes`);
+const quotasRouter = require(`${__dirname}/routes/quotasRoutes`);
 
 const app = express();
 

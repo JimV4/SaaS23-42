@@ -7,7 +7,6 @@ import { useLocation } from "react-router-dom";
 
 function MyAccountPage() {
   const userEmail = localStorage.getItem("email");
-  console.log(userEmail);
   return (
     <div className={classes.container}>
       <FetchAccount text={`Hello ${userEmail}`} />

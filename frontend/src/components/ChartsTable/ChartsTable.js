@@ -3,8 +3,6 @@ import classes from "./ChartsTable.module.css";
 import useModal from "../hooks/useModal";
 import UploadError from "../UI/UploadError";
 
-import axios from "axios";
-
 function ChartsTable(props) {
   const { modalIsShown, showModalHandler, hideModalHandler } = useModal();
 
@@ -159,7 +157,6 @@ function ChartsTable(props) {
   }
 
   const data = props.charts;
-  console.log(data);
   if (!data) {
     return (
       <div className={classes.tablee}>

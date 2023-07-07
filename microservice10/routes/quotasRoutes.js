@@ -1,6 +1,6 @@
 const express = require("express");
-const updateQuotasController = require("../controllers/updateQuotasController");
-const getQuotasController = require("../controllers/getQuotasController");
+const updateQuotasController = require(`${__dirname}/../controllers/updateQuotasController`);
+const getQuotasController = require(`${__dirname}/../controllers/getQuotasController`);
 
 const router = express.Router();
 

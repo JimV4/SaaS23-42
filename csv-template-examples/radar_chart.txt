@@ -1,0 +1,9 @@
+type:radar-chart
+width:1000
+height:500
+title:Example Chart
+displayAxis:false
+displayAngleLines:false
+data:labels[1 2 3 4 5 6 7]
+DATASET1:dataset1,[75 89 100 76 66 25 70],fill/purple,
+DATASET2:dataset2,[65 59 80 81 56 55 40],,

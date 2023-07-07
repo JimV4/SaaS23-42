@@ -1,7 +1,7 @@
 const express = require("express");
-const svgConverterController = require("../controllers/svgConverterController");
-const getPNGController = require("../controllers/getPNGController");
-const authController = require("../controllers/authController");
+const svgConverterController = require(`${__dirname}/../controllers/svgConverterController`);
+const getPNGController = require(`${__dirname}/../controllers/getPNGController`);
+const authController = require(`${__dirname}/../controllers/authController`);
 
 const router = express.Router();
 

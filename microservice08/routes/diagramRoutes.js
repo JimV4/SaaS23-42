@@ -1,5 +1,5 @@
 const express = require("express");
-const diagramController = require("../controllers/diagramController");
+const diagramController = require(`${__dirname}/../controllers/diagramController`);
 
 const router = express.Router();
 

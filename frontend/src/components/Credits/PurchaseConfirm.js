@@ -27,7 +27,6 @@ function PurchaseConfirm(props) {
         }
       );
       if (response.ok) {
-        console.log("here");
         navigate("/my-account");
         props.onClose();
       } else {

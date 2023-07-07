@@ -15,7 +15,6 @@ function ConfirmLogin() {
 
   async function continueHandler() {
     const userID = localStorage.getItem("userID");
-    console.log(userID);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/myCharts/auth/verifylogin/${userID}`,
@@ -25,7 +24,6 @@ function ConfirmLogin() {
       );
 
       const confirmLogin = await response.json();
-      console.log(confirmLogin);
 
       if (confirmLogin.message === "You were successfully logged in!") {
         localStorage.setItem("token", confirmLogin.token);
@@ -33,7 +31,6 @@ function ConfirmLogin() {
       } else {
         setErrorMessage(confirmLogin.message);
         showModalHandler();
-        console.log(confirmLogin);
       }
     } catch (error) {
       console.log(error);
@@ -43,9 +40,7 @@ function ConfirmLogin() {
   }
 
   async function noHandler() {
-    console.log("hereeeeeeeeeeee");
     const userID = localStorage.getItem("userID");
-    console.log(userID);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/myCharts/auth/cancellogin/${userID}`,

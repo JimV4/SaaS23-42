@@ -54,25 +54,6 @@ const router = createBrowserRouter([
     path: "new-chart/created-chart",
     element: <CreatedChartPage />,
   },
-  /*  {
-    path: "new-chart",
-    element: (
-      <div>
-        <MyChartsLogoV />
-        <NewChartPage />
-      </div>
-    ),
-    children: [],
-  },
-  {
-    path: "new-chart/created-chart",
-    element: (
-      <div>
-        <MyChartsLogoV />
-        <CreatedChartPage />
-      </div>
-    ),
-  }, */
   {
     path: "*",
     element: <NotFoundPage />,
